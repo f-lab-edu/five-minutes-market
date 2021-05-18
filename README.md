@@ -6,7 +6,7 @@
 ## 기술스택
 
 - JAVA 11
-- Spring Boot 2.4.5 
+- Spring Boot 2.4.5
 - MySQL
 - MyBatis
 - Gradle
@@ -23,3 +23,7 @@
     - ex) feature/작업명
 - 작업 내용에 대해 Pull Request 생성
 - `main`으로 머지
+
+## Code Convention
+
+[Naver Code Convention](https://naver.github.io/hackday-conventions-java/#_intellij)
