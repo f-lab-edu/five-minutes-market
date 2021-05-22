@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="kr.fiveminutesmarket.product.repository.ProductRepository">
+
+    <select id="findByProductId" resultType="kr.fiveminutesmarket.product.domain.Product">
+        SELECT *
+        FROM product
+        WHERE product_id = #{productId}
+    </select>
+
+    <insert id="insertProduct" parameterType="kr.fiveminutesmarket.product.domain.Product">
+        INSERT INTO product (main_category_id, sub_category_id, name, price, thumb, detail)
+        VALUES (#{mainCategoryId}, #{subCategoryId}, #{name}, #{price}, #{thumb}, #{detail})
+        <selectKey keyProperty="productId" resultType="java.lang.Long" order="AFTER">
+            SELECT LAST_INSERT_ID() as product_id
+        </selectKey>
+    </insert>
+
+</mapper>
