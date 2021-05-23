@@ -26,16 +26,22 @@ public class MainCategoryController {
     }
 
     @GetMapping("/{id}")
-    public MainCategoryResponse getById(@PathVariable("id") Long id) {
-        return mainCategoryService.getById(id);
+    public MainCategoryResponse findById(@PathVariable("id") Long id) {
+        return mainCategoryService.findById(id);
     }
 
     @PostMapping("")
-    public ResponseEntity<MainCategoryResponse> insert(@RequestBody MainCategoryReqeust request) throws URISyntaxException {
-        MainCategoryResponse response = mainCategoryService.add(request);
+    public ResponseEntity<MainCategoryResponse> insert(@RequestBody MainCategoryReqeust resource) throws URISyntaxException {
+        MainCategoryResponse response = mainCategoryService.add(resource);
 
         URI uri = new URI("/mainCategory/" + response.getMainCategoryId());
         return ResponseEntity.created(uri).body(response);
+    }
+
+    @PutMapping("/{id}")
+    public int update(@PathVariable("id") Long id,
+                      @RequestBody MainCategoryReqeust resource) {
+        return mainCategoryService.update(id, resource);
     }
 
 }

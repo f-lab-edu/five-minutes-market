@@ -29,7 +29,7 @@ public class MainCategoryService {
                 .collect(Collectors.toList());
     }
 
-    public MainCategoryResponse getById(Long id) {
+    public MainCategoryResponse findById(Long id) {
 
         MainCategory mainCategory = mainCategoryMapper.findByMainCategoryId(id);
 
@@ -44,4 +44,11 @@ public class MainCategoryService {
         return mainCategory.toResponse();
     }
 
+    public int update(Long id, MainCategoryReqeust resource) {
+
+        MainCategory mainCategory = mainCategoryMapper.findByMainCategoryId(id);
+        mainCategory.updateInfo(resource);
+
+        return mainCategoryMapper.updateMainCategory(id, mainCategory);
+    }
 }

@@ -9,10 +9,19 @@
     </insert>
 
     <select id="findAll" resultType="kr.fiveminutesmarket.category.domain.MainCategory">
-        SELECT * FROM main_category
+        SELECT *
+        FROM main_category
     </select>
 
     <select id="findByMainCategoryId" parameterType="map" resultType="kr.fiveminutesmarket.category.domain.MainCategory">
-        SELECT * FROM main_category WHERE main_category_id = #{mainCategoryId}
+        SELECT *
+        FROM main_category
+        WHERE main_category_id = #{mainCategoryId}
     </select>
+    
+    <update id="updateMainCategory" parameterType="map">
+        UPDATE main_category
+        SET main_category_name = #{mainCategory.mainCategoryName}
+        WHERE main_category_id = #{mainCategoryId}
+    </update>
 </mapper>

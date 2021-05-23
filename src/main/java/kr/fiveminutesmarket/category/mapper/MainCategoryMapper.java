@@ -14,4 +14,7 @@ public interface MainCategoryMapper {
     List<MainCategory> findAll();
 
     MainCategory findByMainCategoryId(@Param("mainCategoryId") Long mainCategoryId);
+
+    int updateMainCategory(@Param("mainCategoryId") Long mainCategoryId,
+                           @Param("mainCategory") MainCategory mainCategory);
 }
