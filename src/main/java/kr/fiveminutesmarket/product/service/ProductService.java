@@ -30,8 +30,8 @@ public class ProductService {
     public List<ProductListDto> findAll(int count, int pageNum) {
         int startIndex = count * (pageNum - 1);
 
-        return productRepository.findAll(startIndex, count)
-                .orElseThrow(() -> new IllegalArgumentException("페이지에 데이터가 없습니다."));
+        return productRepository.findAll(startIndex, count);
+//                .orElseThrow(() -> new IllegalArgumentException("페이지에 데이터가 없습니다."));
 
     }
 

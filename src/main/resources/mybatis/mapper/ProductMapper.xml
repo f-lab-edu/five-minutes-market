@@ -6,39 +6,39 @@
 <mapper namespace="kr.fiveminutesmarket.product.repository.ProductRepository">
 
     <resultMap id="productListDTO" type="kr.fiveminutesmarket.product.dto.ProductListDto">
-        <id property="productId" column="productId" />
-        <result property="sellerId" column="sellerId" />
+        <id property="productId" column="product_id" />
+        <result property="sellerId" column="seller_id" />
         <result property="quantity" column="quantity" />
         <result property="name" column="name" />
         <result property="price" column="price" />
         <result property="thumb" column="thumb" />
         <result property="detail" column="detail" />
-        <association property="mainCategory">
-            <id property="mainCategoryId" column="mainCategoryId" />
-            <result property="mainCategoryName" column="mainCategoryName" />
+        <association property="mainCategory" javaType="kr.fiveminutesmarket.category.domain.MainCategory">
+            <id property="mainCategoryId" column="main_category_id" />
+            <result property="mainCategoryName" column="main_category_name" />
         </association>
-        <association property="subCategory">
-            <id property="subCategoryId" column="subCategoryId" />
-            <result property="subCategoryName" column="subCategoryName" />
+        <association property="subCategory" javaType="kr.fiveminutesmarket.category.domain.SubCategory">
+            <id property="subCategoryId" column="sub_category_id" />
+            <result property="subCategoryName" column="sub_category_name" />
         </association>
-        <collection property="options" column="productOption" ofType="kr.fiveminutesmarket.option.dto.OptionDto">
-            <id property="optionId" column="optionId" />
-            <result property="isOptional" column="isOptional" />
-            <collection property="optionItemList" column="optionItem" ofType="kr.fiveminutesmarket.option.dto.OptionItemDto">
-                <id property="optionItemId" column="optionItemId" />
-                <result property="optionItemName" column="optionItemName" />
-                <result property="optionItemPrice" column="optionItemPrice" />
+        <collection property="options" ofType="kr.fiveminutesmarket.option.dto.OptionDto">
+            <id property="optionId" column="option_id" />
+            <result property="isOptional" column="is_optional" />
+            <collection property="optionItemList" ofType="kr.fiveminutesmarket.option.dto.OptionItemDto">
+                <id property="optionItemId" column="option_item_id" />
+                <result property="optionItemName" column="option_item_name" />
+                <result property="optionItemPrice" column="option_item_price" />
             </collection>
         </collection>
     </resultMap>
 
-    <select id="findAll" resultMap="productListDTO" parameterType="int">
+    <select id="findAll" resultMap="productListDTO" parameterType="map">
         SELECT *
         FROM product
         LEFT OUTER JOIN main_category ON product.main_category_id = main_category.main_category_id
         LEFT OUTER JOIN sub_category ON product.sub_category_id = sub_category.sub_category_id
-        LEFT OUTER JOIN product_option ON product.product_id = product_option.product_id
-        LEFT OUTER JOIN option_item ON product_option.option_id = option_item.option_id
+        LEFT OUTER JOIN `option` ON product.product_id = `option`.product_id
+        LEFT OUTER JOIN option_item ON `option`.option_id = option_item.option_id
         LIMIT #{startIndex}, #{itemCount}
     </select>
 

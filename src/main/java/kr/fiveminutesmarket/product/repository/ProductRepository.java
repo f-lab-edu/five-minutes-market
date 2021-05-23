@@ -15,6 +15,6 @@ public interface ProductRepository {
 
     Optional<Product> findByProductId(Long productId);
 
-    Optional<List<ProductListDto>> findAll(@Param("startIndex") int startIndex, @Param("itemCount") int itemCount);
+    List<ProductListDto> findAll(@Param("startIndex") int startIndex, @Param("itemCount") int itemCount);
 
 }
