@@ -13,33 +13,37 @@ CREATE TABLE `product` (
                            KEY `sub_category_index` (`sub_category_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='상품 테이블'
 
-CREATE TABLE main_category
-(
-    main_category_id 		int AUTO_INCREMENT PRIMARY KEY,
-    main_category_name      VARCHAR(50) NOT NULL
-);
 
-CREATE TABLE sub_category
-(
-    sub_category_id  		int AUTO_INCREMENT PRIMARY KEY,
-    sub_category_name       VARCHAR(50) NOT NULL,
-    main_category_id		BIGINT NOT NULL,
-    FOREIGN KEY (main_category_id) REFERENCES main_category (main_category_id)
-);
+CREATE TABLE `main_category` (
+                            `main_category_id` int NOT NULL AUTO_INCREMENT,
+                            `main_category_name` varchar(50) NOT NULL,
+                            PRIMARY KEY (`main_category_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci
 
-CREATE TABLE `option`
-(
-    option_id 		        int AUTO_INCREMENT PRIMARY KEY,
-    is_optional		        boolean NOT NULL,
-    product_id		        int	NOT NULL,
-    FOREIGN KEY (product_id) REFERENCES product (product_id)
-);
+CREATE TABLE `sub_category` (
+                            `sub_category_id` int NOT NULL AUTO_INCREMENT,
+                            `sub_category_name` varchar(50) NOT NULL,
+                            `main_category_id` int NOT NULL,
+                            PRIMARY KEY (`sub_category_id`),
+                            KEY `main_category_id` (`main_category_id`),
+                            FOREIGN KEY (`main_category_id`) REFERENCES `main_category` (`main_category_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci
 
-CREATE TABLE option_item
-(
-    option_item_id 		    int AUTO_INCREMENT PRIMARY KEY,
-    option_item_name		VARCHAR(50) NOT NULL,
-    option_item_price		INT	NOT NULL,
-    option_id			    int NOT NULL,
-    FOREIGN KEY (option_id) REFERENCES `option` (option_id)
-);
+CREATE TABLE `option` (
+                          `option_id` int NOT NULL AUTO_INCREMENT,
+                          `is_optional` tinyint(1) NOT NULL,
+                          `product_id` int NOT NULL,
+                          PRIMARY KEY (`option_id`),
+                          KEY `product_id` (`product_id`),
+                          FOREIGN KEY (`product_id`) REFERENCES `product` (`product_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci
+
+CREATE TABLE `option_item` (
+                               `option_item_id` int NOT NULL AUTO_INCREMENT,
+                               `option_item_name` varchar(50) NOT NULL,
+                               `option_item_price` int NOT NULL,
+                               `option_id` int NOT NULL,
+                               PRIMARY KEY (`option_item_id`),
+                               KEY `option_id` (`option_id`),
+                               FOREIGN KEY (`option_id`) REFERENCES `option` (`option_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci
