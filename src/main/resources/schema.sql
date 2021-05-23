@@ -2,6 +2,8 @@ CREATE TABLE `product` (
                            `product_id` int NOT NULL AUTO_INCREMENT COMMENT '상품 ID',
                            `main_category_id` int NOT NULL COMMENT '메인 카테고리 ID',
                            `sub_category_id` int NOT NULL COMMENT '서브 카테고리 ID',
+                           `seller_id` varchar(50) NOT NULL COMMENT '판매자 ID',
+                           `quantity` int NOT NULL DEFAULT '0' COMMENT '상품 수량',
                            `name` varchar(50) NOT NULL COMMENT '상품 이름',
                            `price` int NOT NULL DEFAULT '0' COMMENT '상품 가격',
                            `thumb` varchar(200) DEFAULT NULL COMMENT '썸네일 URL',

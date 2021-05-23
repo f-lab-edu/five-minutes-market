@@ -8,6 +8,10 @@ public class Product {
 
     private Long subCategoryId;
 
+    private String sellerId;
+
+    private Integer quantity;
+
     private String name;
 
     private Integer price;
@@ -38,6 +42,22 @@ public class Product {
 
     public void setSubCategoryId(Long subCategoryId) {
         this.subCategoryId = subCategoryId;
+    }
+
+    public String getSellerId() {
+        return sellerId;
+    }
+
+    public void setSellerId(String sellerId) {
+        this.sellerId = sellerId;
+    }
+
+    public Integer getQuantity() {
+        return quantity;
+    }
+
+    public void setQuantity(Integer quantity) {
+        this.quantity = quantity;
     }
 
     public String getName() {
@@ -71,5 +91,4 @@ public class Product {
     public void setDetail(String detail) {
         this.detail = detail;
     }
-
 }

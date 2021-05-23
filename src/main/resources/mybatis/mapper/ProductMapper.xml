@@ -11,6 +11,12 @@
         WHERE product_id = #{productId}
     </select>
 
+    <select id="findAll" resultType="kr.fiveminutesmarket.product.dto.ProductListDto">
+        SELECT *
+        FROM product
+        WHERE
+    </select>
+
     <insert id="insertProduct" parameterType="kr.fiveminutesmarket.product.domain.Product">
         INSERT INTO product (main_category_id, sub_category_id, name, price, thumb, detail)
         VALUES (#{mainCategoryId}, #{subCategoryId}, #{name}, #{price}, #{thumb}, #{detail})
