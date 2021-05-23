@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="kr.fiveminutesmarket.option.mapper.OptionMapper">
+
+    <insert id="insert" parameterType="map" useGeneratedKeys="true" keyProperty="optionId">
+        INSERT INTO `option`(is_optional, product_id)
+        VALUES(#{option.isOptional}, #{option.productId})
+    </insert>
+
+    <select id="findAll" resultType="kr.fiveminutesmarket.option.domain.Option">
+        SELECT *
+        FROM `option`
+    </select>
+
+    <select id="findByOptionId" parameterType="map" resultType="kr.fiveminutesmarket.option.domain.Option">
+        SELECT *
+        FROM `option`
+        WHERE option_id = #{optionId}
+    </select>
+
+    <update id="updateOption" parameterType="map">
+        UPDATE `option`
+        SET is_optional = #{option.isOptional}
+        WHERE option_id = #{optionId}
+    </update>
+
+</mapper>
