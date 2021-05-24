@@ -42,4 +42,25 @@ public class ProductController {
 
         return ResponseEntity.ok(products);
     }
+
+    @PutMapping
+    public ResponseEntity<HttpStatus> updateProduct(@RequestBody Product product) {
+        productService.updateProduct(product);
+
+        return ResponseEntity.status(HttpStatus.OK).build();
+    }
+
+    @PatchMapping("/{productId}/{quantity}")
+    public ResponseEntity<HttpStatus> updateQuantity(@PathVariable Long productId, @PathVariable int quantity) {
+        productService.updateQuantity(productId, quantity);
+
+        return ResponseEntity.status(HttpStatus.OK).build();
+    }
+
+    @DeleteMapping("/{productId}")
+    public ResponseEntity<HttpStatus> deleteProduct(@PathVariable Long productId) {
+        productService.deleteProduct(productId);
+
+        return ResponseEntity.status(HttpStatus.OK).build();
+    }
 }

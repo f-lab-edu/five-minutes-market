@@ -17,4 +17,10 @@ public interface ProductRepository {
 
     List<ProductListDto> findAll(@Param("startIndex") int startIndex, @Param("itemCount") int itemCount);
 
+    void updateProduct(Product product);
+
+    void updateQuantity(@Param("productId") Long productId,@Param("quantity") int quantity);
+
+    void deleteProduct(@Param("productId") Long productId);
+
 }

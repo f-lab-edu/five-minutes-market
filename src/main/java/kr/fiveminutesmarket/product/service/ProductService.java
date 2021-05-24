@@ -31,8 +31,18 @@ public class ProductService {
         int startIndex = count * (pageNum - 1);
 
         return productRepository.findAll(startIndex, count);
-//                .orElseThrow(() -> new IllegalArgumentException("페이지에 데이터가 없습니다."));
+    }
 
+    public void updateProduct(Product product) {
+        productRepository.updateProduct(product);
+    }
+
+    public void updateQuantity(Long productId, int quantity) {
+        productRepository.updateQuantity(productId, quantity);
+    }
+
+    public void deleteProduct(Long productId) {
+        productRepository.deleteProduct(productId);
     }
 
 }
