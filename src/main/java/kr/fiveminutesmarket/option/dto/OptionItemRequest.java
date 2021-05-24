@@ -10,7 +10,7 @@ public class OptionItemRequest {
 
     private Integer optionItemPrice;
 
-    private Long optionId;
+    private Long productOptionId;
 
     public Long getOptionItemId() {
         return optionItemId;
@@ -36,19 +36,19 @@ public class OptionItemRequest {
         this.optionItemPrice = optionItemPrice;
     }
 
-    public Long getOptionId() {
-        return optionId;
+    public Long getProductOptionId() {
+        return productOptionId;
     }
 
-    public void setOptionId(Long optionId) {
-        this.optionId = optionId;
+    public void setProductOptionId(Long productOptionId) {
+        this.productOptionId = productOptionId;
     }
 
     public OptionItem toEntity() {
         OptionItem entity = new OptionItem();
         entity.setOptionItemName(optionItemName);
         entity.setOptionItemPrice(optionItemPrice);
-        entity.setOptionId(optionId);
+        entity.setProductOptionId(productOptionId);
 
         return entity;
     }

@@ -1,21 +1,21 @@
 package kr.fiveminutesmarket.option.dto;
 
-import kr.fiveminutesmarket.option.domain.Option;
+import kr.fiveminutesmarket.option.domain.ProductOption;
 
-public class OptionRequest {
+public class ProductOptionRequest {
 
-    private Long optionId;
+    private Long productOptionId;
 
     private Boolean isOptional;
 
     private Long productId;
 
-    public Long getOptionId() {
-        return optionId;
+    public Long getProductOptionId() {
+        return productOptionId;
     }
 
-    public void setOptionId(Long optionId) {
-        this.optionId = optionId;
+    public void setProductOptionId(Long productOptionId) {
+        this.productOptionId = productOptionId;
     }
 
     public Boolean getIsOptional() {
@@ -34,8 +34,8 @@ public class OptionRequest {
         this.productId = productId;
     }
 
-    public Option toEntity() {
-        Option entity = new Option();
+    public ProductOption toEntity() {
+        ProductOption entity = new ProductOption();
         entity.setIsOptional(isOptional);
         entity.setProductId(productId);
 

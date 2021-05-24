@@ -8,7 +8,7 @@ public class OptionItemResponse {
 
     private Integer optionItemPrice;
 
-    private Long optionId;
+    private Long productOptionId;
 
     public Long getOptionItemId() {
         return optionItemId;
@@ -34,11 +34,11 @@ public class OptionItemResponse {
         this.optionItemPrice = optionItemPrice;
     }
 
-    public Long getOptionId() {
-        return optionId;
+    public Long getProductOptionId() {
+        return productOptionId;
     }
 
-    public void setOptionId(Long optionId) {
-        this.optionId = optionId;
+    public void setProductOptionId(Long productOptionId) {
+        this.productOptionId = productOptionId;
     }
 }

@@ -6,8 +6,8 @@
 <mapper namespace="kr.fiveminutesmarket.option.mapper.OptionItemMapper">
 
     <insert id="insert" parameterType="map" useGeneratedKeys="true" keyProperty="optionItemId">
-        INSERT INTO option_item(option_item_name, option_item_price, option_id)
-        VALUES(#{optionItem.optionItemName}, #{optionItem.optionItemPrice}, #{optionItem.optionId})
+        INSERT INTO option_item(option_item_name, option_item_price, product_option_id)
+        VALUES(#{optionItem.optionItemName}, #{optionItem.optionItemPrice}, #{optionItem.productOptionId})
     </insert>
 
     <select id="findAll" resultType="kr.fiveminutesmarket.option.domain.OptionItem">
@@ -25,7 +25,7 @@
         UPDATE option_item
         SET option_item_name = #{optionItem.optionItemName},
             option_item_price = #{optionItem.optionItemPrice},
-            option_id = #{optionItem.optionId}
+            product_option_id = #{optionItem.productOptionId}
         WHERE option_item_id = #{optionItemId}
     </update>
 

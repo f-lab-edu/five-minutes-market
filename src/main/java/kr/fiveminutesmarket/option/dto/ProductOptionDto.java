@@ -2,9 +2,9 @@ package kr.fiveminutesmarket.option.dto;
 
 import java.util.List;
 
-public class OptionDto {
+public class ProductOptionDto {
 
-    private Long optionId;
+    private Long productOptionId;
 
     private Boolean isOptional;
 
@@ -12,12 +12,12 @@ public class OptionDto {
 
     private List<OptionItemDto> optionItemList;
 
-    public Long getOptionId() {
-        return optionId;
+    public Long getProductOptionId() {
+        return productOptionId;
     }
 
-    public void setOptionId(Long optionId) {
-        this.optionId = optionId;
+    public void setProductOptionId(Long productOptionId) {
+        this.productOptionId = productOptionId;
     }
 
     public Boolean getOptional() {

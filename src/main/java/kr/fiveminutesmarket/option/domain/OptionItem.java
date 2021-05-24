@@ -11,7 +11,7 @@ public class OptionItem {
 
     private Integer optionItemPrice;
 
-    private Long optionId;
+    private Long productOptionId;
 
     public Long getOptionItemId() {
         return optionItemId;
@@ -37,18 +37,18 @@ public class OptionItem {
         this.optionItemPrice = optionItemPrice;
     }
 
-    public Long getOptionId() {
-        return optionId;
+    public Long getProductOptionId() {
+        return productOptionId;
     }
 
-    public void setOptionId(Long optionId) {
-        this.optionId = optionId;
+    public void setProductOptionId(Long productOptionId) {
+        this.productOptionId = productOptionId;
     }
 
     public void updateInfo(OptionItemRequest resource) {
         this.optionItemName = resource.getOptionItemName();
         this.optionItemPrice = resource.getOptionItemPrice();
-        this.optionId = resource.getOptionId();
+        this.productOptionId = resource.getProductOptionId();
     }
 
     public OptionItemResponse toResponse() {
@@ -56,7 +56,7 @@ public class OptionItem {
         response.setOptionItemId(optionItemId);
         response.setOptionItemName(optionItemName);
         response.setOptionItemPrice(optionItemPrice);
-        response.setOptionId(optionId);
+        response.setProductOptionId(productOptionId);
 
         return response;
     }

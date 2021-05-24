@@ -29,11 +29,11 @@ CREATE TABLE `sub_category` (
                             FOREIGN KEY (`main_category_id`) REFERENCES `main_category` (`main_category_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci
 
-CREATE TABLE `option` (
-                          `option_id` int NOT NULL AUTO_INCREMENT,
+CREATE TABLE `product_option` (
+                          `product_option_id` int NOT NULL AUTO_INCREMENT,
                           `is_optional` tinyint(1) NOT NULL,
                           `product_id` int NOT NULL,
-                          PRIMARY KEY (`option_id`),
+                          PRIMARY KEY (`product_option_id`),
                           KEY `product_id` (`product_id`),
                           FOREIGN KEY (`product_id`) REFERENCES `product` (`product_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci
@@ -42,8 +42,8 @@ CREATE TABLE `option_item` (
                                `option_item_id` int NOT NULL AUTO_INCREMENT,
                                `option_item_name` varchar(50) NOT NULL,
                                `option_item_price` int NOT NULL,
-                               `option_id` int NOT NULL,
+                               `product_option_id` int NOT NULL,
                                PRIMARY KEY (`option_item_id`),
-                               KEY `option_id` (`option_id`),
-                               FOREIGN KEY (`option_id`) REFERENCES `option` (`option_id`)
+                               KEY `product_option_id` (`product_option_id`),
+                               FOREIGN KEY (`product_option_id`) REFERENCES `product_option` (`product_option_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci

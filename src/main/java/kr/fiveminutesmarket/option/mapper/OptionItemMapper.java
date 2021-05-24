@@ -1,6 +1,5 @@
 package kr.fiveminutesmarket.option.mapper;
 
-import kr.fiveminutesmarket.option.domain.Option;
 import kr.fiveminutesmarket.option.domain.OptionItem;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
