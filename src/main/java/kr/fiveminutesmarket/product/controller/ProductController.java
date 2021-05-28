@@ -1,7 +1,9 @@
 package kr.fiveminutesmarket.product.controller;
 
 import kr.fiveminutesmarket.product.domain.Product;
-import kr.fiveminutesmarket.product.dto.ProductListDto;
+import kr.fiveminutesmarket.product.dto.request.ProductRequestDTO;
+import kr.fiveminutesmarket.product.dto.response.ProductListResponseDTO;
+import kr.fiveminutesmarket.product.dto.response.ProductResponseDTO;
 import kr.fiveminutesmarket.product.service.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -22,30 +24,30 @@ public class ProductController {
     }
 
     @GetMapping("/{productId}")
-    public ResponseEntity<Product> getProduct(@PathVariable long productId) {
-        Product product = productService.findByProductId(productId);
+    public ResponseEntity<ProductResponseDTO> getProduct(@PathVariable long productId) {
+        ProductResponseDTO product = productService.findByProductId(productId);
 
         return ResponseEntity.ok(product);
     }
 
     @PostMapping
-    public ResponseEntity<HttpStatus> addProduct(@RequestBody Product product) {
+    public ResponseEntity<HttpStatus> addProduct(@RequestBody ProductRequestDTO product) {
         productService.addProduct(product);
 
         return ResponseEntity.status(HttpStatus.CREATED).build();
     }
 
     @GetMapping
-    public ResponseEntity<List<ProductListDto>> getProductList(@RequestParam(value = "count", required = true) int count,
-                                                               @RequestParam(value = "page_num", required = true) int pageNum) {
-        List<ProductListDto> products = productService.findAll(count, pageNum);
+    public ResponseEntity<List<ProductListResponseDTO>> getProductList(@RequestParam(value = "count", required = true) int count,
+                                                                       @RequestParam(value = "page_num", required = true) int pageNum) {
+        List<ProductListResponseDTO> products = productService.findAll(count, pageNum);
 
         return ResponseEntity.ok(products);
     }
 
-    @PutMapping
-    public ResponseEntity<HttpStatus> updateProduct(@RequestBody Product product) {
-        productService.updateProduct(product);
+    @PutMapping("/{productId}")
+    public ResponseEntity<HttpStatus> updateProduct(@PathVariable Long productId, @RequestBody ProductRequestDTO product) {
+        productService.updateProduct(productId, product);
 
         return ResponseEntity.status(HttpStatus.OK).build();
     }

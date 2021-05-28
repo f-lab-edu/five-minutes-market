@@ -1,7 +1,8 @@
 package kr.fiveminutesmarket.product.repository;
 
 import kr.fiveminutesmarket.product.domain.Product;
-import kr.fiveminutesmarket.product.dto.ProductListDto;
+import kr.fiveminutesmarket.product.dto.response.ProductListResponseDTO;
+import kr.fiveminutesmarket.product.dto.response.ProductResponseDTO;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
@@ -13,9 +14,9 @@ public interface ProductRepository {
 
     void insertProduct(Product product);
 
-    Optional<Product> findByProductId(Long productId);
+    Optional<ProductResponseDTO> findByProductId(Long productId);
 
-    List<ProductListDto> findAll(@Param("startIndex") int startIndex, @Param("itemCount") int itemCount);
+    List<ProductListResponseDTO> findAll(@Param("startIndex") int startIndex, @Param("itemCount") int itemCount);
 
     void updateProduct(Product product);
 

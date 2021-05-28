@@ -20,75 +20,50 @@ public class Product {
 
     private String detail;
 
-    public Long getProductId() {
-        return productId;
+    public Product(Long mainCategoryId, Long subCategoryId, String sellerId, Integer quantity, String name, Integer price, String thumb, String detail) {
+        this.mainCategoryId = mainCategoryId;
+        this.subCategoryId = subCategoryId;
+        this.sellerId = sellerId;
+        this.quantity = quantity;
+        this.name = name;
+        this.price = price;
+        this.thumb = thumb;
+        this.detail = detail;
     }
 
-    public void setProductId(Long productId) {
-        this.productId = productId;
+    public Long getProductId() {
+        return productId;
     }
 
     public Long getMainCategoryId() {
         return mainCategoryId;
     }
 
-    public void setMainCategoryId(Long mainCategoryId) {
-        this.mainCategoryId = mainCategoryId;
-    }
-
     public Long getSubCategoryId() {
         return subCategoryId;
-    }
-
-    public void setSubCategoryId(Long subCategoryId) {
-        this.subCategoryId = subCategoryId;
     }
 
     public String getSellerId() {
         return sellerId;
     }
 
-    public void setSellerId(String sellerId) {
-        this.sellerId = sellerId;
-    }
-
     public Integer getQuantity() {
         return quantity;
-    }
-
-    public void setQuantity(Integer quantity) {
-        this.quantity = quantity;
     }
 
     public String getName() {
         return name;
     }
 
-    public void setName(String name) {
-        this.name = name;
-    }
-
     public Integer getPrice() {
         return price;
-    }
-
-    public void setPrice(Integer price) {
-        this.price = price;
     }
 
     public String getThumb() {
         return thumb;
     }
 
-    public void setThumb(String thumb) {
-        this.thumb = thumb;
-    }
-
     public String getDetail() {
         return detail;
-    }
-
-    public void setDetail(String detail) {
-        this.detail = detail;
     }
 }
