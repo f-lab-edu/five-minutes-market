@@ -1,9 +1,9 @@
 package kr.fiveminutesmarket.category.service;
 
 import kr.fiveminutesmarket.category.domain.SubCategory;
-import kr.fiveminutesmarket.category.dto.SubCategoryReqeust;
-import kr.fiveminutesmarket.category.dto.SubCategoryResponse;
-import kr.fiveminutesmarket.category.mapper.SubCategoryMapper;
+import kr.fiveminutesmarket.category.dto.request.SubCategoryReqeust;
+import kr.fiveminutesmarket.category.dto.response.SubCategoryResponse;
+import kr.fiveminutesmarket.category.repository.SubCategoryRepository;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -14,9 +14,9 @@ import java.util.stream.Collectors;
 @Transactional
 public class SubCategoryService {
 
-    private final SubCategoryMapper subCategoryMapper;
+    private final SubCategoryRepository subCategoryMapper;
 
-    public SubCategoryService(SubCategoryMapper subCategoryMapper) {
+    public SubCategoryService(SubCategoryRepository subCategoryMapper) {
         this.subCategoryMapper = subCategoryMapper;
     }
 
@@ -31,7 +31,7 @@ public class SubCategoryService {
 
     public SubCategoryResponse findById(Long id) {
 
-        SubCategory subCategory = subCategoryMapper.findBySubCategoryId(id);
+        SubCategory subCategory = subCategoryMapper.findById(id);
 
         return subCategory.toResponse();
     }
@@ -45,9 +45,13 @@ public class SubCategoryService {
 
     public int update(Long id, SubCategoryReqeust resource) {
 
-        SubCategory subCategory = subCategoryMapper.findBySubCategoryId(id);
+        SubCategory subCategory = subCategoryMapper.findById(id);
         subCategory.updateInfo(resource);
 
         return subCategoryMapper.updateSubCategory(id, subCategory);
+    }
+
+    public void deleteById(Long id) {
+        subCategoryMapper.deleteById(id);
     }
 }

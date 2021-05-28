@@ -3,7 +3,7 @@
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
-<mapper namespace="kr.fiveminutesmarket.option.mapper.ProductOptionMapper">
+<mapper namespace="kr.fiveminutesmarket.option.repository.ProductOptionRepository">
 
     <insert id="insert" parameterType="map" useGeneratedKeys="true" keyProperty="productOptionId">
         INSERT INTO product_option(is_optional, product_id)
@@ -11,12 +11,18 @@
     </insert>
 
     <select id="findAll" resultType="kr.fiveminutesmarket.option.domain.ProductOption">
-        SELECT *
+        SELECT
+               product_option_id,
+               is_optional,
+               product_id
         FROM product_option
     </select>
 
-    <select id="findByProductOptionId" parameterType="map" resultType="kr.fiveminutesmarket.option.domain.ProductOption">
-        SELECT *
+    <select id="findById" parameterType="map" resultType="kr.fiveminutesmarket.option.domain.ProductOption">
+        SELECT
+               product_option_id,
+               is_optional,
+               product_id
         FROM product_option
         WHERE product_option_id = #{productOptionId}
     </select>
@@ -27,4 +33,7 @@
         WHERE product_option_id = #{productOptionId}
     </update>
 
+    <delete id="deleteById" parameterType="map">
+
+    </delete>
 </mapper>

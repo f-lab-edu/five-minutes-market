@@ -1,7 +1,7 @@
 package kr.fiveminutesmarket.category.controller;
 
-import kr.fiveminutesmarket.category.dto.MainCategoryReqeust;
-import kr.fiveminutesmarket.category.dto.MainCategoryResponse;
+import kr.fiveminutesmarket.category.dto.request.MainCategoryReqeust;
+import kr.fiveminutesmarket.category.dto.response.MainCategoryResponse;
 import kr.fiveminutesmarket.category.service.MainCategoryService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -20,7 +20,7 @@ public class MainCategoryController {
         this.mainCategoryService = mainCategoryService;
     }
 
-    @GetMapping("")
+    @GetMapping
     public List<MainCategoryResponse> findAll() {
         return mainCategoryService.findAll();
     }
@@ -30,7 +30,7 @@ public class MainCategoryController {
         return mainCategoryService.findById(id);
     }
 
-    @PostMapping("")
+    @PostMapping
     public ResponseEntity<MainCategoryResponse> insert(@RequestBody MainCategoryReqeust resource) throws URISyntaxException {
         MainCategoryResponse response = mainCategoryService.add(resource);
 

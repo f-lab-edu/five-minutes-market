@@ -1,4 +1,4 @@
-package kr.fiveminutesmarket.option.mapper;
+package kr.fiveminutesmarket.option.repository;
 
 import kr.fiveminutesmarket.option.domain.ProductOption;
 import org.apache.ibatis.annotations.Mapper;
@@ -7,7 +7,7 @@ import org.apache.ibatis.annotations.Param;
 import java.util.List;
 
 @Mapper
-public interface ProductOptionMapper {
+public interface ProductOptionRepository {
 
     int insert(@Param("productOption") ProductOption productOption);
 
@@ -18,4 +18,5 @@ public interface ProductOptionMapper {
     int updateProductOption(@Param("productOptionId") Long productOptionId,
                             @Param("productOption") ProductOption productOption);
 
+    void deleteById(@Param("productOptionId") Long productOptionId);
 }

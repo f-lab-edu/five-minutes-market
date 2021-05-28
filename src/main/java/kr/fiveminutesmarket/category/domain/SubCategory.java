@@ -1,7 +1,7 @@
 package kr.fiveminutesmarket.category.domain;
 
-import kr.fiveminutesmarket.category.dto.SubCategoryReqeust;
-import kr.fiveminutesmarket.category.dto.SubCategoryResponse;
+import kr.fiveminutesmarket.category.dto.request.SubCategoryReqeust;
+import kr.fiveminutesmarket.category.dto.response.SubCategoryResponse;
 
 public class SubCategory {
 
@@ -11,28 +11,24 @@ public class SubCategory {
 
     private Long mainCategoryId;
 
-    public Long getSubCategoryId() {
-        return subCategoryId;
+    public SubCategory() {
     }
 
-    public void setSubCategoryId(Long subCategoryId) {
-        this.subCategoryId = subCategoryId;
+    public SubCategory(String subCategoryName, Long mainCategoryId) {
+        this.subCategoryName = subCategoryName;
+        this.mainCategoryId = mainCategoryId;
+    }
+
+    public Long getSubCategoryId() {
+        return subCategoryId;
     }
 
     public String getSubCategoryName() {
         return subCategoryName;
     }
 
-    public void setSubCategoryName(String subCategoryName) {
-        this.subCategoryName = subCategoryName;
-    }
-
     public Long getMainCategoryId() {
         return mainCategoryId;
-    }
-
-    public void setMainCategoryId(Long mainCategoryId) {
-        this.mainCategoryId = mainCategoryId;
     }
 
     public SubCategoryResponse toResponse() {

@@ -1,9 +1,9 @@
 package kr.fiveminutesmarket.option.service;
 
 import kr.fiveminutesmarket.option.domain.ProductOption;
-import kr.fiveminutesmarket.option.dto.ProductOptionRequest;
-import kr.fiveminutesmarket.option.dto.ProductOptionResponse;
-import kr.fiveminutesmarket.option.mapper.ProductOptionMapper;
+import kr.fiveminutesmarket.option.dto.request.ProductOptionRequest;
+import kr.fiveminutesmarket.option.dto.response.ProductOptionResponse;
+import kr.fiveminutesmarket.option.repository.ProductOptionRepository;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -14,9 +14,9 @@ import java.util.stream.Collectors;
 @Transactional
 public class ProductOptionService {
 
-    private final ProductOptionMapper productOptionMapper;
+    private final ProductOptionRepository productOptionMapper;
 
-    public ProductOptionService(ProductOptionMapper optionMapper) {
+    public ProductOptionService(ProductOptionRepository optionMapper) {
         this.productOptionMapper = optionMapper;
     }
 

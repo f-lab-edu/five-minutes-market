@@ -3,7 +3,7 @@
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
-<mapper namespace="kr.fiveminutesmarket.option.mapper.OptionItemMapper">
+<mapper namespace="kr.fiveminutesmarket.option.repository.OptionItemRepository">
 
     <insert id="insert" parameterType="map" useGeneratedKeys="true" keyProperty="optionItemId">
         INSERT INTO option_item(option_item_name, option_item_price, product_option_id)
@@ -11,12 +11,20 @@
     </insert>
 
     <select id="findAll" resultType="kr.fiveminutesmarket.option.domain.OptionItem">
-        SELECT *
+        SELECT
+               option_item_id,
+               option_item_name,
+               option_item_price,
+               product_option_id
         FROM option_item
     </select>
 
-    <select id="findByOptionItemId" parameterType="map" resultType="kr.fiveminutesmarket.option.domain.OptionItem">
-        SELECT *
+    <select id="findById" parameterType="map" resultType="kr.fiveminutesmarket.option.domain.OptionItem">
+        SELECT
+               option_item_id,
+               option_item_name,
+               option_item_price,
+               product_option_id
         FROM option_item
         WHERE option_item_id = #{optionItemId}
     </select>
@@ -25,8 +33,11 @@
         UPDATE option_item
         SET option_item_name = #{optionItem.optionItemName},
             option_item_price = #{optionItem.optionItemPrice},
-            product_option_id = #{optionItem.productOptionId}
         WHERE option_item_id = #{optionItemId}
     </update>
 
+    <delete id="deleteById" parameterType="map">
+        DELETE FROM option_item
+        WHERE option_item_id = #{optionItemId}
+    </delete>
 </mapper>

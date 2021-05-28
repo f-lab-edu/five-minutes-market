@@ -1,22 +1,12 @@
-package kr.fiveminutesmarket.option.dto;
+package kr.fiveminutesmarket.option.dto.request;
 
 import kr.fiveminutesmarket.option.domain.ProductOption;
 
 public class ProductOptionRequest {
 
-    private Long productOptionId;
-
     private Boolean isOptional;
 
     private Long productId;
-
-    public Long getProductOptionId() {
-        return productOptionId;
-    }
-
-    public void setProductOptionId(Long productOptionId) {
-        this.productOptionId = productOptionId;
-    }
 
     public Boolean getIsOptional() {
         return isOptional;
@@ -35,10 +25,6 @@ public class ProductOptionRequest {
     }
 
     public ProductOption toEntity() {
-        ProductOption entity = new ProductOption();
-        entity.setIsOptional(isOptional);
-        entity.setProductId(productId);
-
-        return entity;
+        return new ProductOption(isOptional, productId);
     }
 }

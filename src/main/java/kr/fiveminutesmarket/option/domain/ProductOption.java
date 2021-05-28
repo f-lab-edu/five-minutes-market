@@ -1,7 +1,7 @@
 package kr.fiveminutesmarket.option.domain;
 
-import kr.fiveminutesmarket.option.dto.ProductOptionRequest;
-import kr.fiveminutesmarket.option.dto.ProductOptionResponse;
+import kr.fiveminutesmarket.option.dto.request.ProductOptionRequest;
+import kr.fiveminutesmarket.option.dto.response.ProductOptionResponse;
 
 public class ProductOption {
 
@@ -11,28 +11,24 @@ public class ProductOption {
 
     private Long productId;
 
-    public Long getProductOptionId() {
-        return productOptionId;
+    public ProductOption() {
     }
 
-    public void setProductOptionId(Long productOptionId) {
-        this.productOptionId = productOptionId;
+    public ProductOption(Boolean isOptional, Long productId) {
+        this.isOptional = isOptional;
+        this.productId = productId;
+    }
+
+    public Long getProductOptionId() {
+        return productOptionId;
     }
 
     public Boolean getIsOptional() {
         return isOptional;
     }
 
-    public void setIsOptional(Boolean optional) {
-        isOptional = optional;
-    }
-
     public Long getProductId() {
         return productId;
-    }
-
-    public void setProductId(Long productId) {
-        this.productId = productId;
     }
 
     public void updateInfo(ProductOptionRequest resource) {

@@ -1,7 +1,7 @@
 package kr.fiveminutesmarket.category.domain;
 
-import kr.fiveminutesmarket.category.dto.MainCategoryReqeust;
-import kr.fiveminutesmarket.category.dto.MainCategoryResponse;
+import kr.fiveminutesmarket.category.dto.request.MainCategoryReqeust;
+import kr.fiveminutesmarket.category.dto.response.MainCategoryResponse;
 
 public class MainCategory {
 
@@ -9,20 +9,19 @@ public class MainCategory {
 
     private String mainCategoryName;
 
+    public MainCategory() {
+    }
+
+    public MainCategory(String mainCategoryName) {
+        this.mainCategoryName = mainCategoryName;
+    }
+
     public Long getMainCategoryId() {
         return mainCategoryId;
     }
 
-    public void setMainCategoryId(Long mainCategoryId) {
-        this.mainCategoryId = mainCategoryId;
-    }
-
     public String getMainCategoryName() {
         return mainCategoryName;
-    }
-
-    public void setMainCategoryName(String mainCategoryName) {
-        this.mainCategoryName = mainCategoryName;
     }
 
     public void updateInfo(MainCategoryReqeust resource) {

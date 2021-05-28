@@ -1,4 +1,4 @@
-package kr.fiveminutesmarket.category.dto;
+package kr.fiveminutesmarket.category.dto.response;
 
 public class MainCategoryResponse {
 

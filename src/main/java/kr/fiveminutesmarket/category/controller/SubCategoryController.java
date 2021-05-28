@@ -1,7 +1,7 @@
 package kr.fiveminutesmarket.category.controller;
 
-import kr.fiveminutesmarket.category.dto.SubCategoryReqeust;
-import kr.fiveminutesmarket.category.dto.SubCategoryResponse;
+import kr.fiveminutesmarket.category.dto.request.SubCategoryReqeust;
+import kr.fiveminutesmarket.category.dto.response.SubCategoryResponse;
 import kr.fiveminutesmarket.category.service.SubCategoryService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -20,7 +20,7 @@ public class SubCategoryController {
         this.subCategoryService = subCategoryService;
     }
 
-    @GetMapping("")
+    @GetMapping
     public List<SubCategoryResponse> getAll() {
         return subCategoryService.findAll();
     }
@@ -30,7 +30,7 @@ public class SubCategoryController {
         return subCategoryService.findById(id);
     }
 
-    @PostMapping("")
+    @PostMapping
     public ResponseEntity<SubCategoryResponse> add(@RequestBody SubCategoryReqeust resource) throws URISyntaxException {
         SubCategoryResponse response = subCategoryService.add(resource);
 
@@ -42,6 +42,12 @@ public class SubCategoryController {
     public int update(@PathVariable("id") Long id,
                       @RequestBody SubCategoryReqeust resource) {
         return subCategoryService.update(id, resource);
+    }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<?> delete(@PathVariable Long id) {
+        subCategoryService.deleteById(id);
+        return ResponseEntity.ok().build();
     }
 
 }

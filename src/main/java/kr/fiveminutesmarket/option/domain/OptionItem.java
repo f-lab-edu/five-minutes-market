@@ -1,7 +1,7 @@
 package kr.fiveminutesmarket.option.domain;
 
-import kr.fiveminutesmarket.option.dto.OptionItemRequest;
-import kr.fiveminutesmarket.option.dto.OptionItemResponse;
+import kr.fiveminutesmarket.option.dto.request.OptionItemRequest;
+import kr.fiveminutesmarket.option.dto.response.OptionItemResponse;
 
 public class OptionItem {
 
@@ -13,28 +13,25 @@ public class OptionItem {
 
     private Long productOptionId;
 
-    public Long getOptionItemId() {
-        return optionItemId;
+    public OptionItem() {
     }
 
-    public void setOptionItemId(Long optionItemId) {
-        this.optionItemId = optionItemId;
+    public OptionItem(String optionItemName, Integer optionItemPrice, Long productOptionId) {
+        this.optionItemName = optionItemName;
+        this.optionItemPrice = optionItemPrice;
+        this.productOptionId = productOptionId;
+    }
+
+    public Long getOptionItemId() {
+        return optionItemId;
     }
 
     public String getOptionItemName() {
         return optionItemName;
     }
 
-    public void setOptionItemName(String optionItemName) {
-        this.optionItemName = optionItemName;
-    }
-
     public Integer getOptionItemPrice() {
         return optionItemPrice;
-    }
-
-    public void setOptionItemPrice(Integer optionItemPrice) {
-        this.optionItemPrice = optionItemPrice;
     }
 
     public Long getProductOptionId() {
@@ -48,7 +45,6 @@ public class OptionItem {
     public void updateInfo(OptionItemRequest resource) {
         this.optionItemName = resource.getOptionItemName();
         this.optionItemPrice = resource.getOptionItemPrice();
-        this.productOptionId = resource.getProductOptionId();
     }
 
     public OptionItemResponse toResponse() {

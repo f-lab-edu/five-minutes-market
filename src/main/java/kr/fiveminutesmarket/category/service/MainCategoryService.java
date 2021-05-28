@@ -1,9 +1,9 @@
 package kr.fiveminutesmarket.category.service;
 
 import kr.fiveminutesmarket.category.domain.MainCategory;
-import kr.fiveminutesmarket.category.dto.MainCategoryReqeust;
-import kr.fiveminutesmarket.category.dto.MainCategoryResponse;
-import kr.fiveminutesmarket.category.mapper.MainCategoryMapper;
+import kr.fiveminutesmarket.category.dto.request.MainCategoryReqeust;
+import kr.fiveminutesmarket.category.dto.response.MainCategoryResponse;
+import kr.fiveminutesmarket.category.repository.MainCategoryRepository;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -14,9 +14,9 @@ import java.util.stream.Collectors;
 @Transactional
 public class MainCategoryService {
 
-    private final MainCategoryMapper mainCategoryMapper;
+    private final MainCategoryRepository mainCategoryMapper;
 
-    public MainCategoryService(MainCategoryMapper mainCategoryMapper) {
+    public MainCategoryService(MainCategoryRepository mainCategoryMapper) {
         this.mainCategoryMapper = mainCategoryMapper;
     }
 
@@ -31,7 +31,7 @@ public class MainCategoryService {
 
     public MainCategoryResponse findById(Long id) {
 
-        MainCategory mainCategory = mainCategoryMapper.findByMainCategoryId(id);
+        MainCategory mainCategory = mainCategoryMapper.findById(id);
 
         return mainCategory.toResponse();
     }
@@ -46,9 +46,10 @@ public class MainCategoryService {
 
     public int update(Long id, MainCategoryReqeust resource) {
 
-        MainCategory mainCategory = mainCategoryMapper.findByMainCategoryId(id);
+        MainCategory mainCategory = mainCategoryMapper.findById(id);
         mainCategory.updateInfo(resource);
 
         return mainCategoryMapper.updateMainCategory(id, mainCategory);
     }
+    
 }

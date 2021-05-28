@@ -1,7 +1,7 @@
 package kr.fiveminutesmarket.option.controller;
 
-import kr.fiveminutesmarket.option.dto.ProductOptionRequest;
-import kr.fiveminutesmarket.option.dto.ProductOptionResponse;
+import kr.fiveminutesmarket.option.dto.request.ProductOptionRequest;
+import kr.fiveminutesmarket.option.dto.response.ProductOptionResponse;
 import kr.fiveminutesmarket.option.service.ProductOptionService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -20,7 +20,7 @@ public class ProductOptionController {
         this.productOptionService = productOptionService;
     }
 
-    @GetMapping("")
+    @GetMapping
     public List<ProductOptionResponse> findAll() {
         return productOptionService.findAll();
     }
@@ -30,7 +30,7 @@ public class ProductOptionController {
         return productOptionService.findById(id);
     }
 
-    @PostMapping("")
+    @PostMapping
     public ResponseEntity<ProductOptionResponse> add(@RequestBody ProductOptionRequest resource) throws URISyntaxException {
         ProductOptionResponse response = productOptionService.add(resource);
 
@@ -43,4 +43,5 @@ public class ProductOptionController {
                       @RequestBody ProductOptionRequest resource) {
         return productOptionService.update(id, resource);
     }
+
 }

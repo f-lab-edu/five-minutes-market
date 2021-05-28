@@ -1,9 +1,9 @@
 package kr.fiveminutesmarket.option.service;
 
 import kr.fiveminutesmarket.option.domain.OptionItem;
-import kr.fiveminutesmarket.option.dto.OptionItemRequest;
-import kr.fiveminutesmarket.option.dto.OptionItemResponse;
-import kr.fiveminutesmarket.option.mapper.OptionItemMapper;
+import kr.fiveminutesmarket.option.dto.request.OptionItemRequest;
+import kr.fiveminutesmarket.option.dto.response.OptionItemResponse;
+import kr.fiveminutesmarket.option.repository.OptionItemRepository;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -14,9 +14,9 @@ import java.util.stream.Collectors;
 @Transactional
 public class OptionItemService {
 
-    private final OptionItemMapper optionItemMapper;
+    private final OptionItemRepository optionItemMapper;
 
-    public OptionItemService(OptionItemMapper optionItemMapper) {
+    public OptionItemService(OptionItemRepository optionItemMapper) {
         this.optionItemMapper = optionItemMapper;
     }
 
@@ -28,7 +28,7 @@ public class OptionItemService {
     }
 
     public OptionItemResponse findById(Long id) {
-        OptionItem option = optionItemMapper.findByOptionItemId(id);
+        OptionItem option = optionItemMapper.findById(id);
 
         return option.toResponse();
     }
@@ -42,9 +42,13 @@ public class OptionItemService {
 
     public int update(Long id, OptionItemRequest resource) {
 
-        OptionItem optionItem = optionItemMapper.findByOptionItemId(id);
+        OptionItem optionItem = optionItemMapper.findById(id);
         optionItem.updateInfo(resource);
 
         return optionItemMapper.updateOptionItem(id, optionItem);
+    }
+
+    public void deleteById(Long id) {
+        optionItemMapper.deleteById(id);
     }
 }

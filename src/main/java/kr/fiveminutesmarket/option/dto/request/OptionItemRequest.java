@@ -1,24 +1,14 @@
-package kr.fiveminutesmarket.option.dto;
+package kr.fiveminutesmarket.option.dto.request;
 
 import kr.fiveminutesmarket.option.domain.OptionItem;
 
 public class OptionItemRequest {
-
-    private Long optionItemId;
 
     private String optionItemName;
 
     private Integer optionItemPrice;
 
     private Long productOptionId;
-
-    public Long getOptionItemId() {
-        return optionItemId;
-    }
-
-    public void setOptionItemId(Long optionItemId) {
-        this.optionItemId = optionItemId;
-    }
 
     public String getOptionItemName() {
         return optionItemName;
@@ -45,11 +35,6 @@ public class OptionItemRequest {
     }
 
     public OptionItem toEntity() {
-        OptionItem entity = new OptionItem();
-        entity.setOptionItemName(optionItemName);
-        entity.setOptionItemPrice(optionItemPrice);
-        entity.setProductOptionId(productOptionId);
-
-        return entity;
+        return new OptionItem(optionItemName, optionItemPrice, productOptionId);
     }
 }
