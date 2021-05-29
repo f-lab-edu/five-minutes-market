@@ -10,7 +10,7 @@ public class ProductOptionDto {
 
     private Long productId;
 
-    private List<OptionItemDto> optionItemList;
+    private List<ProductOptionItemDto> productOptionItemList;
 
     public Long getProductOptionId() {
         return productOptionId;
@@ -36,11 +36,11 @@ public class ProductOptionDto {
         this.productId = productId;
     }
 
-    public List<OptionItemDto> getOptionItemList() {
-        return optionItemList;
+    public List<ProductOptionItemDto> getProductOptionItemList() {
+        return productOptionItemList;
     }
 
-    public void setOptionItemList(List<OptionItemDto> optionItemList) {
-        this.optionItemList = optionItemList;
+    public void setProductOptionItemList(List<ProductOptionItemDto> productOptionItemList) {
+        this.productOptionItemList = productOptionItemList;
     }
 }

@@ -38,12 +38,12 @@ CREATE TABLE `product_option` (
                           FOREIGN KEY (`product_id`) REFERENCES `product` (`product_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci
 
-CREATE TABLE `option_item` (
-                               `option_item_id` int NOT NULL AUTO_INCREMENT,
-                               `option_item_name` varchar(50) NOT NULL,
-                               `option_item_price` int NOT NULL,
+CREATE TABLE `product_option_item` (
+                               `product_option_item_id` int NOT NULL AUTO_INCREMENT,
+                               `product_option_item_name` varchar(50) NOT NULL,
+                               `product_option_item_price` int NOT NULL,
                                `product_option_id` int NOT NULL,
-                               PRIMARY KEY (`option_item_id`),
+                               PRIMARY KEY (`product_option_item_id`),
                                KEY `product_option_id` (`product_option_id`),
                                FOREIGN KEY (`product_option_id`) REFERENCES `product_option` (`product_option_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci
