@@ -1,0 +1,9 @@
+spring:
+  profiles:
+    active: dev
+
+# MyBatis 설정
+mybatis:
+  mapper-locations: mybatis/mapper/**/*.xml
+  configuration:
+    map-underscore-to-camel-case: true

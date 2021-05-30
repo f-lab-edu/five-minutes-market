@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="kr.fiveminutesmarket.category.repository.MainCategoryRepository">
+    <insert id="insert" parameterType="map" useGeneratedKeys="true" keyProperty="mainCategoryId">
+        INSERT INTO main_category(main_category_name)
+        VALUES(#{mainCategory.mainCategoryName})
+    </insert>
+
+    <select id="findAll" resultType="kr.fiveminutesmarket.category.domain.MainCategory">
+        SELECT
+               main_category_id,
+               main_category_name
+        FROM main_category
+    </select>
+
+    <select id="findById" parameterType="map" resultType="kr.fiveminutesmarket.category.domain.MainCategory">
+        SELECT
+               main_category_id,
+               main_category_name
+        FROM main_category
+        WHERE main_category_id = #{mainCategoryId}
+    </select>
+    
+    <update id="updateMainCategory" parameterType="map">
+        UPDATE main_category
+        SET main_category_name = #{mainCategory.mainCategoryName}
+        WHERE main_category_id = #{mainCategoryId}
+    </update>
+
+    <delete id="deleteById" parameterType="map">
+
+    </delete>
+</mapper>

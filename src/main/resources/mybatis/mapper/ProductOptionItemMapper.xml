@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="kr.fiveminutesmarket.option.repository.ProductOptionItemRepository">
+
+    <insert id="insert" parameterType="map" useGeneratedKeys="true" keyProperty="productOptionItemId">
+        INSERT INTO
+            product_option_item(product_option_item_name, product_option_item_price, product_option_id)
+        VALUES(
+               #{productOptionItem.productOptionItemName},
+               #{productOptionItem.productOptionItemPrice},
+               #{productOptionItem.productOptionId})
+    </insert>
+
+    <select id="findAll" resultType="kr.fiveminutesmarket.option.domain.ProductOptionItem">
+        SELECT
+               product_option_item_id,
+               product_option_item_name,
+               product_option_item_price,
+               product_option_id
+        FROM product_option_item
+    </select>
+
+    <select id="findById" parameterType="map" resultType="kr.fiveminutesmarket.option.domain.ProductOptionItem">
+        SELECT
+                product_option_item_id,
+                product_option_item_name,
+                product_option_item_price,
+                product_option_id
+        FROM product_option_item
+        WHERE product_option_item_id = #{productOptionItemId}
+    </select>
+
+    <update id="update" parameterType="map">
+        UPDATE product_option_item
+        SET product_option_item_name = #{productOptionItem.productOptionItemName},
+            product_option_item_price = #{productOptionItem.productOptionItemPrice}
+        WHERE product_option_item_id = #{productOptionItemId}
+    </update>
+
+    <delete id="deleteById" parameterType="map">
+        DELETE FROM product_option_item
+        WHERE product_option_item_id = #{productOptionItemId}
+    </delete>
+</mapper>
