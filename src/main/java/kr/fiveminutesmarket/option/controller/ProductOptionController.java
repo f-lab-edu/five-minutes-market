@@ -44,4 +44,10 @@ public class ProductOptionController {
         return productOptionService.update(id, resource);
     }
 
+    @DeleteMapping("{id}")
+    public ResponseEntity<?> delete(@PathVariable("id") Long id) {
+        productOptionService.deleteById(id);
+        return ResponseEntity.ok().build();
+    }
+
 }

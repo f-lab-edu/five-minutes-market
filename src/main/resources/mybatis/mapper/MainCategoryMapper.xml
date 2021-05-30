@@ -30,6 +30,10 @@
     </update>
 
     <delete id="deleteById" parameterType="map">
+        DELETE FROM sub_category
+        WHERE main_category_id = #{mainCategoryId};
 
+        DELETE FROM main_category
+        WHERE main_category_id = #{mainCategoryId};
     </delete>
 </mapper>

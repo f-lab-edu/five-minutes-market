@@ -51,5 +51,9 @@ public class MainCategoryService {
 
         return mainCategoryMapper.updateMainCategory(id, mainCategory);
     }
+
+    public void deleteById(Long id) {
+        mainCategoryMapper.deleteById(id);
+    }
     
 }

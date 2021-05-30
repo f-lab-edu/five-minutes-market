@@ -48,4 +48,8 @@ public class ProductOptionService {
         return productOptionMapper.updateProductOption(id, productOption);
     }
 
+    public void deleteById(Long id) {
+        productOptionMapper.deleteById(id);
+    }
+
 }

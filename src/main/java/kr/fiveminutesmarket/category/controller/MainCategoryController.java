@@ -44,4 +44,10 @@ public class MainCategoryController {
         return mainCategoryService.update(id, resource);
     }
 
+    @DeleteMapping("{id}")
+    public ResponseEntity<?> delete(@PathVariable("id") Long id) {
+        mainCategoryService.deleteById(id);
+        return ResponseEntity.ok().build();
+    }
+
 }
