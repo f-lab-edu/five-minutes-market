@@ -15,6 +15,8 @@ public interface SubCategoryRepository {
 
     SubCategory findById(@Param("subCategoryId") Long subCategoryId);
 
+    int findByName(@Param("subCategoryName") String subCategoryName);
+
     int updateSubCategory(@Param("subCategoryId") Long subCategoryId,
                            @Param("subCategory") SubCategory subCategory);
 

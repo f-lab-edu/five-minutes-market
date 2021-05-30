@@ -1,9 +1,14 @@
 package kr.fiveminutesmarket.option.service;
 
+import kr.fiveminutesmarket.option.domain.ProductOption;
 import kr.fiveminutesmarket.option.domain.ProductOptionItem;
 import kr.fiveminutesmarket.option.dto.request.ProductOptionItemRequest;
 import kr.fiveminutesmarket.option.dto.response.ProductOptionItemResponse;
+import kr.fiveminutesmarket.option.error.exception.ParentProductOptionNotExistedException;
+import kr.fiveminutesmarket.option.error.exception.ProductOptionItemNameDuplicatedException;
+import kr.fiveminutesmarket.option.error.exception.ProductOptionItemNotFoundException;
 import kr.fiveminutesmarket.option.repository.ProductOptionItemRepository;
+import kr.fiveminutesmarket.option.repository.ProductOptionRepository;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -14,14 +19,17 @@ import java.util.stream.Collectors;
 @Transactional
 public class ProductOptionItemService {
 
-    private final ProductOptionItemRepository productOptionItemMapper;
+    private final ProductOptionItemRepository productOptionItemRepository;
 
-    public ProductOptionItemService(ProductOptionItemRepository productOptionItemMapper) {
-        this.productOptionItemMapper = productOptionItemMapper;
+    private final ProductOptionRepository productOptionRepository;
+
+    public ProductOptionItemService(ProductOptionItemRepository productOptionItemRepository, ProductOptionRepository productOptionRepository) {
+        this.productOptionItemRepository = productOptionItemRepository;
+        this.productOptionRepository = productOptionRepository;
     }
 
     public List<ProductOptionItemResponse> findAll() {
-        List<ProductOptionItem> productOptionItemList = productOptionItemMapper.findAll();
+        List<ProductOptionItem> productOptionItemList = productOptionItemRepository.findAll();
 
         return productOptionItemList.stream()
                 .map(ProductOptionItem::toResponse)
@@ -29,27 +37,40 @@ public class ProductOptionItemService {
     }
 
     public ProductOptionItemResponse findById(Long id) {
-        ProductOptionItem productOptionItem = productOptionItemMapper.findById(id);
+        ProductOptionItem productOptionItem = productOptionItemRepository.findById(id);
+
+        if(productOptionItem == null)
+            throw new ProductOptionItemNotFoundException(id);
 
         return productOptionItem.toResponse();
     }
 
     public ProductOptionItemResponse add(ProductOptionItemRequest resource) {
+        int foundNumber = productOptionItemRepository.findByName(resource.getProductOptionItemName());
+
+        if(foundNumber != 0)
+            throw new ProductOptionItemNameDuplicatedException(resource.getProductOptionItemName());
+
+        ProductOption productOption = productOptionRepository.findById(resource.getProductOptionId());
+
+        if(productOption == null)
+            throw new ParentProductOptionNotExistedException(resource.getProductOptionId());
+
         ProductOptionItem productOptionItem = resource.toEntity();
-        productOptionItemMapper.insert(productOptionItem);
+        productOptionItemRepository.insert(productOptionItem);
 
         return productOptionItem.toResponse();
     }
 
     public int update(Long id, ProductOptionItemRequest resource) {
 
-        ProductOptionItem productOptionItem = productOptionItemMapper.findById(id);
+        ProductOptionItem productOptionItem = productOptionItemRepository.findById(id);
         productOptionItem.updateInfo(resource);
 
-        return productOptionItemMapper.update(id, productOptionItem);
+        return productOptionItemRepository.update(id, productOptionItem);
     }
 
     public void deleteById(Long id) {
-        productOptionItemMapper.deleteById(id);
+        productOptionItemRepository.deleteById(id);
     }
 }

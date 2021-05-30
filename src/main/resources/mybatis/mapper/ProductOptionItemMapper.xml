@@ -33,6 +33,13 @@
         WHERE product_option_item_id = #{productOptionItemId}
     </select>
 
+    <select id="findByName" parameterType="map" resultType="int">
+        SELECT
+            COUNT(*)
+        FROM product_option_item
+        WHERE product_option_item_name = #{productOptionItemName};
+    </select>
+
     <update id="update" parameterType="map">
         UPDATE product_option_item
         SET product_option_item_name = #{productOptionItem.productOptionItemName},

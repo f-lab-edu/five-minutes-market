@@ -3,6 +3,7 @@ package kr.fiveminutesmarket.option.service;
 import kr.fiveminutesmarket.option.domain.ProductOption;
 import kr.fiveminutesmarket.option.dto.request.ProductOptionRequest;
 import kr.fiveminutesmarket.option.dto.response.ProductOptionResponse;
+import kr.fiveminutesmarket.option.error.exception.ProductOptionNotFoundException;
 import kr.fiveminutesmarket.option.repository.ProductOptionRepository;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -28,7 +29,10 @@ public class ProductOptionService {
     }
 
     public ProductOptionResponse findById(Long id) {
-        ProductOption productOption = productOptionMapper.findByProductOptionId(id);
+        ProductOption productOption = productOptionMapper.findById(id);
+
+        if(productOption == null)
+            throw new ProductOptionNotFoundException(id);
 
         return productOption.toResponse();
     }
@@ -42,7 +46,7 @@ public class ProductOptionService {
 
     public int update(Long id, ProductOptionRequest resource) {
 
-        ProductOption productOption = productOptionMapper.findByProductOptionId(id);
+        ProductOption productOption = productOptionMapper.findById(id);
         productOption.updateInfo(resource);
 
         return productOptionMapper.updateProductOption(id, productOption);

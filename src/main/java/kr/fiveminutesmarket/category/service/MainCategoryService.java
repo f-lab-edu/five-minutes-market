@@ -3,6 +3,8 @@ package kr.fiveminutesmarket.category.service;
 import kr.fiveminutesmarket.category.domain.MainCategory;
 import kr.fiveminutesmarket.category.dto.request.MainCategoryReqeust;
 import kr.fiveminutesmarket.category.dto.response.MainCategoryResponse;
+import kr.fiveminutesmarket.category.error.exception.MainCategoryNameDuplicatedException;
+import kr.fiveminutesmarket.category.error.exception.MainCategoryNotFoundException;
 import kr.fiveminutesmarket.category.repository.MainCategoryRepository;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -30,15 +32,21 @@ public class MainCategoryService {
     }
 
     public MainCategoryResponse findById(Long id) {
-
         MainCategory mainCategory = mainCategoryMapper.findById(id);
+
+        if(mainCategory == null)
+            throw new MainCategoryNotFoundException(id);
 
         return mainCategory.toResponse();
     }
 
-    public MainCategoryResponse add(MainCategoryReqeust request) {
+    public MainCategoryResponse add(MainCategoryReqeust resource) {
+        int foundNumber = mainCategoryMapper.findByName(resource.getMainCategoryName());
 
-        MainCategory mainCategory = request.toEntity();
+        if(foundNumber != 0 )
+            throw new MainCategoryNameDuplicatedException(resource.getMainCategoryName());
+
+        MainCategory mainCategory = resource.toEntity();
         mainCategoryMapper.insert(mainCategory);
 
         return mainCategory.toResponse();

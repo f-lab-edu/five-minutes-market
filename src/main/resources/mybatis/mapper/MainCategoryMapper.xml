@@ -22,6 +22,12 @@
         FROM main_category
         WHERE main_category_id = #{mainCategoryId}
     </select>
+
+    <select id="findByName" parameterType="map" resultType="int">
+        SELECT COUNT(*)
+        FROM main_category
+        WHERE main_category_name = #{mainCategoryName}
+    </select>
     
     <update id="updateMainCategory" parameterType="map">
         UPDATE main_category
