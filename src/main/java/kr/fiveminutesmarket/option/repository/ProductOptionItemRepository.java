@@ -15,11 +15,12 @@ public interface ProductOptionItemRepository {
 
     ProductOptionItem findById(@Param("productOptionItemId") Long productOptionItemId);
 
-    int findByName(@Param("productOptionItemName") String productOptionItemName);
+    int countByName(@Param("productOptionItemName") String productOptionItemName);
 
     int update(@Param("productOptionItemId") Long productOptionItemId,
                      @Param("productOptionItem") ProductOptionItem productOptionItem);
 
     void deleteById(@Param("productOptionItemId") Long productOptionItemId);
 
+    void deleteByProductOptionId(@Param("productOptionId") Long productOptionId);
 }

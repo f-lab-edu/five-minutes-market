@@ -15,7 +15,7 @@ public interface MainCategoryRepository {
 
     MainCategory findById(@Param("mainCategoryId") Long mainCategoryId);
 
-    int findByName(@Param("mainCategoryName") String mainCategoryName);
+    int countByName(@Param("mainCategoryName") String mainCategoryName);
 
     int updateMainCategory(@Param("mainCategoryId") Long mainCategoryId,
                            @Param("mainCategory") MainCategory mainCategory);

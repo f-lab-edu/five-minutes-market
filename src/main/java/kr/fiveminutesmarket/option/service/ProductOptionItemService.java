@@ -46,9 +46,9 @@ public class ProductOptionItemService {
     }
 
     public ProductOptionItemResponse add(ProductOptionItemRequest resource) {
-        int foundNumber = productOptionItemRepository.findByName(resource.getProductOptionItemName());
+        int count = productOptionItemRepository.countByName(resource.getProductOptionItemName());
 
-        if(foundNumber != 0)
+        if(count != 0)
             throw new ProductOptionItemNameDuplicatedException(resource.getProductOptionItemName());
 
         ProductOption productOption = productOptionRepository.findById(resource.getProductOptionId());

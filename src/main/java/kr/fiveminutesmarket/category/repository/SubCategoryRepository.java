@@ -15,10 +15,12 @@ public interface SubCategoryRepository {
 
     SubCategory findById(@Param("subCategoryId") Long subCategoryId);
 
-    int findByName(@Param("subCategoryName") String subCategoryName);
+    int countByName(@Param("subCategoryName") String subCategoryName);
 
     int updateSubCategory(@Param("subCategoryId") Long subCategoryId,
                            @Param("subCategory") SubCategory subCategory);
 
     void deleteById(@Param("subCategoryId") Long subCategoryId);
+
+    void deleteByMainCategoryId(@Param("mainCategoryId") Long mainCategoryId);
 }

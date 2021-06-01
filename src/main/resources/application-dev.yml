@@ -4,6 +4,6 @@ spring:
       on-profile: dev
   datasource:
     driver-class-name: net.sf.log4jdbc.sql.jdbcapi.DriverSpy
-    url: jdbc:log4jdbc:mysql://localhost:3306/fiveminutesmarket?autoreconnect=true&characterEncoding=utf8&serverTimezone=Asia/Seoul&allowMultiQueries=true
+    url: jdbc:log4jdbc:mysql://localhost:3306/fiveminutesmarket?autoreconnect=true&characterEncoding=utf8&serverTimezone=Asia/Seoul
     username: root
     password: springtest

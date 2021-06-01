@@ -47,9 +47,9 @@ public class SubCategoryService {
     }
 
     public SubCategoryResponse add(SubCategoryReqeust resource) {
-        int foundNumber = subCategoryRepository.findByName(resource.getSubCategoryName());
+        int count = subCategoryRepository.countByName(resource.getSubCategoryName());
 
-        if(foundNumber != 0 )
+        if(count != 0 )
             throw new SubCategoryNameDuplicatedException(resource.getSubCategoryName());
 
         MainCategory mainCategory = mainCategoryRepository.findById(resource.getMainCategoryId());

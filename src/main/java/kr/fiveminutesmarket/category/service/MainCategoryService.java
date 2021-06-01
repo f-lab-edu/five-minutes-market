@@ -6,6 +6,7 @@ import kr.fiveminutesmarket.category.dto.response.MainCategoryResponse;
 import kr.fiveminutesmarket.category.error.exception.MainCategoryNameDuplicatedException;
 import kr.fiveminutesmarket.category.error.exception.MainCategoryNotFoundException;
 import kr.fiveminutesmarket.category.repository.MainCategoryRepository;
+import kr.fiveminutesmarket.category.repository.SubCategoryRepository;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -16,15 +17,18 @@ import java.util.stream.Collectors;
 @Transactional
 public class MainCategoryService {
 
-    private final MainCategoryRepository mainCategoryMapper;
+    private final MainCategoryRepository mainCategoryRepository;
 
-    public MainCategoryService(MainCategoryRepository mainCategoryMapper) {
-        this.mainCategoryMapper = mainCategoryMapper;
+    private final SubCategoryRepository subCategoryRepository;
+
+    public MainCategoryService(MainCategoryRepository mainCategoryRepository, SubCategoryRepository subCategoryRepository) {
+        this.mainCategoryRepository = mainCategoryRepository;
+        this.subCategoryRepository = subCategoryRepository;
     }
 
     public List<MainCategoryResponse> findAll() {
 
-        List<MainCategory> mainCategoryList = mainCategoryMapper.findAll();
+        List<MainCategory> mainCategoryList = mainCategoryRepository.findAll();
 
         return mainCategoryList.stream()
                 .map(MainCategory::toResponse)
@@ -32,7 +36,7 @@ public class MainCategoryService {
     }
 
     public MainCategoryResponse findById(Long id) {
-        MainCategory mainCategory = mainCategoryMapper.findById(id);
+        MainCategory mainCategory = mainCategoryRepository.findById(id);
 
         if(mainCategory == null)
             throw new MainCategoryNotFoundException(id);
@@ -41,27 +45,29 @@ public class MainCategoryService {
     }
 
     public MainCategoryResponse add(MainCategoryReqeust resource) {
-        int foundNumber = mainCategoryMapper.findByName(resource.getMainCategoryName());
+        int count = mainCategoryRepository.countByName(resource.getMainCategoryName());
 
-        if(foundNumber != 0 )
+        if(count != 0 )
             throw new MainCategoryNameDuplicatedException(resource.getMainCategoryName());
 
         MainCategory mainCategory = resource.toEntity();
-        mainCategoryMapper.insert(mainCategory);
+        mainCategoryRepository.insert(mainCategory);
 
         return mainCategory.toResponse();
     }
 
     public int update(Long id, MainCategoryReqeust resource) {
 
-        MainCategory mainCategory = mainCategoryMapper.findById(id);
+        MainCategory mainCategory = mainCategoryRepository.findById(id);
         mainCategory.updateInfo(resource);
 
-        return mainCategoryMapper.updateMainCategory(id, mainCategory);
+        return mainCategoryRepository.updateMainCategory(id, mainCategory);
     }
 
     public void deleteById(Long id) {
-        mainCategoryMapper.deleteById(id);
+        subCategoryRepository.deleteByMainCategoryId(id);
+
+        mainCategoryRepository.deleteById(id);
     }
-    
+
 }

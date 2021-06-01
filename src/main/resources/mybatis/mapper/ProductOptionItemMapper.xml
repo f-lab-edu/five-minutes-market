@@ -33,7 +33,7 @@
         WHERE product_option_item_id = #{productOptionItemId}
     </select>
 
-    <select id="findByName" parameterType="map" resultType="int">
+    <select id="countByName" parameterType="map" resultType="int">
         SELECT
             COUNT(*)
         FROM product_option_item
@@ -50,5 +50,10 @@
     <delete id="deleteById" parameterType="map">
         DELETE FROM product_option_item
         WHERE product_option_item_id = #{productOptionItemId}
+    </delete>
+
+    <delete id="deleteByProductOptionId" parameterType="map">
+        DELETE FROM product_option_item
+        WHERE product_option_id = #{productOptionId}
     </delete>
 </mapper>

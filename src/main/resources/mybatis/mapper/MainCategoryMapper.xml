@@ -23,7 +23,7 @@
         WHERE main_category_id = #{mainCategoryId}
     </select>
 
-    <select id="findByName" parameterType="map" resultType="int">
+    <select id="countByName" parameterType="map" resultType="int">
         SELECT COUNT(*)
         FROM main_category
         WHERE main_category_name = #{mainCategoryName}
@@ -36,9 +36,6 @@
     </update>
 
     <delete id="deleteById" parameterType="map">
-        DELETE FROM sub_category
-        WHERE main_category_id = #{mainCategoryId};
-
         DELETE FROM main_category
         WHERE main_category_id = #{mainCategoryId};
     </delete>
