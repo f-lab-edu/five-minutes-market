@@ -3,6 +3,7 @@ package kr.fiveminutesmarket.product.service;
 import kr.fiveminutesmarket.product.domain.Product;
 import kr.fiveminutesmarket.product.dto.request.ProductRequestDTO;
 import kr.fiveminutesmarket.product.dto.response.ProductResponseDTO;
+import kr.fiveminutesmarket.product.error.exception.ProductNotFoundException;
 import kr.fiveminutesmarket.product.repository.ProductRepository;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -43,11 +44,11 @@ class ProductServiceTest {
     @Test
     @DisplayName("Product 없는 데이터 조회시 Exception 발생")
     void findByProductIdTest() {
-        Exception exception = assertThrows(IllegalArgumentException.class, () -> {
+        Exception exception = assertThrows(ProductNotFoundException.class, () -> {
             ProductResponseDTO targetProduct = productService.findByProductId(0L);
         });
 
-        assertThat(exception.getClass()).isEqualTo(IllegalArgumentException.class);
+        assertThat(exception.getClass()).isEqualTo(ProductNotFoundException.class);
     }
 
     @Test
