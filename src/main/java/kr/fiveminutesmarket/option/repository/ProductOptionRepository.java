@@ -13,7 +13,7 @@ public interface ProductOptionRepository {
 
     List<ProductOption> findAll();
 
-    ProductOption findByProductOptionId(@Param("productOptionId") Long productOptionId);
+    ProductOption findById(@Param("productOptionId") Long productOptionId);
 
     int updateProductOption(@Param("productOptionId") Long productOptionId,
                             @Param("productOption") ProductOption productOption);

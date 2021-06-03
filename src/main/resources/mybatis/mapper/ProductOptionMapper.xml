@@ -34,6 +34,7 @@
     </update>
 
     <delete id="deleteById" parameterType="map">
-
+        DELETE FROM product_option
+        WHERE product_option_id = #{productOptionId};
     </delete>
 </mapper>
