@@ -1,6 +1,10 @@
 package kr.fiveminutesmarket.product.dto.request;
 
 import kr.fiveminutesmarket.product.domain.Product;
+import org.hibernate.validator.constraints.Length;
+
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.Positive;
 
 public class ProductRequestDTO {
 
@@ -10,14 +14,20 @@ public class ProductRequestDTO {
 
     private String sellerId;
 
+    @Positive
     private Integer quantity;
 
+    @NotBlank
+    @Length(max = 50)
     private String name;
 
+    @Positive
     private Integer price;
 
+    @Length(max = 200)
     private String thumb;
 
+    @Length(max = 1024)
     private String detail;
 
     public Product toEntity() {

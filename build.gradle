@@ -16,6 +16,9 @@ dependencies {
     implementation 'org.springframework.boot:spring-boot-starter-web'
     developmentOnly 'org.springframework.boot:spring-boot-devtools'
 
+    // validation
+    implementation("org.springframework.boot:spring-boot-starter-validation")
+
     // Actuator (웹 어플리케이션 모니터링 지원)
     implementation 'org.springframework.boot:spring-boot-starter-actuator'
 

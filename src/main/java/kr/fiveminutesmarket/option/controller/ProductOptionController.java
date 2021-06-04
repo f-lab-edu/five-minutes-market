@@ -6,6 +6,7 @@ import kr.fiveminutesmarket.option.service.ProductOptionService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.List;
@@ -31,7 +32,7 @@ public class ProductOptionController {
     }
 
     @PostMapping
-    public ResponseEntity<ProductOptionResponse> add(@RequestBody ProductOptionRequest resource) throws URISyntaxException {
+    public ResponseEntity<ProductOptionResponse> add(@Valid @RequestBody ProductOptionRequest resource) throws URISyntaxException {
         ProductOptionResponse response = productOptionService.add(resource);
 
         URI uri = new URI("/productOption/" + response.getProductOptionId());
@@ -40,7 +41,7 @@ public class ProductOptionController {
 
     @PutMapping("/{id}")
     public int update(@PathVariable("id") Long id,
-                      @RequestBody ProductOptionRequest resource) {
+                      @Valid @RequestBody ProductOptionRequest resource) {
         return productOptionService.update(id, resource);
     }
 

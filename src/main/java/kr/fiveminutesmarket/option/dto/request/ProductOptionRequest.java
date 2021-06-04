@@ -2,8 +2,11 @@ package kr.fiveminutesmarket.option.dto.request;
 
 import kr.fiveminutesmarket.option.domain.ProductOption;
 
+import javax.validation.constraints.NotNull;
+
 public class ProductOptionRequest {
 
+    @NotNull
     private Boolean isOptional;
 
     private Long productId;

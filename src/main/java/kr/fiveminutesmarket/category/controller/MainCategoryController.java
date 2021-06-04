@@ -6,6 +6,7 @@ import kr.fiveminutesmarket.category.service.MainCategoryService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.List;
@@ -31,7 +32,7 @@ public class MainCategoryController {
     }
 
     @PostMapping
-    public ResponseEntity<MainCategoryResponse> insert(@RequestBody MainCategoryReqeust resource) throws URISyntaxException {
+    public ResponseEntity<MainCategoryResponse> insert(@Valid @RequestBody MainCategoryReqeust resource) throws URISyntaxException {
         MainCategoryResponse response = mainCategoryService.add(resource);
 
         URI uri = new URI("/mainCategory/" + response.getMainCategoryId());
@@ -40,7 +41,7 @@ public class MainCategoryController {
 
     @PutMapping("/{id}")
     public int update(@PathVariable("id") Long id,
-                      @RequestBody MainCategoryReqeust resource) {
+                      @Valid @RequestBody MainCategoryReqeust resource) {
         return mainCategoryService.update(id, resource);
     }
 
