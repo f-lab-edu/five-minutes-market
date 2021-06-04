@@ -1,5 +1,6 @@
 package kr.fiveminutesmarket.product.controller;
 
+import kr.fiveminutesmarket.common.dto.ResponseDto;
 import kr.fiveminutesmarket.product.domain.Product;
 import kr.fiveminutesmarket.product.dto.request.ProductRequestDTO;
 import kr.fiveminutesmarket.product.dto.response.ProductListResponseDTO;
@@ -24,45 +25,45 @@ public class ProductController {
     }
 
     @GetMapping("/{productId}")
-    public ResponseEntity<ProductResponseDTO> getProduct(@PathVariable long productId) {
+    public ResponseEntity<ResponseDto<ProductResponseDTO>> getProduct(@PathVariable long productId) {
         ProductResponseDTO product = productService.findByProductId(productId);
 
-        return ResponseEntity.ok(product);
+        return ResponseEntity.ok(new ResponseDto<>(0,null, product));
     }
 
     @PostMapping
-    public ResponseEntity<HttpStatus> addProduct(@RequestBody ProductRequestDTO product) {
+    public ResponseEntity<ResponseDto> addProduct(@RequestBody ProductRequestDTO product) {
         productService.addProduct(product);
 
-        return ResponseEntity.status(HttpStatus.CREATED).build();
+        return ResponseEntity.status(HttpStatus.CREATED).body(new ResponseDto<>(0));
     }
 
     @GetMapping
-    public ResponseEntity<List<ProductListResponseDTO>> getProductList(@RequestParam(value = "count", required = true) int count,
+    public ResponseEntity<ResponseDto<List<ProductListResponseDTO>>> getProductList(@RequestParam(value = "count", required = true) int count,
                                                                        @RequestParam(value = "page_num", required = true) int pageNum) {
         List<ProductListResponseDTO> products = productService.findAll(count, pageNum);
 
-        return ResponseEntity.ok(products);
+        return ResponseEntity.ok(new ResponseDto<>(0,null, products));
     }
 
     @PutMapping("/{productId}")
-    public ResponseEntity<HttpStatus> updateProduct(@PathVariable Long productId, @RequestBody ProductRequestDTO product) {
+    public ResponseEntity<ResponseDto> updateProduct(@PathVariable Long productId, @RequestBody ProductRequestDTO product) {
         productService.updateProduct(productId, product);
 
-        return ResponseEntity.status(HttpStatus.OK).build();
+        return ResponseEntity.ok(new ResponseDto<>(0));
     }
 
     @PatchMapping("/{productId}/{quantity}")
-    public ResponseEntity<HttpStatus> updateQuantity(@PathVariable Long productId, @PathVariable int quantity) {
+    public ResponseEntity<ResponseDto> updateQuantity(@PathVariable Long productId, @PathVariable int quantity) {
         productService.updateQuantity(productId, quantity);
 
-        return ResponseEntity.status(HttpStatus.OK).build();
+        return ResponseEntity.ok(new ResponseDto<>(0));
     }
 
     @DeleteMapping("/{productId}")
-    public ResponseEntity<HttpStatus> deleteProduct(@PathVariable Long productId) {
+    public ResponseEntity<ResponseDto> deleteProduct(@PathVariable Long productId) {
         productService.deleteProduct(productId);
 
-        return ResponseEntity.status(HttpStatus.OK).build();
+        return ResponseEntity.ok(new ResponseDto<>(0));
     }
 }
