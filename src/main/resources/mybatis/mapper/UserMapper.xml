@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="kr.fiveminutesmarket.user.repository.UserRepository">
+    <insert id="insert" parameterType="map" useGeneratedKeys="true" keyProperty="userId">
+        INSERT INTO user(user_name, email, password, address, phone_number, salt)
+        VALUES(
+               #{user.userName},
+               #{user.email},
+               #{user.password},
+               #{user.address},
+               #{user.phoneNumber},
+               #{user.salt}
+               )
+    </insert>
+
+    <select id="findAll" resultType="kr.fiveminutesmarket.user.domain.User">
+        SELECT
+               user_id,
+               user_name,
+               email,
+               address,
+               phone_number
+        FROM user
+    </select>
+
+    <select id="findById" parameterType="map" resultType="kr.fiveminutesmarket.user.domain.User">
+        SELECT
+               user_id,
+               user_name,
+               email,
+               address,
+               phone_number
+        FROM user
+        WHERE user_id = #{userId}
+    </select>
+
+    <!--  login 인증시 email 기준으로 select 조회  -->
+    <select id="findByEmail" parameterType="map" resultType="kr.fiveminutesmarket.user.domain.User">
+        SELECT
+               user_id,
+               user_name,
+               email,
+               password,
+               address,
+               phone_number,
+               salt
+        FROM user
+        WHERE email = #{email}
+    </select>
+</mapper>
