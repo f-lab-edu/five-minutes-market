@@ -3,6 +3,7 @@ package kr.fiveminutesmarket.category.controller;
 import kr.fiveminutesmarket.category.dto.request.MainCategoryReqeust;
 import kr.fiveminutesmarket.category.dto.response.MainCategoryResponse;
 import kr.fiveminutesmarket.category.service.MainCategoryService;
+import kr.fiveminutesmarket.common.dto.ResponseDto;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -21,33 +22,40 @@ public class MainCategoryController {
     }
 
     @GetMapping
-    public List<MainCategoryResponse> findAll() {
-        return mainCategoryService.findAll();
+    public ResponseEntity<ResponseDto<List<MainCategoryResponse>>> findAll() {
+        List<MainCategoryResponse> mainCategoryList = mainCategoryService.findAll();
+
+        return ResponseEntity.ok(new ResponseDto<>(0,null, mainCategoryList));
     }
 
     @GetMapping("/{id}")
-    public MainCategoryResponse findById(@PathVariable("id") Long id) {
-        return mainCategoryService.findById(id);
+    public ResponseEntity<ResponseDto<MainCategoryResponse>> findById(@PathVariable("id") Long id) {
+        MainCategoryResponse mainCategory = mainCategoryService.findById(id);
+
+        return ResponseEntity.ok(new ResponseDto<>(0,null, mainCategory));
     }
 
     @PostMapping
-    public ResponseEntity<MainCategoryResponse> insert(@RequestBody MainCategoryReqeust resource) throws URISyntaxException {
+    public ResponseEntity<ResponseDto<MainCategoryResponse>> insert(@RequestBody MainCategoryReqeust resource) throws URISyntaxException {
         MainCategoryResponse response = mainCategoryService.add(resource);
 
         URI uri = new URI("/mainCategory/" + response.getMainCategoryId());
-        return ResponseEntity.created(uri).body(response);
+        return ResponseEntity.created(uri).body(new ResponseDto<>(0, null, response));
     }
 
     @PutMapping("/{id}")
-    public int update(@PathVariable("id") Long id,
+    public ResponseEntity<ResponseDto> update(@PathVariable("id") Long id,
                       @RequestBody MainCategoryReqeust resource) {
-        return mainCategoryService.update(id, resource);
+        mainCategoryService.update(id, resource);
+
+        return ResponseEntity.ok(new ResponseDto<>(0));
     }
 
     @DeleteMapping("{id}")
-    public ResponseEntity<?> delete(@PathVariable("id") Long id) {
+    public ResponseEntity<ResponseDto> delete(@PathVariable("id") Long id) {
         mainCategoryService.deleteById(id);
-        return ResponseEntity.ok().build();
+
+        return ResponseEntity.ok(new ResponseDto<>(0));
     }
 
 }

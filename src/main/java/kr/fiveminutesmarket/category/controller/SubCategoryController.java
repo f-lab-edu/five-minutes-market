@@ -3,6 +3,7 @@ package kr.fiveminutesmarket.category.controller;
 import kr.fiveminutesmarket.category.dto.request.SubCategoryReqeust;
 import kr.fiveminutesmarket.category.dto.response.SubCategoryResponse;
 import kr.fiveminutesmarket.category.service.SubCategoryService;
+import kr.fiveminutesmarket.common.dto.ResponseDto;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -21,33 +22,40 @@ public class SubCategoryController {
     }
 
     @GetMapping
-    public List<SubCategoryResponse> getAll() {
-        return subCategoryService.findAll();
+    public ResponseEntity<ResponseDto<List<SubCategoryResponse>>> getAll() {
+        List<SubCategoryResponse> subCategoryList = subCategoryService.findAll();
+
+        return ResponseEntity.ok(new ResponseDto<>(0,null, subCategoryList));
     }
 
     @GetMapping("/{id}")
-    public SubCategoryResponse findById(@PathVariable("id") Long id) {
-        return subCategoryService.findById(id);
+    public ResponseEntity<ResponseDto<SubCategoryResponse>> findById(@PathVariable("id") Long id) {
+        SubCategoryResponse subCategory = subCategoryService.findById(id);
+
+        return ResponseEntity.ok(new ResponseDto<>(0,null, subCategory));
     }
 
     @PostMapping
-    public ResponseEntity<SubCategoryResponse> add(@RequestBody SubCategoryReqeust resource) throws URISyntaxException {
+    public ResponseEntity<ResponseDto<SubCategoryResponse>> add(@RequestBody SubCategoryReqeust resource) throws URISyntaxException {
         SubCategoryResponse response = subCategoryService.add(resource);
 
         URI uri = new URI("/mainCategory/" + response.getMainCategoryId());
-        return ResponseEntity.created(uri).body(response);
+        return ResponseEntity.created(uri).body(new ResponseDto<>(0,null, response));
     }
 
     @PutMapping("/{id}")
-    public int update(@PathVariable("id") Long id,
+    public ResponseEntity<ResponseDto> update(@PathVariable("id") Long id,
                       @RequestBody SubCategoryReqeust resource) {
-        return subCategoryService.update(id, resource);
+        subCategoryService.update(id, resource);
+
+        return ResponseEntity.ok(new ResponseDto<>(0));
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<?> delete(@PathVariable Long id) {
+    public ResponseEntity<ResponseDto> delete(@PathVariable Long id) {
         subCategoryService.deleteById(id);
-        return ResponseEntity.ok().build();
+
+        return ResponseEntity.ok(new ResponseDto<>(0));
     }
 
 }
