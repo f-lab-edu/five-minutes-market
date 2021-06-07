@@ -31,7 +31,7 @@ CREATE TABLE `sub_category` (
 
 CREATE TABLE `product_option` (
                           `product_option_id` int NOT NULL AUTO_INCREMENT,
-                          `is_optional` tinyint(1) NOT NULL,
+                          `optional` tinyint(1) NOT NULL,
                           `product_id` int NOT NULL,
                           PRIMARY KEY (`product_option_id`),
                           KEY `product_id` (`product_id`),

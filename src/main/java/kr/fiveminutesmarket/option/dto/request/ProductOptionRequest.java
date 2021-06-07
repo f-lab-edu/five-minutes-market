@@ -7,16 +7,16 @@ import javax.validation.constraints.NotNull;
 public class ProductOptionRequest {
 
     @NotNull
-    private Boolean isOptional;
+    private Boolean optional;
 
     private Long productId;
 
-    public Boolean getIsOptional() {
-        return isOptional;
+    public Boolean isOptional() {
+        return optional;
     }
 
-    public void setIsOptional(Boolean isOptional) {
-        this.isOptional = isOptional;
+    public void setOptional(Boolean optional) {
+        this.optional = optional;
     }
 
     public Long getProductId() {
@@ -28,6 +28,6 @@ public class ProductOptionRequest {
     }
 
     public ProductOption toEntity() {
-        return new ProductOption(isOptional, productId);
+        return new ProductOption(optional, productId);
     }
 }

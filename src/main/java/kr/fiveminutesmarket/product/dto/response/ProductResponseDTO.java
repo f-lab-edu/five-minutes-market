@@ -26,7 +26,7 @@ public class ProductResponseDTO {
 
     private SubCategory subCategory;
 
-    private List<ProductOptionDto> options;
+    private List<ProductOptionDto> productOptions;
 
     public Long getProductId() {
         return productId;
@@ -100,11 +100,11 @@ public class ProductResponseDTO {
         this.subCategory = subCategory;
     }
 
-    public List<ProductOptionDto> getOptions() {
-        return options;
+    public List<ProductOptionDto> getProductOptions() {
+        return productOptions;
     }
 
-    public void setOptions(List<ProductOptionDto> options) {
-        this.options = options;
+    public void setProductOptions(List<ProductOptionDto> productOptions) {
+        this.productOptions = productOptions;
     }
 }
