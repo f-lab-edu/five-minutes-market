@@ -7,23 +7,27 @@ import kr.fiveminutesmarket.option.error.exception.ProductOptionItemNotFoundExce
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ExceptionHandler;
+import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
 @RestControllerAdvice
 public class ProductOptionItemExceptionHandler {
 
     @ExceptionHandler(ProductOptionItemNotFoundException.class)
-    public ResponseEntity<ResponseDto> handleNotFoundException(ProductOptionItemNotFoundException exception) {
-        return new ResponseEntity<>(new ResponseDto(-1, exception.getMessage()), HttpStatus.NOT_FOUND);
+    @ResponseStatus(HttpStatus.NOT_FOUND)
+    public ResponseDto<?> handleNotFoundException(ProductOptionItemNotFoundException exception) {
+        return new ResponseDto<>(-1, exception.getMessage());
     }
 
     @ExceptionHandler(ProductOptionItemNameDuplicatedException.class)
-    public ResponseEntity<ResponseDto> handleNameDuplicatedException(ProductOptionItemNameDuplicatedException exception) {
-        return new ResponseEntity<>(new ResponseDto(-1, exception.getMessage()), HttpStatus.BAD_REQUEST);
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    public ResponseDto<?> handleNameDuplicatedException(ProductOptionItemNameDuplicatedException exception) {
+        return new ResponseDto<>(-1, exception.getMessage());
     }
 
     @ExceptionHandler(ParentProductOptionNotExistedException.class)
-    public ResponseEntity<ResponseDto> handleNotExistedParentCategoryException(ParentProductOptionNotExistedException exception) {
-        return new ResponseEntity<>(new ResponseDto(-1, exception.getMessage()), HttpStatus.BAD_REQUEST);
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    public ResponseDto<?> handleNotExistedParentCategoryException(ParentProductOptionNotExistedException exception) {
+        return new ResponseDto<>(-1, exception.getMessage());
     }
 }
