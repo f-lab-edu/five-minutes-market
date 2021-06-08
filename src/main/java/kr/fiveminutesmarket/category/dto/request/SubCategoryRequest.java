@@ -6,7 +6,7 @@ import org.hibernate.validator.constraints.Length;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Pattern;
 
-public class SubCategoryReqeust {
+public class SubCategoryRequest {
 
     @NotBlank(message = "카테고리 이름은 필수 입력 값입니다.")
     @Length(max = 50, message = "카테고리 이름의 길이는 50자 제한입니다.")
@@ -15,10 +15,10 @@ public class SubCategoryReqeust {
 
     private Long mainCategoryId;
 
-    public SubCategoryReqeust() {
+    public SubCategoryRequest() {
     }
 
-    public SubCategoryReqeust(String subCategoryName, Long mainCategoryId) {
+    public SubCategoryRequest(String subCategoryName, Long mainCategoryId) {
         this.subCategoryName = subCategoryName;
         this.mainCategoryId = mainCategoryId;
     }

@@ -64,7 +64,7 @@
                  LEFT OUTER JOIN main_category ON product.main_category_id = main_category.main_category_id
                  LEFT OUTER JOIN sub_category ON product.sub_category_id = sub_category.sub_category_id
                  LEFT OUTER JOIN product_option ON product.product_id = product_option.product_id
-                 LEFT OUTER JOIN product_option_item ON product_option.option_id = product_option_item.option_id
+                 LEFT OUTER JOIN product_option_item ON product_option.product_option_id = product_option_item.product_option_id
         WHERE product.product_id = #{productId}
     </select>
 

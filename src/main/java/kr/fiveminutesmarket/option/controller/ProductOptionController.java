@@ -1,8 +1,10 @@
 package kr.fiveminutesmarket.option.controller;
 
+import kr.fiveminutesmarket.common.dto.ResponseDto;
 import kr.fiveminutesmarket.option.dto.request.ProductOptionRequest;
 import kr.fiveminutesmarket.option.dto.response.ProductOptionResponse;
 import kr.fiveminutesmarket.option.service.ProductOptionService;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -22,33 +24,44 @@ public class ProductOptionController {
     }
 
     @GetMapping
-    public List<ProductOptionResponse> findAll() {
-        return productOptionService.findAll();
+    @ResponseStatus(HttpStatus.OK)
+    public ResponseDto<List<ProductOptionResponse>> findAll() {
+        List<ProductOptionResponse> productOptionList = productOptionService.findAll();
+
+        return new ResponseDto<>(0,null, productOptionList);
     }
 
     @GetMapping("/{id}")
-    public ProductOptionResponse findById(@PathVariable("id") Long id) {
-        return productOptionService.findById(id);
+    @ResponseStatus(HttpStatus.OK)
+    public ResponseDto<ProductOptionResponse> findById(@PathVariable("id") Long id) {
+        ProductOptionResponse productOption = productOptionService.findById(id);
+
+        return new ResponseDto<>(0,null, productOption);
     }
 
     @PostMapping
-    public ResponseEntity<ProductOptionResponse> add(@Valid @RequestBody ProductOptionRequest resource) throws URISyntaxException {
+    @ResponseStatus(HttpStatus.CREATED)
+    public ResponseDto<ProductOptionResponse> add(@Valid @RequestBody ProductOptionRequest resource) {
         ProductOptionResponse response = productOptionService.add(resource);
 
-        URI uri = new URI("/productOption/" + response.getProductOptionId());
-        return ResponseEntity.created(uri).body(response);
+        return new ResponseDto<>(0,null, response);
     }
 
     @PutMapping("/{id}")
-    public int update(@PathVariable("id") Long id,
+    @ResponseStatus(HttpStatus.OK)
+    public ResponseDto<?> update(@PathVariable("id") Long id,
                       @Valid @RequestBody ProductOptionRequest resource) {
-        return productOptionService.update(id, resource);
+        productOptionService.update(id, resource);
+
+        return new ResponseDto<>(0);
     }
 
     @DeleteMapping("{id}")
-    public ResponseEntity<?> delete(@PathVariable("id") Long id) {
+    @ResponseStatus(HttpStatus.OK)
+    public ResponseDto<?> delete(@PathVariable("id") Long id) {
         productOptionService.deleteById(id);
-        return ResponseEntity.ok().build();
+
+        return new ResponseDto<>(0);
     }
 
 }
