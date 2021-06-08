@@ -1,33 +1,24 @@
 package kr.fiveminutesmarket.product.error.handler;
 
+import kr.fiveminutesmarket.common.dto.ResponseDto;
 import kr.fiveminutesmarket.product.error.exception.ProductNotFoundException;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ExceptionHandler;
+import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
 @RestControllerAdvice(basePackages = {"kr.fiveminutesmarket.product"})
 public class ProductExceptionHandler {
 
-    private class ExceptionResponseDTO {
-        String message;
-
-        public ExceptionResponseDTO(String message) {
-            this.message = message;
-        }
-
-        public String getMessage() {
-            return message;
-        }
-    }
-
     @ExceptionHandler(ProductNotFoundException.class)
-    public ResponseEntity<ExceptionResponseDTO> handlerNotFoundException(ProductNotFoundException exception) {
-        return new ResponseEntity<>(new ExceptionResponseDTO(exception.getMessage()), HttpStatus.NOT_FOUND);
+    @ResponseStatus(HttpStatus.NOT_FOUND)
+    public ResponseDto<?> handlerNotFoundException(ProductNotFoundException exception) {
+        return new ResponseDto<>(-1, exception.getMessage());
     }
 
     @ExceptionHandler(IllegalArgumentException.class)
-    public ResponseEntity<ExceptionResponseDTO> handlerNotEqualsException(IllegalArgumentException exception) {
-        return new ResponseEntity<>(new ExceptionResponseDTO(exception.getMessage()), HttpStatus.BAD_REQUEST);
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    public ResponseDto<?> handlerNotEqualsException(IllegalArgumentException exception) {
+        return new ResponseDto<>(-1, exception.getMessage());
     }
 }

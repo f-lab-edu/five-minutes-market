@@ -48,12 +48,12 @@
             <result property="subCategoryName" column="sub_category_name" />
         </association>
         <collection property="options" column="productOption" ofType="kr.fiveminutesmarket.option.dto.ProductOptionDto">
-            <id property="optionId" column="option_id" />
+            <id property="productOptionId" column="product_option_id" />
             <result property="isOptional" column="is_optional" />
             <collection property="productOptionItemList" ofType="kr.fiveminutesmarket.option.dto.ProductOptionItemDto">
-                <id property="optionItemId" column="option_item_id" />
-                <result property="optionItemName" column="option_item_name" />
-                <result property="optionItemPrice" column="option_item_price" />
+                <id property="productOptionItemId" column="product_option_item_id" />
+                <result property="productOptionItemName" column="product_option_item_name" />
+                <result property="productOptionItemPrice" column="product_option_item_price" />
             </collection>
         </collection>
     </resultMap>
@@ -64,7 +64,7 @@
                  LEFT OUTER JOIN main_category ON product.main_category_id = main_category.main_category_id
                  LEFT OUTER JOIN sub_category ON product.sub_category_id = sub_category.sub_category_id
                  LEFT OUTER JOIN product_option ON product.product_id = product_option.product_id
-                 LEFT OUTER JOIN product_option_item ON product_option.option_id = product_option_item.option_id
+                 LEFT OUTER JOIN product_option_item ON product_option.product_option_id = product_option_item.product_option_id
         WHERE product.product_id = #{productId}
     </select>
 
