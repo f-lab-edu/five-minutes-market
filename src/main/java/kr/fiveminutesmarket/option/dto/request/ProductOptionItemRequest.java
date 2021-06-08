@@ -4,12 +4,14 @@ import kr.fiveminutesmarket.option.domain.ProductOptionItem;
 import org.hibernate.validator.constraints.Length;
 
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Positive;
 
 public class ProductOptionItemRequest {
 
-    @NotBlank
-    @Length(max = 50)
+    @NotBlank(message = "상품옵션 아이템 이름은 필수 입력 값입니다.")
+    @Length(max = 50, message = "상품옵션 아이템 이름의 길이는 50자 제한입니다.")
+    @Pattern(regexp = "[\\w ㄱ-ㅎㅏ-ㅣ가-힣]+$", message = "특수문자는 입력할 수 없습니다.")
     private String productOptionItemName;
 
     @Positive
