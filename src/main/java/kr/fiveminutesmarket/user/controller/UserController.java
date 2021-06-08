@@ -1,8 +1,9 @@
 package kr.fiveminutesmarket.user.controller;
 
-import kr.fiveminutesmarket.user.dto.request.UserRequestDto;
+import kr.fiveminutesmarket.user.dto.request.UserRegistrationRequest;
 import kr.fiveminutesmarket.user.dto.response.UserResponseDto;
 import kr.fiveminutesmarket.user.service.UserService;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -22,12 +23,12 @@ public class UserController {
 
     // 회원가입
     @PostMapping
-    public ResponseEntity<String> signUp(@RequestBody UserRequestDto resource) throws URISyntaxException {
+    public ResponseEntity<UserResponseDto> signUp(@RequestBody UserRegistrationRequest resource) throws URISyntaxException {
 
         UserResponseDto userResponseDto = userService.registerUser(resource);
 
         URI uri = new URI("/user" + userResponseDto.getUserId());
-        return ResponseEntity.created(uri).build();
+        return new ResponseEntity<>(userResponseDto, HttpStatus.CREATED);
     }
 
     @GetMapping

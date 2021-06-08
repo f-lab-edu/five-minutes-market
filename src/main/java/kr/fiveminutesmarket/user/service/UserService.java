@@ -1,7 +1,7 @@
 package kr.fiveminutesmarket.user.service;
 
 import kr.fiveminutesmarket.user.domain.User;
-import kr.fiveminutesmarket.user.dto.request.UserRequestDto;
+import kr.fiveminutesmarket.user.dto.request.UserRegistrationRequest;
 import kr.fiveminutesmarket.user.dto.response.UserResponseDto;
 import kr.fiveminutesmarket.user.error.exception.UserNotFoundException;
 import kr.fiveminutesmarket.user.repository.UserRepository;
@@ -25,7 +25,7 @@ public class UserService {
         this.javaPasswordEncoder = javaPasswordEncoder;
     }
 
-    public UserResponseDto registerUser(UserRequestDto resource) {
+    public UserResponseDto registerUser(UserRegistrationRequest resource) {
         String salt = javaPasswordEncoder.generateSalt();
         String password = resource.getPassword();
 
@@ -56,7 +56,7 @@ public class UserService {
         return toResponse(user);
     }
 
-    private User toEntity(UserRequestDto resource, String encodedPassword, String salt) {
+    private User toEntity(UserRegistrationRequest resource, String encodedPassword, String salt) {
         return new User(
                 resource.getUserName(),
                 resource.getEmail(),
