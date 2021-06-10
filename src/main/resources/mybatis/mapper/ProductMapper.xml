@@ -47,9 +47,9 @@
             <id property="subCategoryId" column="sub_category_id" />
             <result property="subCategoryName" column="sub_category_name" />
         </association>
-        <collection property="options" column="productOption" ofType="kr.fiveminutesmarket.option.dto.ProductOptionDto">
+        <collection property="productOptions" ofType="kr.fiveminutesmarket.option.dto.ProductOptionDto">
             <id property="productOptionId" column="product_option_id" />
-            <result property="isOptional" column="is_optional" />
+            <result property="optional" column="optional" />
             <collection property="productOptionItemList" ofType="kr.fiveminutesmarket.option.dto.ProductOptionItemDto">
                 <id property="productOptionItemId" column="product_option_item_id" />
                 <result property="productOptionItemName" column="product_option_item_name" />

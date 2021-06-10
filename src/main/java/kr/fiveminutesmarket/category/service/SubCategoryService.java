@@ -2,7 +2,7 @@ package kr.fiveminutesmarket.category.service;
 
 import kr.fiveminutesmarket.category.domain.MainCategory;
 import kr.fiveminutesmarket.category.domain.SubCategory;
-import kr.fiveminutesmarket.category.dto.request.SubCategoryReqeust;
+import kr.fiveminutesmarket.category.dto.request.SubCategoryRequest;
 import kr.fiveminutesmarket.category.dto.response.SubCategoryResponse;
 import kr.fiveminutesmarket.category.error.exception.ParentCategoryNotExistedException;
 import kr.fiveminutesmarket.category.error.exception.SubCategoryNameDuplicatedException;
@@ -46,7 +46,7 @@ public class SubCategoryService {
         return subCategory.toResponse();
     }
 
-    public SubCategoryResponse add(SubCategoryReqeust resource) {
+    public SubCategoryResponse add(SubCategoryRequest resource) {
         int count = subCategoryRepository.countByName(resource.getSubCategoryName());
 
         if(count != 0 )
@@ -63,7 +63,7 @@ public class SubCategoryService {
         return subCategory.toResponse();
     }
 
-    public int update(Long id, SubCategoryReqeust resource) {
+    public int update(Long id, SubCategoryRequest resource) {
 
         SubCategory subCategory = subCategoryRepository.findById(id);
         subCategory.updateInfo(resource);

@@ -2,18 +2,21 @@ package kr.fiveminutesmarket.option.dto.request;
 
 import kr.fiveminutesmarket.option.domain.ProductOption;
 
+import javax.validation.constraints.NotNull;
+
 public class ProductOptionRequest {
 
-    private Boolean isOptional;
+    @NotNull(message = "true 혹은 false 로 입력해주세요.")
+    private Boolean optional;
 
     private Long productId;
 
-    public Boolean getIsOptional() {
-        return isOptional;
+    public Boolean isOptional() {
+        return optional;
     }
 
-    public void setIsOptional(Boolean isOptional) {
-        this.isOptional = isOptional;
+    public void setOptional(Boolean optional) {
+        this.optional = optional;
     }
 
     public Long getProductId() {
@@ -25,6 +28,6 @@ public class ProductOptionRequest {
     }
 
     public ProductOption toEntity() {
-        return new ProductOption(isOptional, productId);
+        return new ProductOption(optional, productId);
     }
 }

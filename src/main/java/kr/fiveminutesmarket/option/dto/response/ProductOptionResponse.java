@@ -4,7 +4,7 @@ public class ProductOptionResponse {
 
     private Long productOptionId;
 
-    private Boolean isOptional;
+    private Boolean optional;
 
     private Long productId;
 
@@ -16,12 +16,12 @@ public class ProductOptionResponse {
         this.productOptionId = productOptionId;
     }
 
-    public Boolean getIsOptional() {
-        return isOptional;
+    public Boolean isOptional() {
+        return optional;
     }
 
-    public void setIsOptional(Boolean optional) {
-        isOptional = optional;
+    public void setOptional(Boolean optional) {
+        this.optional = optional;
     }
 
     public Long getProductId() {

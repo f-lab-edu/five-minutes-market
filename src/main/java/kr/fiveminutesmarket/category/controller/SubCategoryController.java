@@ -1,15 +1,13 @@
 package kr.fiveminutesmarket.category.controller;
 
-import kr.fiveminutesmarket.category.dto.request.SubCategoryReqeust;
+import kr.fiveminutesmarket.category.dto.request.SubCategoryRequest;
 import kr.fiveminutesmarket.category.dto.response.SubCategoryResponse;
 import kr.fiveminutesmarket.category.service.SubCategoryService;
 import kr.fiveminutesmarket.common.dto.ResponseDto;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.net.URI;
-import java.net.URISyntaxException;
+import javax.validation.Valid;
 import java.util.List;
 
 @RestController
@@ -40,7 +38,7 @@ public class SubCategoryController {
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public ResponseDto<SubCategoryResponse> add(@RequestBody SubCategoryReqeust resource) {
+    public ResponseDto<SubCategoryResponse> add(@Valid @RequestBody SubCategoryRequest resource) {
         SubCategoryResponse response = subCategoryService.add(resource);
 
         return new ResponseDto<>(0,null, response);
@@ -49,7 +47,7 @@ public class SubCategoryController {
     @PutMapping("/{id}")
     @ResponseStatus(HttpStatus.OK)
     public ResponseDto<?> update(@PathVariable("id") Long id,
-                      @RequestBody SubCategoryReqeust resource) {
+                @Valid @RequestBody SubCategoryRequest resource) {
         subCategoryService.update(id, resource);
 
         return new ResponseDto<>(0);

@@ -1,6 +1,10 @@
 package kr.fiveminutesmarket.product.dto.request;
 
 import kr.fiveminutesmarket.product.domain.Product;
+import org.hibernate.validator.constraints.Length;
+
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.Positive;
 
 public class ProductRequestDTO {
 
@@ -10,14 +14,20 @@ public class ProductRequestDTO {
 
     private String sellerId;
 
+    @Positive(message = "상품 수량은 0보다 큰 정수 값을 입력해주세요.")
     private Integer quantity;
 
+    @NotBlank(message = "상품 이름은 필수 입력 값입니다.")
+    @Length(max = 50, message = "상품 이름의 길이는 50자 제한입니다.")
     private String name;
 
+    @Positive(message = "상품 가격은 0보다 큰 정수 값을 입력해주세요.")
     private Integer price;
 
+    @Length(max = 200, message = "상품 썸네일 이미지주소는 200자 제한입니다.")
     private String thumb;
 
+    @Length(max = 1024, message = "상품 상세 내용은 1024자 제한입니다.")
     private String detail;
 
     public Product toEntity() {

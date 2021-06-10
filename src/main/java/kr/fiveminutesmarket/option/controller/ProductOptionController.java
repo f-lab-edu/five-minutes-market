@@ -8,6 +8,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.List;
@@ -40,7 +41,7 @@ public class ProductOptionController {
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public ResponseDto<ProductOptionResponse> add(@RequestBody ProductOptionRequest resource) {
+    public ResponseDto<ProductOptionResponse> add(@Valid @RequestBody ProductOptionRequest resource) {
         ProductOptionResponse response = productOptionService.add(resource);
 
         return new ResponseDto<>(0,null, response);
@@ -49,7 +50,7 @@ public class ProductOptionController {
     @PutMapping("/{id}")
     @ResponseStatus(HttpStatus.OK)
     public ResponseDto<?> update(@PathVariable("id") Long id,
-                      @RequestBody ProductOptionRequest resource) {
+                      @Valid @RequestBody ProductOptionRequest resource) {
         productOptionService.update(id, resource);
 
         return new ResponseDto<>(0);

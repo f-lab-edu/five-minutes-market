@@ -1,6 +1,6 @@
 package kr.fiveminutesmarket.category.domain;
 
-import kr.fiveminutesmarket.category.dto.request.SubCategoryReqeust;
+import kr.fiveminutesmarket.category.dto.request.SubCategoryRequest;
 import kr.fiveminutesmarket.category.dto.response.SubCategoryResponse;
 
 public class SubCategory {
@@ -40,7 +40,7 @@ public class SubCategory {
         return response;
     }
 
-    public void updateInfo(SubCategoryReqeust resource) {
+    public void updateInfo(SubCategoryRequest resource) {
         this.subCategoryName = resource.getSubCategoryName();
         this.mainCategoryId = resource.getMainCategoryId();
     }

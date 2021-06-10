@@ -6,7 +6,7 @@ public class ProductOptionDto {
 
     private Long productOptionId;
 
-    private Boolean isOptional;
+    private Boolean optional;
 
     private Long productId;
 
@@ -20,12 +20,12 @@ public class ProductOptionDto {
         this.productOptionId = productOptionId;
     }
 
-    public Boolean getOptional() {
-        return isOptional;
+    public Boolean isOptional() {
+        return optional;
     }
 
     public void setOptional(Boolean optional) {
-        isOptional = optional;
+        this.optional = optional;
     }
 
     public Long getProductId() {

@@ -9,6 +9,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
+import javax.validation.constraints.Positive;
 import java.util.List;
 
 @RestController
@@ -32,7 +34,7 @@ public class ProductController {
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public ResponseDto<?> addProduct(@RequestBody ProductRequestDTO product) {
+    public ResponseDto<?> addProduct(@Valid @RequestBody ProductRequestDTO product) {
         productService.addProduct(product);
 
         return new ResponseDto<>(0);
@@ -41,7 +43,7 @@ public class ProductController {
     @GetMapping
     @ResponseStatus(HttpStatus.OK)
     public ResponseDto<List<ProductListResponseDTO>> getProductList(@RequestParam(value = "count", required = true) int count,
-                                                                       @RequestParam(value = "page_num", required = true) int pageNum) {
+                                                                    @RequestParam(value = "page_num", required = true) int pageNum) {
         List<ProductListResponseDTO> products = productService.findAll(count, pageNum);
 
         return new ResponseDto<>(0,null, products);
@@ -49,7 +51,8 @@ public class ProductController {
 
     @PutMapping("/{productId}")
     @ResponseStatus(HttpStatus.OK)
-    public ResponseDto<?> updateProduct(@PathVariable Long productId, @RequestBody ProductRequestDTO product) {
+    public ResponseDto<?> updateProduct(@PathVariable Long productId,
+                                        @Valid @RequestBody ProductRequestDTO product) {
         productService.updateProduct(productId, product);
 
         return new ResponseDto<>(0);

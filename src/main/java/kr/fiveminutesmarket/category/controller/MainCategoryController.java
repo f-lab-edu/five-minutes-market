@@ -1,6 +1,6 @@
 package kr.fiveminutesmarket.category.controller;
 
-import kr.fiveminutesmarket.category.dto.request.MainCategoryReqeust;
+import kr.fiveminutesmarket.category.dto.request.MainCategoryRequest;
 import kr.fiveminutesmarket.category.dto.response.MainCategoryResponse;
 import kr.fiveminutesmarket.category.service.MainCategoryService;
 import kr.fiveminutesmarket.common.dto.ResponseDto;
@@ -8,6 +8,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.List;
@@ -40,7 +41,7 @@ public class MainCategoryController {
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public ResponseDto<MainCategoryResponse> insert(@RequestBody MainCategoryReqeust resource) {
+    public ResponseDto<MainCategoryResponse> insert(@Valid @RequestBody MainCategoryRequest resource) {
         MainCategoryResponse response = mainCategoryService.add(resource);
 
         return new ResponseDto<>(0, null, response);
@@ -49,7 +50,7 @@ public class MainCategoryController {
     @PutMapping("/{id}")
     @ResponseStatus(HttpStatus.OK)
     public ResponseDto<?> update(@PathVariable("id") Long id,
-                      @RequestBody MainCategoryReqeust resource) {
+                      @Valid @RequestBody MainCategoryRequest resource) {
         mainCategoryService.update(id, resource);
 
         return new ResponseDto<>(0);
