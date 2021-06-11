@@ -1,11 +1,14 @@
 package kr.fiveminutesmarket.option.controller;
 
+import kr.fiveminutesmarket.common.dto.ResponseDto;
 import kr.fiveminutesmarket.option.dto.request.ProductOptionItemRequest;
 import kr.fiveminutesmarket.option.dto.response.ProductOptionItemResponse;
 import kr.fiveminutesmarket.option.service.ProductOptionItemService;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.List;
@@ -21,32 +24,42 @@ public class ProductOptionItemController {
     }
 
     @GetMapping
-    public List<ProductOptionItemResponse> findAll() {
-        return productOptionItemService.findAll();
+    @ResponseStatus(HttpStatus.OK)
+    public ResponseDto<List<ProductOptionItemResponse>> findAll() {
+        List<ProductOptionItemResponse> productOptionItemList = productOptionItemService.findAll();
+
+        return new ResponseDto<>(0,null, productOptionItemList);
     }
 
     @GetMapping("/{id}")
-    public ProductOptionItemResponse findById(@PathVariable("id") Long id) {
-        return productOptionItemService.findById(id);
+    @ResponseStatus(HttpStatus.OK)
+    public ResponseDto<ProductOptionItemResponse> findById(@PathVariable("id") Long id) {
+        ProductOptionItemResponse productOptionItem = productOptionItemService.findById(id);
+        return new ResponseDto<>(0,null, productOptionItem);
     }
 
     @PostMapping
-    public ResponseEntity<ProductOptionItemResponse> add(@RequestBody ProductOptionItemRequest resource) throws URISyntaxException {
+    @ResponseStatus(HttpStatus.CREATED)
+    public ResponseDto<ProductOptionItemResponse> add(@Valid @RequestBody ProductOptionItemRequest resource) throws URISyntaxException {
         ProductOptionItemResponse response = productOptionItemService.add(resource);
 
         URI uri = new URI("/productOptionItem/" + response.getProductOptionId());
-        return ResponseEntity.created(uri).body(response);
+        return new ResponseDto<>(0,null, response);
     }
 
     @PutMapping("/{id}")
-    public int update(@PathVariable("id") Long id,
-                      @RequestBody ProductOptionItemRequest resource) {
-        return productOptionItemService.update(id, resource);
+    @ResponseStatus(HttpStatus.OK)
+    public ResponseDto<?> update(@PathVariable("id") Long id,
+                      @Valid @RequestBody ProductOptionItemRequest resource) {
+        productOptionItemService.update(id, resource);
+
+        return new ResponseDto<>(0);
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<?> delete(@PathVariable Long id) {
+    @ResponseStatus(HttpStatus.OK)
+    public ResponseDto<?> delete(@PathVariable Long id) {
         productOptionItemService.deleteById(id);
-        return ResponseEntity.ok().build();
+        return new ResponseDto<>(0);
     }
 }

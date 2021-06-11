@@ -7,7 +7,7 @@ public class ProductOption {
 
     private Long productOptionId;
 
-    private Boolean isOptional;
+    private Boolean optional;
 
     private Long productId;
 
@@ -15,7 +15,7 @@ public class ProductOption {
     }
 
     public ProductOption(Boolean isOptional, Long productId) {
-        this.isOptional = isOptional;
+        this.optional = isOptional;
         this.productId = productId;
     }
 
@@ -23,8 +23,8 @@ public class ProductOption {
         return productOptionId;
     }
 
-    public Boolean getIsOptional() {
-        return isOptional;
+    public Boolean isOptional() {
+        return optional;
     }
 
     public Long getProductId() {
@@ -32,14 +32,14 @@ public class ProductOption {
     }
 
     public void updateInfo(ProductOptionRequest resource) {
-        this.isOptional = resource.getIsOptional();
+        this.optional = resource.isOptional();
         this.productId = resource.getProductId();
     }
 
     public ProductOptionResponse toResponse() {
         ProductOptionResponse response = new ProductOptionResponse();
         response.setProductOptionId(productOptionId);
-        response.setIsOptional(isOptional);
+        response.setOptional(optional);
         response.setProductId(productId);
 
         return response;

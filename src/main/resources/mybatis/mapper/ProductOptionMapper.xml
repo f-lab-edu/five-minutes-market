@@ -6,14 +6,14 @@
 <mapper namespace="kr.fiveminutesmarket.option.repository.ProductOptionRepository">
 
     <insert id="insert" parameterType="map" useGeneratedKeys="true" keyProperty="productOptionId">
-        INSERT INTO product_option(is_optional, product_id)
-        VALUES(#{productOption.isOptional}, #{productOption.productId})
+        INSERT INTO product_option(optional, product_id)
+        VALUES(#{productOption.optional}, #{productOption.productId})
     </insert>
 
     <select id="findAll" resultType="kr.fiveminutesmarket.option.domain.ProductOption">
         SELECT
                product_option_id,
-               is_optional,
+               optional,
                product_id
         FROM product_option
     </select>
@@ -21,7 +21,7 @@
     <select id="findById" parameterType="map" resultType="kr.fiveminutesmarket.option.domain.ProductOption">
         SELECT
                product_option_id,
-               is_optional,
+               optional,
                product_id
         FROM product_option
         WHERE product_option_id = #{productOptionId}
@@ -29,7 +29,7 @@
 
     <update id="updateProductOption" parameterType="map">
         UPDATE product_option
-        SET is_optional = #{productOption.isOptional}
+        SET optional = #{productOption.optional}
         WHERE product_option_id = #{productOptionId}
     </update>
 

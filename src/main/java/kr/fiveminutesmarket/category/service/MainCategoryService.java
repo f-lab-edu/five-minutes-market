@@ -1,7 +1,7 @@
 package kr.fiveminutesmarket.category.service;
 
 import kr.fiveminutesmarket.category.domain.MainCategory;
-import kr.fiveminutesmarket.category.dto.request.MainCategoryReqeust;
+import kr.fiveminutesmarket.category.dto.request.MainCategoryRequest;
 import kr.fiveminutesmarket.category.dto.response.MainCategoryResponse;
 import kr.fiveminutesmarket.category.error.exception.MainCategoryNameDuplicatedException;
 import kr.fiveminutesmarket.category.error.exception.MainCategoryNotFoundException;
@@ -44,7 +44,7 @@ public class MainCategoryService {
         return mainCategory.toResponse();
     }
 
-    public MainCategoryResponse add(MainCategoryReqeust resource) {
+    public MainCategoryResponse add(MainCategoryRequest resource) {
         int count = mainCategoryRepository.countByName(resource.getMainCategoryName());
 
         if(count != 0 )
@@ -56,7 +56,7 @@ public class MainCategoryService {
         return mainCategory.toResponse();
     }
 
-    public int update(Long id, MainCategoryReqeust resource) {
+    public int update(Long id, MainCategoryRequest resource) {
 
         MainCategory mainCategory = mainCategoryRepository.findById(id);
         mainCategory.updateInfo(resource);
