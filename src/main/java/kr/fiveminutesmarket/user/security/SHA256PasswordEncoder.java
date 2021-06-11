@@ -39,7 +39,12 @@ public class SHA256PasswordEncoder implements JavaPasswordEncoder {
         return result;
     }
 
-    // login시 password 일치 여부
+    /*
+    * 로그인 인증시 비밀번호 일치여부
+    * password:             로그인시 입력한 비밀번호
+    * encodedPassword:      User Table에 저장된 인코딩된 비밀번호
+    * salt:                 User Table에 저장된 salt 정보
+    * */
     @Override
     public Boolean matches(String password, String encodedPassword, String salt) {
         return encode(password, salt).equals(encodedPassword);

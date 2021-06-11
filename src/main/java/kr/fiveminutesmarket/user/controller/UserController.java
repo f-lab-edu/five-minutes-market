@@ -1,13 +1,13 @@
 package kr.fiveminutesmarket.user.controller;
 
-import kr.fiveminutesmarket.user.dto.request.UserRegistrationRequest;
+import kr.fiveminutesmarket.common.dto.ResponseDto;
+import kr.fiveminutesmarket.user.dto.request.UserRegistrationRequestDto;
 import kr.fiveminutesmarket.user.dto.response.UserResponseDto;
 import kr.fiveminutesmarket.user.service.UserService;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.net.URI;
+import javax.validation.Valid;
 import java.net.URISyntaxException;
 import java.util.List;
 
@@ -23,22 +23,24 @@ public class UserController {
 
     // 회원가입
     @PostMapping
-    public ResponseEntity<UserResponseDto> signUp(@RequestBody UserRegistrationRequest resource) throws URISyntaxException {
+    @ResponseStatus(HttpStatus.CREATED)
+    public ResponseDto<UserResponseDto> signUp(@Valid @RequestBody UserRegistrationRequestDto resource) throws URISyntaxException {
 
-        UserResponseDto userResponseDto = userService.registerUser(resource);
+        UserResponseDto userResponseDto = userService.singUp(resource);
 
-        URI uri = new URI("/user" + userResponseDto.getUserId());
-        return new ResponseEntity<>(userResponseDto, HttpStatus.CREATED);
+        return new ResponseDto<>(0, null, userResponseDto);
     }
 
     @GetMapping
-    public List<UserResponseDto> findAll() {
-        return userService.findAll();
+    @ResponseStatus(HttpStatus.OK)
+    public ResponseDto<List<UserResponseDto>> findAll() {
+        return new ResponseDto<>(0, null, userService.findAll());
     }
 
-    @GetMapping("/{id}")
-    public UserResponseDto findById(@PathVariable("id") Long id) {
-        return userService.findById(id);
+    @GetMapping("/{userName}")
+    @ResponseStatus(HttpStatus.OK)
+    public ResponseDto<UserResponseDto> findById(@PathVariable("userName") String userName) {
+        return new ResponseDto<>(0, null, userService.findByEmailWithRole(userName));
     }
 
 }

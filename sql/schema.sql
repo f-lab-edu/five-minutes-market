@@ -11,14 +11,13 @@ CREATE TABLE `product` (
                            PRIMARY KEY (`product_id`),
                            KEY `main_category_index` (`main_category_id`),
                            KEY `sub_category_index` (`sub_category_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='상품 테이블'
-
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='상품 테이블';
 
 CREATE TABLE `main_category` (
                             `main_category_id` int NOT NULL AUTO_INCREMENT,
                             `main_category_name` varchar(50) NOT NULL,
                             PRIMARY KEY (`main_category_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 CREATE TABLE `sub_category` (
                             `sub_category_id` int NOT NULL AUTO_INCREMENT,
@@ -27,7 +26,7 @@ CREATE TABLE `sub_category` (
                             PRIMARY KEY (`sub_category_id`),
                             KEY `main_category_id` (`main_category_id`),
                             FOREIGN KEY (`main_category_id`) REFERENCES `main_category` (`main_category_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 CREATE TABLE `product_option` (
                           `product_option_id` int NOT NULL AUTO_INCREMENT,
@@ -36,7 +35,7 @@ CREATE TABLE `product_option` (
                           PRIMARY KEY (`product_option_id`),
                           KEY `product_id` (`product_id`),
                           FOREIGN KEY (`product_id`) REFERENCES `product` (`product_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 CREATE TABLE `product_option_item` (
                                `product_option_item_id` int NOT NULL AUTO_INCREMENT,
@@ -46,7 +45,7 @@ CREATE TABLE `product_option_item` (
                                PRIMARY KEY (`product_option_item_id`),
                                KEY `product_option_id` (`product_option_id`),
                                FOREIGN KEY (`product_option_id`) REFERENCES `product_option` (`product_option_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 CREATE TABLE `user` (
                         `user_id` int NOT NULL AUTO_INCREMENT,
@@ -55,6 +54,19 @@ CREATE TABLE `user` (
                         `password` varchar(500) NOT NULL,
                         `address` varchar(100) NOT NULL,
                         `phone_number` varchar(11) NOT NULL,
-                        `salt` varchar(100) NOT NULL,
-                        PRIMARY KEY (`user_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci
+                        `seller` tinyint NOT NULL,
+                        `role_type_id` int NOT NULL,
+                        `salt` varchar(20) NOT NULL,
+                        PRIMARY KEY (`user_id`),
+                        KEY `role_type_id` (`role_type_id`),
+                        FOREIGN KEY (`role_type_id`) REFERENCES `role_type` (`role_type_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+CREATE TABLE `role_type` (
+                        `role_type_id` int NOT NULL AUTO_INCREMENT,
+                        `role_type_name` varchar(20) NOT NULL
+                        PRIMARY KEY (`role_type_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+INSERT INTO `role_type` (`role_type_name`) VALUES ('ROLE_ADMIN');
+INSERT INTO `role_type` (`role_type_name`) VALUES ('ROLE_USER');

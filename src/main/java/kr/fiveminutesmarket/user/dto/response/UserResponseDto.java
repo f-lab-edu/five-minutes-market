@@ -12,15 +12,27 @@ public class UserResponseDto {
 
     private String phoneNumber;
 
+    private Boolean seller;
+
+    private RoleTypeResponseDto roleType;
+
     public UserResponseDto() {
     }
 
-    public UserResponseDto(Long userId, String userName, String email, String address, String phoneNumber) {
+    public UserResponseDto(Long userId,
+                           String userName,
+                           String email,
+                           String address,
+                           String phoneNumber,
+                           Boolean seller,
+                           RoleTypeResponseDto roleType) {
         this.userId = userId;
         this.userName = userName;
         this.email = email;
         this.address = address;
         this.phoneNumber = phoneNumber;
+        this.seller = seller;
+        this.roleType = roleType;
     }
 
     public Long getUserId() {
@@ -43,4 +55,11 @@ public class UserResponseDto {
         return phoneNumber;
     }
 
+    public Boolean getSeller() {
+        return seller;
+    }
+
+    public RoleTypeResponseDto getRoleType() {
+        return roleType;
+    }
 }
