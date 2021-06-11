@@ -14,9 +14,7 @@ import kr.fiveminutesmarket.user.security.JavaPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.Collections;
 import java.util.List;
-import java.util.Set;
 import java.util.stream.Collectors;
 
 @Service
@@ -70,8 +68,8 @@ public class UserService {
                 .collect(Collectors.toList());
     }
 
-    public UserResponseDto findByEmailWithRole(String userName) {
-        User user = userRepository.findByEmailWithRole(userName);
+    public UserResponseDto findByUserNameWithRole(String userName) {
+        User user = userRepository.findByUserNameWithRole(userName);
 
         if(user == null) {
             throw new UserNotFoundException(userName);

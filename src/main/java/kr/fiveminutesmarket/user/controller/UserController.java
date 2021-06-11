@@ -39,8 +39,8 @@ public class UserController {
 
     @GetMapping("/{userName}")
     @ResponseStatus(HttpStatus.OK)
-    public ResponseDto<UserResponseDto> findById(@PathVariable("userName") String userName) {
-        return new ResponseDto<>(0, null, userService.findByEmailWithRole(userName));
+    public ResponseDto<UserResponseDto> findUserInfo(@PathVariable("userName") String userName) {
+        return new ResponseDto<>(0, null, userService.findByUserNameWithRole(userName));
     }
 
 }

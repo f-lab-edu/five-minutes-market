@@ -17,5 +17,5 @@ public interface UserRepository {
 
     User findByEmail(@Param("email") String email);
 
-    User findByEmailWithRole(@Param("userName") String userName);
+    User findByUserNameWithRole(@Param("userName") String userName);
 }

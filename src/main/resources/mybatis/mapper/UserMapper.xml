@@ -46,7 +46,7 @@
     </select>
 
     <!-- ROLE_USER 권한: 사용자이름으로 사용자 조회 -->
-    <select id="findByEmailWithRole" parameterType="map" resultMap="userResultMap">
+    <select id="findByUserNameWithRole" parameterType="map" resultMap="userResultMap">
         SELECT
             u.user_id AS user_id,
             u.user_name AS user_name,
