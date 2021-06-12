@@ -2,9 +2,11 @@ package kr.fiveminutesmarket.user.service;
 
 import kr.fiveminutesmarket.user.domain.RoleType;
 import kr.fiveminutesmarket.user.domain.User;
+import kr.fiveminutesmarket.user.dto.request.SignInRequestDto;
 import kr.fiveminutesmarket.user.dto.request.UserRegistrationRequestDto;
 import kr.fiveminutesmarket.user.dto.response.RoleTypeResponseDto;
 import kr.fiveminutesmarket.user.dto.response.UserResponseDto;
+import kr.fiveminutesmarket.user.error.exception.AuthenticationException;
 import kr.fiveminutesmarket.user.error.exception.RoleTypeNotFoundException;
 import kr.fiveminutesmarket.user.error.exception.UserEmailExistedException;
 import kr.fiveminutesmarket.user.error.exception.UserNotFoundException;
@@ -15,6 +17,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
@@ -58,6 +61,19 @@ public class UserService {
         userRepository.insert(user);
 
         return toUserResponse(user);
+    }
+
+    public void signIn(SignInRequestDto resource) {
+        User user = Optional.of(userRepository.findByEmail(resource.getEmail()))
+                .orElseThrow(() -> new AuthenticationException("존재하지 않는 이메일입니다."));
+
+        String password = resource.getPassword();
+        String encodedPassword = user.getPassword();
+        String salt = user.getSalt();
+
+        if (!javaPasswordEncoder.matches(password, encodedPassword, salt)) {
+            throw new AuthenticationException("패스워드가 틀렸습니다.");
+        }
     }
 
     public List<UserResponseDto> findAll() {

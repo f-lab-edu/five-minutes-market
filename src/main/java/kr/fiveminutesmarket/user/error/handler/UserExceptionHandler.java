@@ -1,6 +1,7 @@
 package kr.fiveminutesmarket.user.error.handler;
 
 import kr.fiveminutesmarket.common.dto.ResponseDto;
+import kr.fiveminutesmarket.user.error.exception.AuthenticationException;
 import kr.fiveminutesmarket.user.error.exception.UserEmailExistedException;
 import kr.fiveminutesmarket.user.error.exception.UserNotFoundException;
 import org.springframework.http.HttpStatus;
@@ -20,6 +21,12 @@ public class UserExceptionHandler {
     @ExceptionHandler(UserEmailExistedException.class)
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     public ResponseDto<?> handleEmailExistedException(UserEmailExistedException exception) {
+        return new ResponseDto<>(-1, exception.getMessage());
+    }
+
+    @ExceptionHandler(AuthenticationException.class)
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    public ResponseDto<?> handleAuthenticationException(AuthenticationException exception) {
         return new ResponseDto<>(-1, exception.getMessage());
     }
 
