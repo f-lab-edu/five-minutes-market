@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="kr.fiveminutesmarket.user.repository.UserRepository">
+    <insert id="insert" parameterType="map" useGeneratedKeys="true" keyProperty="userId">
+        INSERT INTO user(user_name, email, password, address, phone_number, seller, role_type_id, salt)
+        VALUES(
+               #{user.userName},
+               #{user.email},
+               #{user.password},
+               #{user.address},
+               #{user.phoneNumber},
+               #{user.seller},
+               #{user.roleType.roleTypeId},
+               #{user.salt}
+               )
+    </insert>
+
+    <resultMap id="userResultMap" type="kr.fiveminutesmarket.user.domain.User">
+        <id property="userId" column="user_id"  />
+        <result property="userName" column="user_name" />
+        <result property="email" column="email" />
+        <result property="address" column="address" />
+        <result property="phoneNumber" column="phone_number" />
+        <association property="roleType" javaType="kr.fiveminutesmarket.user.domain.RoleType">
+            <id property="roleTypeId" column="role_type_id" />
+            <result property="roleTypeName" column="role_type_name" />
+        </association>
+    </resultMap>
+
+    <!--  ROLE_ADMIN 권한: 모든 사용자 조회  -->
+    <select id="findAll" resultMap="userResultMap">
+        SELECT
+               u.user_id AS user_id,
+               u.user_name AS user_name,
+               u.email AS email,
+               u.address AS address,
+               u.phone_number AS phone_number,
+               u.seller AS seller,
+               rt.role_type_id AS role_type_id,
+               rt.role_type_name AS role_type_name
+        FROM user u
+            LEFT OUTER JOIN role_type rt
+                ON u.role_type_id = rt.role_type_id
+    </select>
+
+    <!-- ROLE_USER 권한: 사용자이름으로 사용자 조회 -->
+    <select id="findByUserNameWithRole" parameterType="map" resultMap="userResultMap">
+        SELECT
+            u.user_id AS user_id,
+            u.user_name AS user_name,
+            u.email AS email,
+            u.address AS address,
+            u.phone_number AS phone_number,
+            u.seller AS seller,
+            rt.role_type_id AS role_type_id,
+            rt.role_type_name AS role_type_name
+        FROM user u
+                 LEFT OUTER JOIN role_type rt
+                                 ON u.role_type_id = rt.role_type_id
+        WHERE u.user_name = #{userName}
+    </select>
+
+    <!--  login 인증시 email 기준으로 select 조회  -->
+    <select id="findByEmail" parameterType="map" resultType="kr.fiveminutesmarket.user.domain.User">
+        SELECT
+               user_id,
+               user_name,
+               email,
+               password,
+               address,
+               phone_number,
+               seller,
+               salt
+        FROM user
+        WHERE email = #{email}
+    </select>
+
+</mapper>

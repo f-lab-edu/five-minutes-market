@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="kr.fiveminutesmarket.user.repository.RoleTypeRepository">
+    <select id="findByRoleTypeName" parameterType="map" resultType="kr.fiveminutesmarket.user.domain.RoleType">
+        SELECT
+               role_type_id,
+               role_type_name
+        FROM role_type
+        WHERE role_type_name = #{roleTypeName}
+    </select>
+</mapper>
