@@ -64,7 +64,7 @@ public class UserService {
     }
 
     public void signIn(SignInRequestDto resource) {
-        User user = Optional.of(userRepository.findByEmail(resource.getEmail()))
+        User user = Optional.ofNullable(userRepository.findByEmail(resource.getEmail()))
                 .orElseThrow(() -> new AuthenticationException("존재하지 않는 이메일입니다."));
 
         String password = resource.getPassword();
