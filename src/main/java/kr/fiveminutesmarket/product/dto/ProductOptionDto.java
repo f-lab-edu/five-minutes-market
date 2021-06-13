@@ -1,4 +1,4 @@
-package kr.fiveminutesmarket.option.dto;
+package kr.fiveminutesmarket.product.dto;
 
 import java.util.List;
 

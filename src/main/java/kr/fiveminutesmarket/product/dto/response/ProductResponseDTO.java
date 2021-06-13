@@ -2,7 +2,7 @@ package kr.fiveminutesmarket.product.dto.response;
 
 import kr.fiveminutesmarket.category.domain.MainCategory;
 import kr.fiveminutesmarket.category.domain.SubCategory;
-import kr.fiveminutesmarket.option.dto.ProductOptionDto;
+import kr.fiveminutesmarket.product.dto.ProductOptionDto;
 
 import java.util.List;
 

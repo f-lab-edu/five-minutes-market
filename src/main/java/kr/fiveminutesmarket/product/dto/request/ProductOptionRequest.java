@@ -1,6 +1,6 @@
-package kr.fiveminutesmarket.option.dto.request;
+package kr.fiveminutesmarket.product.dto.request;
 
-import kr.fiveminutesmarket.option.domain.ProductOption;
+import kr.fiveminutesmarket.product.domain.ProductOption;
 
 import javax.validation.constraints.NotNull;
 

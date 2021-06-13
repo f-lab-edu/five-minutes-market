@@ -1,6 +1,6 @@
-package kr.fiveminutesmarket.option.dto.request;
+package kr.fiveminutesmarket.product.dto.request;
 
-import kr.fiveminutesmarket.option.domain.ProductOptionItem;
+import kr.fiveminutesmarket.product.domain.ProductOptionItem;
 import org.hibernate.validator.constraints.Length;
 
 import javax.validation.constraints.NotBlank;

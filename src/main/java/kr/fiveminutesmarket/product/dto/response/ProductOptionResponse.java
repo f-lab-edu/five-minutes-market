@@ -1,4 +1,4 @@
-package kr.fiveminutesmarket.option.dto.response;
+package kr.fiveminutesmarket.product.dto.response;
 
 public class ProductOptionResponse {
 

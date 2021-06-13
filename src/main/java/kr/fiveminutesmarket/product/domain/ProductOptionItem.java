@@ -1,7 +1,7 @@
-package kr.fiveminutesmarket.option.domain;
+package kr.fiveminutesmarket.product.domain;
 
-import kr.fiveminutesmarket.option.dto.request.ProductOptionItemRequest;
-import kr.fiveminutesmarket.option.dto.response.ProductOptionItemResponse;
+import kr.fiveminutesmarket.product.dto.request.ProductOptionItemRequest;
+import kr.fiveminutesmarket.product.dto.response.ProductOptionItemResponse;
 
 public class ProductOptionItem {
 

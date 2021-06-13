@@ -1,11 +1,11 @@
-package kr.fiveminutesmarket.option.service;
+package kr.fiveminutesmarket.product.service;
 
-import kr.fiveminutesmarket.option.domain.ProductOption;
-import kr.fiveminutesmarket.option.dto.request.ProductOptionRequest;
-import kr.fiveminutesmarket.option.dto.response.ProductOptionResponse;
-import kr.fiveminutesmarket.option.error.exception.ProductOptionNotFoundException;
-import kr.fiveminutesmarket.option.repository.ProductOptionItemRepository;
-import kr.fiveminutesmarket.option.repository.ProductOptionRepository;
+import kr.fiveminutesmarket.product.domain.ProductOption;
+import kr.fiveminutesmarket.product.dto.request.ProductOptionRequest;
+import kr.fiveminutesmarket.product.dto.response.ProductOptionResponse;
+import kr.fiveminutesmarket.product.error.exception.ProductOptionNotFoundException;
+import kr.fiveminutesmarket.product.repository.ProductOptionItemRepository;
+import kr.fiveminutesmarket.product.repository.ProductOptionRepository;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 

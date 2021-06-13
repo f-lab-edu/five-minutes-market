@@ -1,14 +1,14 @@
-package kr.fiveminutesmarket.option.service;
+package kr.fiveminutesmarket.product.service;
 
-import kr.fiveminutesmarket.option.domain.ProductOption;
-import kr.fiveminutesmarket.option.domain.ProductOptionItem;
-import kr.fiveminutesmarket.option.dto.request.ProductOptionItemRequest;
-import kr.fiveminutesmarket.option.dto.response.ProductOptionItemResponse;
-import kr.fiveminutesmarket.option.error.exception.ParentProductOptionNotExistedException;
-import kr.fiveminutesmarket.option.error.exception.ProductOptionItemNameDuplicatedException;
-import kr.fiveminutesmarket.option.error.exception.ProductOptionItemNotFoundException;
-import kr.fiveminutesmarket.option.repository.ProductOptionItemRepository;
-import kr.fiveminutesmarket.option.repository.ProductOptionRepository;
+import kr.fiveminutesmarket.product.domain.ProductOption;
+import kr.fiveminutesmarket.product.domain.ProductOptionItem;
+import kr.fiveminutesmarket.product.dto.request.ProductOptionItemRequest;
+import kr.fiveminutesmarket.product.dto.response.ProductOptionItemResponse;
+import kr.fiveminutesmarket.product.error.exception.ParentProductOptionNotExistedException;
+import kr.fiveminutesmarket.product.error.exception.ProductOptionItemNameDuplicatedException;
+import kr.fiveminutesmarket.product.error.exception.ProductOptionItemNotFoundException;
+import kr.fiveminutesmarket.product.repository.ProductOptionItemRepository;
+import kr.fiveminutesmarket.product.repository.ProductOptionRepository;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 

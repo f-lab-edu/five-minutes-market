@@ -1,11 +1,10 @@
-package kr.fiveminutesmarket.option.controller;
+package kr.fiveminutesmarket.product.controller;
 
 import kr.fiveminutesmarket.common.dto.ResponseDto;
-import kr.fiveminutesmarket.option.dto.request.ProductOptionItemRequest;
-import kr.fiveminutesmarket.option.dto.response.ProductOptionItemResponse;
-import kr.fiveminutesmarket.option.service.ProductOptionItemService;
+import kr.fiveminutesmarket.product.dto.request.ProductOptionItemRequest;
+import kr.fiveminutesmarket.product.dto.response.ProductOptionItemResponse;
+import kr.fiveminutesmarket.product.service.ProductOptionItemService;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
