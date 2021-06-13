@@ -1,10 +1,12 @@
 package kr.fiveminutesmarket.user.service;
 
+import kr.fiveminutesmarket.common.jwt.JwtTokenUtils;
 import kr.fiveminutesmarket.user.domain.RoleType;
 import kr.fiveminutesmarket.user.domain.User;
 import kr.fiveminutesmarket.user.dto.request.SignInRequestDto;
 import kr.fiveminutesmarket.user.dto.request.UserRegistrationRequestDto;
 import kr.fiveminutesmarket.user.dto.response.RoleTypeResponseDto;
+import kr.fiveminutesmarket.user.dto.response.SignInResponseDto;
 import kr.fiveminutesmarket.user.dto.response.UserResponseDto;
 import kr.fiveminutesmarket.user.error.exception.AuthenticationException;
 import kr.fiveminutesmarket.user.error.exception.RoleTypeNotFoundException;
@@ -16,6 +18,7 @@ import kr.fiveminutesmarket.user.security.JavaPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -28,13 +31,16 @@ public class UserService {
     private final RoleTypeRepository roleTypeRepository;
 
     private final JavaPasswordEncoder javaPasswordEncoder;
+    private final JwtTokenUtils jwtTokenUtils;
 
     public UserService(UserRepository userRepository,
                        RoleTypeRepository roleTypeRepository,
-                       JavaPasswordEncoder javaPasswordEncoder) {
+                       JavaPasswordEncoder javaPasswordEncoder,
+                       JwtTokenUtils jwtTokenUtils) {
         this.userRepository = userRepository;
         this.roleTypeRepository = roleTypeRepository;
         this.javaPasswordEncoder = javaPasswordEncoder;
+        this.jwtTokenUtils = jwtTokenUtils;
     }
 
     public UserResponseDto singUp(UserRegistrationRequestDto resource) {
@@ -63,7 +69,7 @@ public class UserService {
         return toUserResponse(user);
     }
 
-    public void signIn(SignInRequestDto resource) {
+    public SignInResponseDto signIn(SignInRequestDto resource) {
         User user = Optional.ofNullable(userRepository.findByEmail(resource.getEmail()))
                 .orElseThrow(() -> new AuthenticationException("존재하지 않는 이메일입니다."));
 
@@ -74,6 +80,16 @@ public class UserService {
         if (!javaPasswordEncoder.matches(password, encodedPassword, salt)) {
             throw new AuthenticationException("패스워드가 틀렸습니다.");
         }
+
+        String token = jwtTokenUtils.createToken(user);
+
+        jwtTokenUtils.isValidToken(token);
+
+        Date expiredDate = jwtTokenUtils.getExpiredDate(token);
+
+        return new SignInResponseDto(user.getEmail(),
+                token,
+                expiredDate);
     }
 
     public List<UserResponseDto> findAll() {
