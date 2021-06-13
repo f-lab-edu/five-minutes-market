@@ -17,4 +17,10 @@ public class CommonExceptionHandler {
     public ResponseDto<?> handleHttpMessageNotReadableException(HttpMessageNotReadableException exception) throws IOException {
         return new ResponseDto<>(-1, "잘못된 입력값을 기입했습니다.");
     }
+
+    @ExceptionHandler(IllegalArgumentException.class)
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    public ResponseDto<?> handlerNotEqualsException(IllegalArgumentException exception) {
+        return new ResponseDto<>(-1, exception.getMessage());
+    }
 }
