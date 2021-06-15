@@ -7,3 +7,12 @@ spring:
     url: jdbc:log4jdbc:mysql://localhost:3306/fiveminutesmarket?autoreconnect=true&characterEncoding=utf8&serverTimezone=Asia/Seoul
     username: root
     password: springtest
+  mail:
+    host: smtp.gmail.com
+    port: 587
+    username: joybeanie@gmail.com
+    password: fznptbxvhytislnl
+    properties:
+      mail.smtp.auth: true
+      mail.smtp.starttls.enable: true
+    default-encoding: UTF-8

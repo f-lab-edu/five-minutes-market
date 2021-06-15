@@ -77,4 +77,11 @@
         WHERE email = #{email}
     </select>
 
+    <update id="updateUser" parameterType="map">
+        UPDATE user
+        SET password = #{user.password},
+            salt = #{user.salt}
+        WHERE user_id = #{user.userId}
+    </update>
+
 </mapper>

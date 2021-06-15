@@ -18,4 +18,6 @@ public interface UserRepository {
     User findByEmail(@Param("email") String email);
 
     User findByUserNameWithRole(@Param("userName") String userName);
+
+    void updateUser(@Param("user") User user);
 }

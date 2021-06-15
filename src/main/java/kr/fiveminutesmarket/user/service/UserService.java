@@ -68,6 +68,16 @@ public class UserService {
                 .collect(Collectors.toList());
     }
 
+    public void updatePassword(String userEmail, String password) {
+        User user = userRepository.findByEmail(userEmail);
+        if (user == null) throw new UserNotFoundException(userEmail);
+
+        String salt = javaPasswordEncoder.generateSalt();
+        user.updatePasswordWithSalt(javaPasswordEncoder.encode(password, salt), salt);
+
+        userRepository.updateUser(user);
+    }
+
     public UserResponseDto findByUserNameWithRole(String userName) {
         User user = userRepository.findByUserNameWithRole(userName);
 
