@@ -69,10 +69,6 @@ public class UserService {
     public List<UserResponseDto> findAll() throws UnknownHostException {
         List<User> userList = userRepository.findAll();
 
-        System.out.println("Host Address" + InetAddress.getLocalHost().getHostAddress());
-        System.out.println("Host Name" +InetAddress.getLocalHost().getHostName());
-        System.out.println("Port" + environment.getProperty("local.server.port"));
-
         return userList.stream()
                 .map(this::toUserResponse)
                 .collect(Collectors.toList());
