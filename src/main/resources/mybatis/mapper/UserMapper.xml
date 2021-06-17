@@ -23,6 +23,7 @@
         <result property="email" column="email" />
         <result property="address" column="address" />
         <result property="phoneNumber" column="phone_number" />
+        <result property="seller" column="seller" />
         <association property="roleType" javaType="kr.fiveminutesmarket.user.domain.RoleType">
             <id property="roleTypeId" column="role_type_id" />
             <result property="roleTypeName" column="role_type_name" />

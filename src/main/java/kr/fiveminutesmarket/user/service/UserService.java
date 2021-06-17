@@ -11,9 +11,12 @@ import kr.fiveminutesmarket.user.error.exception.UserNotFoundException;
 import kr.fiveminutesmarket.user.repository.RoleTypeRepository;
 import kr.fiveminutesmarket.user.repository.UserRepository;
 import kr.fiveminutesmarket.user.security.JavaPasswordEncoder;
+import org.springframework.core.env.Environment;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.net.InetAddress;
+import java.net.UnknownHostException;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -25,13 +28,16 @@ public class UserService {
     private final RoleTypeRepository roleTypeRepository;
 
     private final JavaPasswordEncoder javaPasswordEncoder;
+    private Environment environment;
 
     public UserService(UserRepository userRepository,
                        RoleTypeRepository roleTypeRepository,
-                       JavaPasswordEncoder javaPasswordEncoder) {
+                       JavaPasswordEncoder javaPasswordEncoder,
+                       Environment environment) {
         this.userRepository = userRepository;
         this.roleTypeRepository = roleTypeRepository;
         this.javaPasswordEncoder = javaPasswordEncoder;
+        this.environment = environment;
     }
 
     public UserResponseDto singUp(UserRegistrationRequestDto resource) {
@@ -60,8 +66,12 @@ public class UserService {
         return toUserResponse(user);
     }
 
-    public List<UserResponseDto> findAll() {
+    public List<UserResponseDto> findAll() throws UnknownHostException {
         List<User> userList = userRepository.findAll();
+
+        System.out.println("Host Address" + InetAddress.getLocalHost().getHostAddress());
+        System.out.println("Host Name" +InetAddress.getLocalHost().getHostName());
+        System.out.println("Port" + environment.getProperty("local.server.port"));
 
         return userList.stream()
                 .map(this::toUserResponse)

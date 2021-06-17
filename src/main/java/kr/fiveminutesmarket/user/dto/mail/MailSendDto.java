@@ -7,6 +7,8 @@ public class MailSendDto {
 
     private String message;
 
+    private String key;
+
     public String getAddress() {
         return address;
     }
@@ -29,5 +31,13 @@ public class MailSendDto {
 
     public void setMessage(String message) {
         this.message = message;
+    }
+
+    public String getKey() {
+        return key;
+    }
+
+    public void setKey(String key) {
+        this.key = key;
     }
 }
