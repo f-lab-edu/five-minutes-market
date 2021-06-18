@@ -2,6 +2,7 @@ package kr.fiveminutesmarket.user.service;
 
 import kr.fiveminutesmarket.user.domain.RoleType;
 import kr.fiveminutesmarket.user.domain.User;
+import kr.fiveminutesmarket.user.dto.request.SignInRequestDto;
 import kr.fiveminutesmarket.user.dto.request.UserRegistrationRequestDto;
 import kr.fiveminutesmarket.user.dto.response.RoleTypeResponseDto;
 import kr.fiveminutesmarket.user.dto.response.UserResponseDto;
@@ -17,7 +18,9 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.net.InetAddress;
 import java.net.UnknownHostException;
+import javax.servlet.http.HttpSession;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
@@ -66,7 +69,24 @@ public class UserService {
         return toUserResponse(user);
     }
 
-    public List<UserResponseDto> findAll() throws UnknownHostException {
+    public void signIn(SignInRequestDto resource, HttpSession session) {
+        User user = Optional.ofNullable(userRepository.findByEmail(resource.getEmail()))
+                .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 이메일입니다."));
+
+        String password = resource.getPassword();
+        String encodedPassword = user.getPassword();
+        String salt = user.getSalt();
+
+        if (!javaPasswordEncoder.matches(password, encodedPassword, salt)) {
+            throw new IllegalArgumentException("패스워드가 틀렸습니다.");
+        }
+
+        session.setAttribute("email", user.getEmail());
+        session.setAttribute("seller", user.getSeller());
+        session.setAttribute("role", user.getRoleType());
+    }
+
+    public List<UserResponseDto> findAll() {
         List<User> userList = userRepository.findAll();
 
         return userList.stream()

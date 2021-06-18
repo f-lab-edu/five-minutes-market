@@ -5,6 +5,7 @@ import kr.fiveminutesmarket.user.dto.mail.MailSendDto;
 import kr.fiveminutesmarket.user.dto.mail.UserEmailRequestDto;
 import kr.fiveminutesmarket.user.dto.mail.UserInfoDto;
 import kr.fiveminutesmarket.user.dto.request.UserPasswordRequestDto;
+import kr.fiveminutesmarket.user.dto.request.SignInRequestDto;
 import kr.fiveminutesmarket.user.dto.request.UserRegistrationRequestDto;
 import kr.fiveminutesmarket.user.dto.response.UserResponseDto;
 import kr.fiveminutesmarket.user.service.AuthService;
@@ -45,6 +46,14 @@ public class UserController {
         UserResponseDto userResponseDto = userService.singUp(resource);
 
         return new ResponseDto<>(0, null, userResponseDto);
+    }
+
+    // 로그인
+    @PostMapping("/signIn")
+    @ResponseStatus(HttpStatus.OK)
+    public ResponseDto<?> signIn(@Valid @RequestBody SignInRequestDto resource, HttpSession session) {
+        userService.signIn(resource, session);
+        return new ResponseDto<>(0);
     }
 
     @GetMapping

@@ -64,7 +64,7 @@ CREATE TABLE `user` (
 
 CREATE TABLE `role_type` (
                         `role_type_id` int NOT NULL AUTO_INCREMENT,
-                        `role_type_name` varchar(20) NOT NULL
+                        `role_type_name` varchar(20) NOT NULL,
                         PRIMARY KEY (`role_type_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
