@@ -12,12 +12,9 @@ import kr.fiveminutesmarket.user.error.exception.UserNotFoundException;
 import kr.fiveminutesmarket.user.repository.RoleTypeRepository;
 import kr.fiveminutesmarket.user.repository.UserRepository;
 import kr.fiveminutesmarket.user.security.JavaPasswordEncoder;
-import org.springframework.core.env.Environment;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.net.InetAddress;
-import java.net.UnknownHostException;
 import javax.servlet.http.HttpSession;
 import java.util.List;
 import java.util.Optional;
@@ -29,18 +26,14 @@ public class UserService {
 
     private final UserRepository userRepository;
     private final RoleTypeRepository roleTypeRepository;
-
     private final JavaPasswordEncoder javaPasswordEncoder;
-    private Environment environment;
 
     public UserService(UserRepository userRepository,
                        RoleTypeRepository roleTypeRepository,
-                       JavaPasswordEncoder javaPasswordEncoder,
-                       Environment environment) {
+                       JavaPasswordEncoder javaPasswordEncoder) {
         this.userRepository = userRepository;
         this.roleTypeRepository = roleTypeRepository;
         this.javaPasswordEncoder = javaPasswordEncoder;
-        this.environment = environment;
     }
 
     public UserResponseDto singUp(UserRegistrationRequestDto resource) {

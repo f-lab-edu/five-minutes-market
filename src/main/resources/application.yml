@@ -1,6 +1,3 @@
-spring:
-  profiles:
-    active: "dev,mail"
 # MyBatis 설정
 mybatis:
   mapper-locations: mybatis/mapper/**/*.xml

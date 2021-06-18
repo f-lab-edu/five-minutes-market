@@ -1,7 +1,7 @@
 package kr.fiveminutesmarket.user.service;
 
 import kr.fiveminutesmarket.user.domain.User;
-import kr.fiveminutesmarket.user.dto.mail.UserInfoDto;
+import kr.fiveminutesmarket.user.dto.dispatch.mail.UserInfoDto;
 import kr.fiveminutesmarket.user.error.exception.ExpirePasswordKeyException;
 import kr.fiveminutesmarket.user.error.exception.UserNotFoundException;
 import kr.fiveminutesmarket.user.repository.UserRepository;

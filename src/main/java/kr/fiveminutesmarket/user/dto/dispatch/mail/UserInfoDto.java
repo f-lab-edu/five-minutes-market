@@ -1,4 +1,4 @@
-package kr.fiveminutesmarket.user.dto.mail;
+package kr.fiveminutesmarket.user.dto.dispatch.mail;
 
 public class UserInfoDto {
     private String userEmail;
