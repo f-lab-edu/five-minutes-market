@@ -1,8 +1,8 @@
 package kr.fiveminutesmarket.product.controller;
 
 import kr.fiveminutesmarket.common.dto.ResponseDto;
-import kr.fiveminutesmarket.product.dto.request.ProductOptionItemRequest;
-import kr.fiveminutesmarket.product.dto.response.ProductOptionItemResponse;
+import kr.fiveminutesmarket.product.dto.request.ProductOptionItemRequestDto;
+import kr.fiveminutesmarket.product.dto.response.ProductOptionItemResponseDto;
 import kr.fiveminutesmarket.product.service.ProductOptionItemService;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
@@ -24,32 +24,32 @@ public class ProductOptionItemController {
 
     @GetMapping
     @ResponseStatus(HttpStatus.OK)
-    public ResponseDto<List<ProductOptionItemResponse>> findAll() {
-        List<ProductOptionItemResponse> productOptionItemList = productOptionItemService.findAll();
+    public ResponseDto<List<ProductOptionItemResponseDto>> findAll() {
+        List<ProductOptionItemResponseDto> productOptionItemList = productOptionItemService.findAll();
 
         return new ResponseDto<>(0,null, productOptionItemList);
     }
 
     @GetMapping("/{id}")
     @ResponseStatus(HttpStatus.OK)
-    public ResponseDto<ProductOptionItemResponse> findById(@PathVariable("id") Long id) {
-        ProductOptionItemResponse productOptionItem = productOptionItemService.findById(id);
+    public ResponseDto<ProductOptionItemResponseDto> findById(@PathVariable("id") Long id) {
+        ProductOptionItemResponseDto productOptionItem = productOptionItemService.findById(id);
         return new ResponseDto<>(0,null, productOptionItem);
     }
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public ResponseDto<ProductOptionItemResponse> add(@Valid @RequestBody ProductOptionItemRequest resource) throws URISyntaxException {
-        ProductOptionItemResponse response = productOptionItemService.add(resource);
+    public ResponseDto<ProductOptionItemResponseDto> add(@Valid @RequestBody ProductOptionItemRequestDto resource) throws URISyntaxException {
+        ProductOptionItemResponseDto response = productOptionItemService.add(resource);
 
-        URI uri = new URI("/productOptionItem/" + response.getProductOptionId());
+        URI uri = new URI("/productOptionItem/" + response.getProductOptionItemId());
         return new ResponseDto<>(0,null, response);
     }
 
     @PutMapping("/{id}")
     @ResponseStatus(HttpStatus.OK)
     public ResponseDto<?> update(@PathVariable("id") Long id,
-                      @Valid @RequestBody ProductOptionItemRequest resource) {
+                      @Valid @RequestBody ProductOptionItemRequestDto resource) {
         productOptionItemService.update(id, resource);
 
         return new ResponseDto<>(0);

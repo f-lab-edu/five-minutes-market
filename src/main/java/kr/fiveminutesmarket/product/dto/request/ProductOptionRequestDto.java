@@ -4,7 +4,7 @@ import kr.fiveminutesmarket.product.domain.ProductOption;
 
 import javax.validation.constraints.NotNull;
 
-public class ProductOptionRequest {
+public class ProductOptionRequestDto {
 
     @NotNull(message = "optional: true 혹은 false 로 입력해주세요.")
     private Boolean optional;

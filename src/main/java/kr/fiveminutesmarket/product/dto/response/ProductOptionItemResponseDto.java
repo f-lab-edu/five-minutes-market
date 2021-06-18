@@ -1,14 +1,12 @@
 package kr.fiveminutesmarket.product.dto.response;
 
-public class ProductOptionItemResponse {
+public class ProductOptionItemResponseDto {
 
     private Long productOptionItemId;
 
     private String productOptionItemName;
 
     private Integer productOptionItemPrice;
-
-    private Long productOptionId;
 
     public Long getProductOptionItemId() {
         return productOptionItemId;
@@ -32,13 +30,5 @@ public class ProductOptionItemResponse {
 
     public void setProductOptionItemPrice(Integer productOptionItemPrice) {
         this.productOptionItemPrice = productOptionItemPrice;
-    }
-
-    public Long getProductOptionId() {
-        return productOptionId;
-    }
-
-    public void setProductOptionId(Long productOptionId) {
-        this.productOptionId = productOptionId;
     }
 }

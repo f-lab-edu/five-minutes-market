@@ -1,8 +1,8 @@
 package kr.fiveminutesmarket.product.service;
 
 import kr.fiveminutesmarket.product.domain.ProductOption;
-import kr.fiveminutesmarket.product.dto.request.ProductOptionRequest;
-import kr.fiveminutesmarket.product.dto.response.ProductOptionResponse;
+import kr.fiveminutesmarket.product.dto.request.ProductOptionRequestDto;
+import kr.fiveminutesmarket.product.dto.response.ProductOptionResponseDto;
 import kr.fiveminutesmarket.product.error.exception.ProductOptionNotFoundException;
 import kr.fiveminutesmarket.product.repository.ProductOptionItemRepository;
 import kr.fiveminutesmarket.product.repository.ProductOptionRepository;
@@ -26,14 +26,14 @@ public class ProductOptionService {
         this.productOptionItemRepository = productOptionItemRepository;
     }
 
-    public List<ProductOptionResponse> findAll() {
+    public List<ProductOptionResponseDto> findAll() {
         List<ProductOption> productOptionList = productOptionRepository.findAll();
 
         return productOptionList.stream().map(ProductOption::toResponse)
                 .collect(Collectors.toList());
     }
 
-    public ProductOptionResponse findById(Long id) {
+    public ProductOptionResponseDto findById(Long id) {
         ProductOption productOption = productOptionRepository.findById(id);
 
         if(productOption == null)
@@ -42,14 +42,14 @@ public class ProductOptionService {
         return productOption.toResponse();
     }
 
-    public ProductOptionResponse add(ProductOptionRequest resource) {
+    public ProductOptionResponseDto add(ProductOptionRequestDto resource) {
         ProductOption productOption = resource.toEntity();
         productOptionRepository.insert(productOption);
 
         return productOption.toResponse();
     }
 
-    public int update(Long id, ProductOptionRequest resource) {
+    public int update(Long id, ProductOptionRequestDto resource) {
 
         ProductOption productOption = productOptionRepository.findById(id);
         productOption.updateInfo(resource);

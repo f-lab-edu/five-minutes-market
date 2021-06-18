@@ -1,12 +1,9 @@
 package kr.fiveminutesmarket.product.dto.response;
 
-public class ProductOptionResponse {
-
+public class ProductOptionResponseDto {
     private Long productOptionId;
 
     private Boolean optional;
-
-    private Long productId;
 
     public Long getProductOptionId() {
         return productOptionId;
@@ -16,19 +13,11 @@ public class ProductOptionResponse {
         this.productOptionId = productOptionId;
     }
 
-    public Boolean isOptional() {
+    public Boolean getOptional() {
         return optional;
     }
 
     public void setOptional(Boolean optional) {
         this.optional = optional;
-    }
-
-    public Long getProductId() {
-        return productId;
-    }
-
-    public void setProductId(Long productId) {
-        this.productId = productId;
     }
 }

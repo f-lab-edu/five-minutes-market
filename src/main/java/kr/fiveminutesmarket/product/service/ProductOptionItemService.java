@@ -2,8 +2,8 @@ package kr.fiveminutesmarket.product.service;
 
 import kr.fiveminutesmarket.product.domain.ProductOption;
 import kr.fiveminutesmarket.product.domain.ProductOptionItem;
-import kr.fiveminutesmarket.product.dto.request.ProductOptionItemRequest;
-import kr.fiveminutesmarket.product.dto.response.ProductOptionItemResponse;
+import kr.fiveminutesmarket.product.dto.request.ProductOptionItemRequestDto;
+import kr.fiveminutesmarket.product.dto.response.ProductOptionItemResponseDto;
 import kr.fiveminutesmarket.product.error.exception.ParentProductOptionNotExistedException;
 import kr.fiveminutesmarket.product.error.exception.ProductOptionItemNameDuplicatedException;
 import kr.fiveminutesmarket.product.error.exception.ProductOptionItemNotFoundException;
@@ -28,7 +28,7 @@ public class ProductOptionItemService {
         this.productOptionRepository = productOptionRepository;
     }
 
-    public List<ProductOptionItemResponse> findAll() {
+    public List<ProductOptionItemResponseDto> findAll() {
         List<ProductOptionItem> productOptionItemList = productOptionItemRepository.findAll();
 
         return productOptionItemList.stream()
@@ -36,7 +36,7 @@ public class ProductOptionItemService {
                 .collect(Collectors.toList());
     }
 
-    public ProductOptionItemResponse findById(Long id) {
+    public ProductOptionItemResponseDto findById(Long id) {
         ProductOptionItem productOptionItem = productOptionItemRepository.findById(id);
 
         if(productOptionItem == null)
@@ -45,7 +45,7 @@ public class ProductOptionItemService {
         return productOptionItem.toResponse();
     }
 
-    public ProductOptionItemResponse add(ProductOptionItemRequest resource) {
+    public ProductOptionItemResponseDto add(ProductOptionItemRequestDto resource) {
         int count = productOptionItemRepository.countByName(resource.getProductOptionItemName());
 
         if(count != 0)
@@ -62,7 +62,7 @@ public class ProductOptionItemService {
         return productOptionItem.toResponse();
     }
 
-    public int update(Long id, ProductOptionItemRequest resource) {
+    public int update(Long id, ProductOptionItemRequestDto resource) {
 
         ProductOptionItem productOptionItem = productOptionItemRepository.findById(id);
         productOptionItem.updateInfo(resource);
