@@ -1,6 +1,6 @@
-package kr.fiveminutesmarket.option.dto;
+package kr.fiveminutesmarket.product.dto.response;
 
-public class ProductOptionItemDto {
+public class ProductOptionItemResponseDto {
 
     private Long productOptionItemId;
 

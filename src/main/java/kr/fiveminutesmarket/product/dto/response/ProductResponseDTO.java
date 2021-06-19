@@ -2,7 +2,6 @@ package kr.fiveminutesmarket.product.dto.response;
 
 import kr.fiveminutesmarket.category.domain.MainCategory;
 import kr.fiveminutesmarket.category.domain.SubCategory;
-import kr.fiveminutesmarket.option.dto.ProductOptionDto;
 
 import java.util.List;
 
@@ -26,7 +25,7 @@ public class ProductResponseDTO {
 
     private SubCategory subCategory;
 
-    private List<ProductOptionDto> productOptions;
+    private List<ProductOptionWithItemsDto> productOptions;
 
     public Long getProductId() {
         return productId;
@@ -100,11 +99,11 @@ public class ProductResponseDTO {
         this.subCategory = subCategory;
     }
 
-    public List<ProductOptionDto> getProductOptions() {
+    public List<ProductOptionWithItemsDto> getProductOptions() {
         return productOptions;
     }
 
-    public void setProductOptions(List<ProductOptionDto> productOptions) {
+    public void setProductOptions(List<ProductOptionWithItemsDto> productOptions) {
         this.productOptions = productOptions;
     }
 }

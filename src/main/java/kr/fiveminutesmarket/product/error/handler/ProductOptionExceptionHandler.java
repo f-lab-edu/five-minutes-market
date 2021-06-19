@@ -1,9 +1,8 @@
-package kr.fiveminutesmarket.option.error.handler;
+package kr.fiveminutesmarket.product.error.handler;
 
 import kr.fiveminutesmarket.common.dto.ResponseDto;
-import kr.fiveminutesmarket.option.error.exception.ProductOptionNotFoundException;
+import kr.fiveminutesmarket.product.error.exception.ProductOptionNotFoundException;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestControllerAdvice;

@@ -3,14 +3,14 @@
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
-<mapper namespace="kr.fiveminutesmarket.option.repository.ProductOptionRepository">
+<mapper namespace="kr.fiveminutesmarket.product.repository.ProductOptionRepository">
 
     <insert id="insert" parameterType="map" useGeneratedKeys="true" keyProperty="productOptionId">
         INSERT INTO product_option(optional, product_id)
         VALUES(#{productOption.optional}, #{productOption.productId})
     </insert>
 
-    <select id="findAll" resultType="kr.fiveminutesmarket.option.domain.ProductOption">
+    <select id="findAll" resultType="kr.fiveminutesmarket.product.domain.ProductOption">
         SELECT
                product_option_id,
                optional,
@@ -18,7 +18,7 @@
         FROM product_option
     </select>
 
-    <select id="findById" parameterType="map" resultType="kr.fiveminutesmarket.option.domain.ProductOption">
+    <select id="findById" parameterType="map" resultType="kr.fiveminutesmarket.product.domain.ProductOption">
         SELECT
                product_option_id,
                optional,

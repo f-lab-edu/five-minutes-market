@@ -2,7 +2,7 @@ package kr.fiveminutesmarket.product.controller;
 
 import kr.fiveminutesmarket.common.dto.ResponseDto;
 import kr.fiveminutesmarket.product.dto.request.ProductRequestDTO;
-import kr.fiveminutesmarket.product.dto.response.ProductListResponseDTO;
+import kr.fiveminutesmarket.product.dto.response.ProductResponseListDTO;
 import kr.fiveminutesmarket.product.dto.response.ProductResponseDTO;
 import kr.fiveminutesmarket.product.service.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,7 +10,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
-import javax.validation.constraints.Positive;
 import java.util.List;
 
 @RestController
@@ -42,9 +41,9 @@ public class ProductController {
 
     @GetMapping
     @ResponseStatus(HttpStatus.OK)
-    public ResponseDto<List<ProductListResponseDTO>> getProductList(@RequestParam(value = "count", required = true) int count,
+    public ResponseDto<List<ProductResponseListDTO>> getProductList(@RequestParam(value = "count", required = true) int count,
                                                                     @RequestParam(value = "page_num", required = true) int pageNum) {
-        List<ProductListResponseDTO> products = productService.findAll(count, pageNum);
+        List<ProductResponseListDTO> products = productService.findAll(count, pageNum);
 
         return new ResponseDto<>(0,null, products);
     }

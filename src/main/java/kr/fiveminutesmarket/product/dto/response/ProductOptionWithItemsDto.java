@@ -1,16 +1,14 @@
-package kr.fiveminutesmarket.option.dto;
+package kr.fiveminutesmarket.product.dto.response;
 
 import java.util.List;
 
-public class ProductOptionDto {
+public class ProductOptionWithItemsDto {
 
     private Long productOptionId;
 
     private Boolean optional;
 
-    private Long productId;
-
-    private List<ProductOptionItemDto> productOptionItemList;
+    private List<ProductOptionItemResponseDto> productOptionItemList;
 
     public Long getProductOptionId() {
         return productOptionId;
@@ -28,19 +26,11 @@ public class ProductOptionDto {
         this.optional = optional;
     }
 
-    public Long getProductId() {
-        return productId;
-    }
-
-    public void setProductId(Long productId) {
-        this.productId = productId;
-    }
-
-    public List<ProductOptionItemDto> getProductOptionItemList() {
+    public List<ProductOptionItemResponseDto> getProductOptionItemList() {
         return productOptionItemList;
     }
 
-    public void setProductOptionItemList(List<ProductOptionItemDto> productOptionItemList) {
+    public void setProductOptionItemList(List<ProductOptionItemResponseDto> productOptionItemList) {
         this.productOptionItemList = productOptionItemList;
     }
 }
