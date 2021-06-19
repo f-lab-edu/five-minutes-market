@@ -18,7 +18,6 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
-import java.net.UnknownHostException;
 import java.util.List;
 
 
@@ -99,7 +98,7 @@ public class UserController {
 
     @GetMapping
     @ResponseStatus(HttpStatus.OK)
-    public ResponseDto<List<UserResponseDto>> findAll() throws UnknownHostException {
+    public ResponseDto<List<UserResponseDto>> findAll() {
         return new ResponseDto<>(0, null, userService.findAll());
     }
 
