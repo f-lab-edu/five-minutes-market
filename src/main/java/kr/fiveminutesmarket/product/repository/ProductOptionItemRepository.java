@@ -1,6 +1,6 @@
-package kr.fiveminutesmarket.option.repository;
+package kr.fiveminutesmarket.product.repository;
 
-import kr.fiveminutesmarket.option.domain.ProductOptionItem;
+import kr.fiveminutesmarket.product.domain.ProductOptionItem;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 

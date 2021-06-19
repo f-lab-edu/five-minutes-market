@@ -1,11 +1,10 @@
-package kr.fiveminutesmarket.option.error.handler;
+package kr.fiveminutesmarket.product.error.handler;
 
 import kr.fiveminutesmarket.common.dto.ResponseDto;
-import kr.fiveminutesmarket.option.error.exception.ParentProductOptionNotExistedException;
-import kr.fiveminutesmarket.option.error.exception.ProductOptionItemNameDuplicatedException;
-import kr.fiveminutesmarket.option.error.exception.ProductOptionItemNotFoundException;
+import kr.fiveminutesmarket.product.error.exception.ParentProductOptionNotExistedException;
+import kr.fiveminutesmarket.product.error.exception.ProductOptionItemNameDuplicatedException;
+import kr.fiveminutesmarket.product.error.exception.ProductOptionItemNotFoundException;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestControllerAdvice;

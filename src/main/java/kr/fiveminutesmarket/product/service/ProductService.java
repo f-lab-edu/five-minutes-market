@@ -2,7 +2,7 @@ package kr.fiveminutesmarket.product.service;
 
 import kr.fiveminutesmarket.product.domain.Product;
 import kr.fiveminutesmarket.product.dto.request.ProductRequestDTO;
-import kr.fiveminutesmarket.product.dto.response.ProductListResponseDTO;
+import kr.fiveminutesmarket.product.dto.response.ProductResponseListDTO;
 import kr.fiveminutesmarket.product.dto.response.ProductResponseDTO;
 import kr.fiveminutesmarket.product.error.exception.ProductNotFoundException;
 import kr.fiveminutesmarket.product.repository.ProductRepository;
@@ -31,7 +31,7 @@ public class ProductService {
                 .orElseThrow(() -> new ProductNotFoundException("해당 상품 ID의 데이터를 찾을수 없습니다."));
     }
 
-    public List<ProductListResponseDTO> findAll(int count, int pageNum) {
+    public List<ProductResponseListDTO> findAll(int count, int pageNum) {
         int startIndex = count * (pageNum - 1);
 
         return productRepository.findAll(startIndex, count);

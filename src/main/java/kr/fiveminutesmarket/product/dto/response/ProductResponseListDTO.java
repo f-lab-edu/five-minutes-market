@@ -5,7 +5,7 @@ import kr.fiveminutesmarket.category.domain.SubCategory;
 
 import java.util.List;
 
-public class ProductListResponseDTO {
+public class ProductResponseListDTO {
 
     private Long productId;
 

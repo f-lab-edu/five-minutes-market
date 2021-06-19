@@ -1,16 +1,13 @@
-package kr.fiveminutesmarket.option.controller;
+package kr.fiveminutesmarket.product.controller;
 
 import kr.fiveminutesmarket.common.dto.ResponseDto;
-import kr.fiveminutesmarket.option.dto.request.ProductOptionRequest;
-import kr.fiveminutesmarket.option.dto.response.ProductOptionResponse;
-import kr.fiveminutesmarket.option.service.ProductOptionService;
+import kr.fiveminutesmarket.product.dto.request.ProductOptionRequestDto;
+import kr.fiveminutesmarket.product.dto.response.ProductOptionResponseDto;
+import kr.fiveminutesmarket.product.service.ProductOptionService;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
-import java.net.URI;
-import java.net.URISyntaxException;
 import java.util.List;
 
 @RestController
@@ -25,24 +22,24 @@ public class ProductOptionController {
 
     @GetMapping
     @ResponseStatus(HttpStatus.OK)
-    public ResponseDto<List<ProductOptionResponse>> findAll() {
-        List<ProductOptionResponse> productOptionList = productOptionService.findAll();
+    public ResponseDto<List<ProductOptionResponseDto>> findAll() {
+        List<ProductOptionResponseDto> productOptionList = productOptionService.findAll();
 
         return new ResponseDto<>(0,null, productOptionList);
     }
 
     @GetMapping("/{id}")
     @ResponseStatus(HttpStatus.OK)
-    public ResponseDto<ProductOptionResponse> findById(@PathVariable("id") Long id) {
-        ProductOptionResponse productOption = productOptionService.findById(id);
+    public ResponseDto<ProductOptionResponseDto> findById(@PathVariable("id") Long id) {
+        ProductOptionResponseDto productOption = productOptionService.findById(id);
 
         return new ResponseDto<>(0,null, productOption);
     }
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public ResponseDto<ProductOptionResponse> add(@Valid @RequestBody ProductOptionRequest resource) {
-        ProductOptionResponse response = productOptionService.add(resource);
+    public ResponseDto<ProductOptionResponseDto> add(@Valid @RequestBody ProductOptionRequestDto resource) {
+        ProductOptionResponseDto response = productOptionService.add(resource);
 
         return new ResponseDto<>(0,null, response);
     }
@@ -50,7 +47,7 @@ public class ProductOptionController {
     @PutMapping("/{id}")
     @ResponseStatus(HttpStatus.OK)
     public ResponseDto<?> update(@PathVariable("id") Long id,
-                      @Valid @RequestBody ProductOptionRequest resource) {
+                      @Valid @RequestBody ProductOptionRequestDto resource) {
         productOptionService.update(id, resource);
 
         return new ResponseDto<>(0);

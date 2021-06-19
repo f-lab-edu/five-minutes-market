@@ -1,7 +1,8 @@
-package kr.fiveminutesmarket.option.domain;
+package kr.fiveminutesmarket.product.domain;
 
-import kr.fiveminutesmarket.option.dto.request.ProductOptionRequest;
-import kr.fiveminutesmarket.option.dto.response.ProductOptionResponse;
+import kr.fiveminutesmarket.product.dto.request.ProductOptionRequestDto;
+import kr.fiveminutesmarket.product.dto.response.ProductOptionResponseDto;
+import kr.fiveminutesmarket.product.dto.response.ProductOptionWithItemsDto;
 
 public class ProductOption {
 
@@ -31,16 +32,15 @@ public class ProductOption {
         return productId;
     }
 
-    public void updateInfo(ProductOptionRequest resource) {
+    public void updateInfo(ProductOptionRequestDto resource) {
         this.optional = resource.isOptional();
         this.productId = resource.getProductId();
     }
 
-    public ProductOptionResponse toResponse() {
-        ProductOptionResponse response = new ProductOptionResponse();
+    public ProductOptionResponseDto toResponse() {
+        ProductOptionResponseDto response = new ProductOptionResponseDto();
         response.setProductOptionId(productOptionId);
         response.setOptional(optional);
-        response.setProductId(productId);
 
         return response;
     }

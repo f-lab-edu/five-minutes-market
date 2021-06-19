@@ -1,4 +1,4 @@
-package kr.fiveminutesmarket.option.error.exception;
+package kr.fiveminutesmarket.product.error.exception;
 
 public class ParentProductOptionNotExistedException extends RuntimeException{
     public ParentProductOptionNotExistedException(Long productOptionId) {

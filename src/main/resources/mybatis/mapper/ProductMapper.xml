@@ -5,7 +5,7 @@
 
 <mapper namespace="kr.fiveminutesmarket.product.repository.ProductRepository">
 
-    <resultMap id="productListDTO" type="kr.fiveminutesmarket.product.dto.response.ProductListResponseDTO">
+    <resultMap id="productListDTO" type="kr.fiveminutesmarket.product.dto.response.ProductResponseListDTO">
         <id property="productId" column="product_id" />
         <result property="sellerId" column="seller_id" />
         <result property="quantity" column="quantity" />
@@ -47,10 +47,10 @@
             <id property="subCategoryId" column="sub_category_id" />
             <result property="subCategoryName" column="sub_category_name" />
         </association>
-        <collection property="productOptions" ofType="kr.fiveminutesmarket.option.dto.ProductOptionDto">
+        <collection property="productOptions" ofType="kr.fiveminutesmarket.product.dto.response.ProductOptionWithItemsDto">
             <id property="productOptionId" column="product_option_id" />
             <result property="optional" column="optional" />
-            <collection property="productOptionItemList" ofType="kr.fiveminutesmarket.option.dto.ProductOptionItemDto">
+            <collection property="productOptionItemList" ofType="kr.fiveminutesmarket.product.dto.response.ProductOptionItemResponseDto">
                 <id property="productOptionItemId" column="product_option_item_id" />
                 <result property="productOptionItemName" column="product_option_item_name" />
                 <result property="productOptionItemPrice" column="product_option_item_price" />
