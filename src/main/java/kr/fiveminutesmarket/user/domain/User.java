@@ -76,4 +76,9 @@ public class User {
     public String getSalt() {
         return salt;
     }
+
+    public void updatePasswordWithSalt(String password, String salt) {
+        this.password = password;
+        this.salt = salt;
+    }
 }

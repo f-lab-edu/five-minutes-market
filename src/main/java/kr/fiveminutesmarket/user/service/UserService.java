@@ -26,7 +26,6 @@ public class UserService {
 
     private final UserRepository userRepository;
     private final RoleTypeRepository roleTypeRepository;
-
     private final JavaPasswordEncoder javaPasswordEncoder;
 
     public UserService(UserRepository userRepository,
@@ -86,6 +85,16 @@ public class UserService {
         return userList.stream()
                 .map(this::toUserResponse)
                 .collect(Collectors.toList());
+    }
+
+    public void updatePassword(String userEmail, String password) {
+        User user = userRepository.findByEmail(userEmail);
+        if (user == null) throw new UserNotFoundException(userEmail);
+
+        String salt = javaPasswordEncoder.generateSalt();
+        user.updatePasswordWithSalt(javaPasswordEncoder.encode(password, salt), salt);
+
+        userRepository.updateUser(user);
     }
 
     public UserResponseDto findByUserNameWithRole(String userName) {
