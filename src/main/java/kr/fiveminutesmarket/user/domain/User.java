@@ -1,5 +1,7 @@
 package kr.fiveminutesmarket.user.domain;
 
+import java.time.LocalDateTime;
+
 public class User {
 
     private Long userId;
@@ -20,7 +22,13 @@ public class User {
 
     private String salt;
 
-    public User() {
+    private String checkKey;
+
+    private LocalDateTime expireDate;
+
+    public User(String checkKey, LocalDateTime expireDate) {
+        this.checkKey = checkKey;
+        this.expireDate = expireDate;
     }
 
     public User(String userName,
@@ -75,6 +83,14 @@ public class User {
 
     public String getSalt() {
         return salt;
+    }
+
+    public String getCheckKey() {
+        return checkKey;
+    }
+
+    public LocalDateTime getExpireDate() {
+        return expireDate;
     }
 
     public void updatePasswordWithSalt(String password, String salt) {
