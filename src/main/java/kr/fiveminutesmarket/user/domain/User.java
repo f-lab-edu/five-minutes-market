@@ -26,6 +26,9 @@ public class User {
 
     private LocalDateTime expireDate;
 
+    public User() {
+    }
+
     public User(String checkKey, LocalDateTime expireDate) {
         this.checkKey = checkKey;
         this.expireDate = expireDate;
