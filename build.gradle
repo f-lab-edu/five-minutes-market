@@ -1,7 +1,14 @@
+buildscript {
+    ext {
+        flywayVersion = '7.10.0'
+    }
+}
+
 plugins {
     id 'org.springframework.boot' version '2.4.5'
     id 'io.spring.dependency-management' version '1.0.11.RELEASE'
     id 'java'
+    id 'org.flywaydb.flyway' version "${flywayVersion}"
 }
 
 group = 'kr.fiveminutesmarket'
@@ -15,8 +22,6 @@ repositories {
 dependencies {
     implementation 'org.springframework.boot:spring-boot-starter-web'
     developmentOnly 'org.springframework.boot:spring-boot-devtools'
-
-    annotationProcessor "org.springframework.boot:spring-boot-configuration-processor"
 
     // validation
     implementation("org.springframework.boot:spring-boot-starter-validation")
@@ -38,6 +43,7 @@ dependencies {
     // MyBatis, MySQL 설정
     runtimeOnly 'mysql:mysql-connector-java'
     implementation 'org.mybatis.spring.boot:mybatis-spring-boot-starter:2.1.4'
+    implementation "org.flywaydb:flyway-core:${flywayVersion}"
 
     // main sender
     implementation 'org.springframework.boot:spring-boot-starter-mail'
