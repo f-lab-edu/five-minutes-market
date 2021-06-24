@@ -62,7 +62,7 @@ public class UserService {
         return toUserResponse(user);
     }
 
-    public void signIn(SignInRequestDto resource, HttpSession session) {
+    public User signIn(SignInRequestDto resource, HttpSession session) {
         User user = Optional.ofNullable(userRepository.findByEmail(resource.getEmail()))
                 .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 이메일입니다."));
 
@@ -74,9 +74,7 @@ public class UserService {
             throw new IllegalArgumentException("패스워드가 틀렸습니다.");
         }
 
-        session.setAttribute("email", user.getEmail());
-        session.setAttribute("seller", user.getSeller());
-        session.setAttribute("role", user.getRoleType());
+        return user;
     }
 
     public List<UserResponseDto> findAll() {
