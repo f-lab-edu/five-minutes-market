@@ -78,10 +78,10 @@ public class UserController {
         // 해당 이메일이 존재하는지 여부 검토
         UserInfoDto userInfoDto = authService.findByEmail(resource.getEmail());
         userPasswordResetService.saveResetKey(userInfoDto.getUserEmail());
-        ContentDto mailContentDto
-                = mailContentService.createContent(userInfoDto.getUserEmail(), userInfoDto.getUserName());
 
-        sendMailService.sendMail(mailContentDto);
+        // TODO: saveResetKey 안에서 Outbox 패턴을 이용한 메일 발송 eventual consistency 구현하기
+        // ContentDto mailContentDto = mailContentService.createContent(userInfoDto.getUserEmail(), userInfoDto.getUserName());
+        //sendMailService.sendMail(mailContentDto);
 
         return new ResponseDto<>(0, "비밀번호 초기화를 위한 이메일을 발송하였습니다.", resource.getEmail());
     }

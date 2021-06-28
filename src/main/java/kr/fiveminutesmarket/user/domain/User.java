@@ -22,16 +22,7 @@ public class User {
 
     private String salt;
 
-    private String checkKey;
-
-    private LocalDateTime expireDate;
-
     public User() {
-    }
-
-    public User(String checkKey, LocalDateTime expireDate) {
-        this.checkKey = checkKey;
-        this.expireDate = expireDate;
     }
 
     public User(String userName,
@@ -86,14 +77,6 @@ public class User {
 
     public String getSalt() {
         return salt;
-    }
-
-    public String getCheckKey() {
-        return checkKey;
-    }
-
-    public LocalDateTime getExpireDate() {
-        return expireDate;
     }
 
     public void updatePasswordWithSalt(String password, String salt) {

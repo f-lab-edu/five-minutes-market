@@ -1,6 +1,7 @@
 package kr.fiveminutesmarket.user.service;
 
-import kr.fiveminutesmarket.user.repository.UserRepository;
+import kr.fiveminutesmarket.user.dto.dispatch.ContentDto;
+import kr.fiveminutesmarket.user.repository.ResetPwKeyRepository;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -11,10 +12,10 @@ import java.util.UUID;
 @Transactional
 public class UserPasswordResetService {
 
-    private final UserRepository userRepository;
+    private final ResetPwKeyRepository resetKeyRepository;
 
-    public UserPasswordResetService(UserRepository userRepository) {
-        this.userRepository = userRepository;
+    public UserPasswordResetService(ResetPwKeyRepository resetKeyRepository) {
+        this.resetKeyRepository = resetKeyRepository;
     }
 
     /**
@@ -26,7 +27,8 @@ public class UserPasswordResetService {
         LocalDateTime now = LocalDateTime.now();
         LocalDateTime expiredTime = now.plusMinutes(30);
 
-        userRepository.updateResetKey(userEmail, key, expiredTime);
+        resetKeyRepository.insertResetPwKey(key, expiredTime, userEmail);
+
     }
 
     private String createResetKey() {

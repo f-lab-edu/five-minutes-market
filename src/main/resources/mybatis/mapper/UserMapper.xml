@@ -85,24 +85,4 @@
         WHERE user_id = #{user.userId}
     </update>
 
-    <update id="updateResetKey">
-        UPDATE user
-        SET check_key = #{key},
-            expire_date = #{expiredTime}
-        WHERE email = #{userEmail}
-    </update>
-
-    <select id="findKeyByEmail" resultType="string">
-        SELECT check_key
-        FROM user
-        WHERE email = #{userEmail}
-    </select>
-
-    <select id="findByCheckKey" resultType="kr.fiveminutesmarket.user.domain.User">
-        SELECT
-               check_key,
-               expire_date
-        FROM user
-        WHERE check_key = #{checkKey}
-    </select>
 </mapper>

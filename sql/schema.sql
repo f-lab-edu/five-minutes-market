@@ -71,11 +71,19 @@ CREATE TABLE `user` (
                         `seller` tinyint NOT NULL,
                         `role_type_id` int NOT NULL,
                         `salt` varchar(20) NOT NULL,
-                        `check_key` varchar(200),
                         `expire_date` datetime,
                         PRIMARY KEY (`user_id`),
                         KEY `role_type_id` (`role_type_id`),
                         FOREIGN KEY (`role_type_id`) REFERENCES `role_type` (`role_type_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+CREATE TABLE `reset_pw_key` (
+                             `reset_pw_key_id` int NOT NULL AUTO_INCREMENT,
+                             `reset_key` varchar(40) NOT NULL,
+                             `expire_date` datetime NOT NULL,
+                             `email` varchar(50) NOT NULL,
+                             PRIMARY KEY (`reset_pw_key_id`),
+                             INDEX `ix_reset_key` (`reset_key`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 INSERT INTO `role_type` (`role_type_name`) VALUES ('ROLE_ADMIN');
