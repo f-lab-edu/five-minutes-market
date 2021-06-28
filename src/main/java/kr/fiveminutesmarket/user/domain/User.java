@@ -1,5 +1,7 @@
 package kr.fiveminutesmarket.user.domain;
 
+import java.time.LocalDateTime;
+
 public class User {
 
     private Long userId;

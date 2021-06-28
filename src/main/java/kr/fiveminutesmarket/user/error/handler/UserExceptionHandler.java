@@ -1,7 +1,7 @@
 package kr.fiveminutesmarket.user.error.handler;
 
 import kr.fiveminutesmarket.common.dto.ResponseDto;
-import kr.fiveminutesmarket.user.error.exception.ExpirePasswordKeyException;
+import kr.fiveminutesmarket.user.error.exception.ExpiredPasswordResetKeyException;
 import kr.fiveminutesmarket.user.error.exception.UserEmailExistedException;
 import kr.fiveminutesmarket.user.error.exception.UserNotFoundException;
 import org.springframework.http.HttpStatus;
@@ -24,9 +24,9 @@ public class UserExceptionHandler {
         return new ResponseDto<>(-1, exception.getMessage());
     }
 
-    @ExceptionHandler(ExpirePasswordKeyException.class)
+    @ExceptionHandler(ExpiredPasswordResetKeyException.class)
     @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
-    public ResponseDto<?> handleFailSendMailException(ExpirePasswordKeyException exception) {
+    public ResponseDto<?> handleFailSendMailException(ExpiredPasswordResetKeyException exception) {
         return new ResponseDto<>(-1, exception.getMessage());
     }
 

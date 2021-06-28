@@ -8,16 +8,14 @@ import kr.fiveminutesmarket.user.dto.request.SignInRequestDto;
 import kr.fiveminutesmarket.user.dto.request.UserPasswordRequestDto;
 import kr.fiveminutesmarket.user.dto.request.UserRegistrationRequestDto;
 import kr.fiveminutesmarket.user.dto.response.UserResponseDto;
-import kr.fiveminutesmarket.user.service.AuthService;
-import kr.fiveminutesmarket.user.service.ContentService;
-import kr.fiveminutesmarket.user.service.SendMailService;
-import kr.fiveminutesmarket.user.service.UserService;
+import kr.fiveminutesmarket.user.service.*;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
+import java.time.LocalDateTime;
 import java.util.List;
 
 
@@ -33,14 +31,18 @@ public class UserController {
 
     private final ContentService mailContentService;
 
+    private final UserPasswordResetService userPasswordResetService;
+
     public UserController(UserService userService,
                           SendMailService sendMailService,
                           AuthService authService,
-                          @Qualifier("mailContentService") ContentService mailContentService) {
+                          @Qualifier("mailContentService") ContentService mailContentService,
+                          UserPasswordResetService userPasswordResetService) {
         this.userService = userService;
         this.sendMailService = sendMailService;
         this.authService = authService;
         this.mailContentService = mailContentService;
+        this.userPasswordResetService = userPasswordResetService;
     }
 
     // 회원가입
@@ -75,23 +77,20 @@ public class UserController {
     public ResponseDto<String> findPassword(@Valid @RequestBody UserEmailRequestDto resource) {
         // 해당 이메일이 존재하는지 여부 검토
         UserInfoDto userInfoDto = authService.findByEmail(resource.getEmail());
+        userPasswordResetService.saveResetKey(userInfoDto.getUserEmail());
 
-        ContentDto mailContentDto
-                = mailContentService.createContent(userInfoDto.getUserEmail(), userInfoDto.getUserName());
-        /*
-        * TODO
-        *  - 인증키 저장 방식 수정필요
-        *  - 비동기 방식으로 이메일 전송
-        */
-        sendMailService.sendMail(mailContentDto);
+        // TODO: saveResetKey 안에서 Outbox 패턴을 이용한 메일 발송 eventual consistency 구현하기
+        // ContentDto mailContentDto = mailContentService.createContent(userInfoDto.getUserEmail(), userInfoDto.getUserName());
+        //sendMailService.sendMail(mailContentDto);
 
-        return new ResponseDto<>(0, "성공적으로 사용자의 비밀번호 변경요청을 수행했습니다.", resource.getEmail());
+        return new ResponseDto<>(0, "비밀번호 초기화를 위한 이메일을 발송하였습니다.", resource.getEmail());
     }
 
     // 비밀번호 초기화 키 유효성 검증
     @GetMapping("/reset-password/{key}")
     public ResponseDto<?> validateKey(@PathVariable("key") String key) {
-        // TODO 세션 인증 방식 수정필요
+        LocalDateTime now = LocalDateTime.now();
+        authService.isValidResetKey(key, now);
 
         return new ResponseDto<>(0, "비밀번호 초기화 작업이 유효합니다.", null);
     }

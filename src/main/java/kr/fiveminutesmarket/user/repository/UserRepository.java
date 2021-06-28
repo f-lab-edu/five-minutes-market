@@ -20,4 +20,5 @@ public interface UserRepository {
     User findByUserNameWithRole(@Param("userName") String userName);
 
     void updateUser(@Param("user") User user);
+
 }
