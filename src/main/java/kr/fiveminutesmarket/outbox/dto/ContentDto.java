@@ -1,4 +1,4 @@
-package kr.fiveminutesmarket.user.dto.dispatch;
+package kr.fiveminutesmarket.outbox.dto;
 
 public class ContentDto {
     private String to;

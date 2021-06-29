@@ -86,5 +86,14 @@ CREATE TABLE `reset_pw_key` (
                              INDEX `ix_reset_key` (`reset_key`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
+CREATE TABLE `out_box` (
+                        `out_box_id` int NOT NULL AUTO_INCREMENT,
+                        `aggregate_id` int NOT NULL,
+                        `aggregate_type` varchar(30) NOT NULL,
+                        `event_type` varchar(30) NOT NULL,
+                        `payload` varchar(200) NOT NULL,
+                        PRIMARY KEY (`out_box_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
 INSERT INTO `role_type` (`role_type_name`) VALUES ('ROLE_ADMIN');
 INSERT INTO `role_type` (`role_type_name`) VALUES ('ROLE_USER');

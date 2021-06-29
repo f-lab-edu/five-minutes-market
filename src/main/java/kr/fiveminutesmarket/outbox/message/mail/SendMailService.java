@@ -1,6 +1,6 @@
-package kr.fiveminutesmarket.user.service;
+package kr.fiveminutesmarket.outbox.message.mail;
 
-import kr.fiveminutesmarket.user.dto.dispatch.ContentDto;
+import kr.fiveminutesmarket.outbox.dto.ContentDto;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.stereotype.Service;
