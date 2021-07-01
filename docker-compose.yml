@@ -1,0 +1,16 @@
+version: "3.8"
+
+services:
+  fiveminutesmarket_database:
+    image: mysql:8.0.25
+    environment:
+      MYSQL_DATABASE: 'fiveminutesmarket'
+      MYSQL_ALLOW_EMPTY_PASSWORD: 'true'
+    ports:
+      - 3306:3306
+  fiveminutesmarket_application:
+    image: five-minutes-market:latest
+    ports:
+      - 8080:8080
+    depends_on:
+      - fiveminutesmarket_database
