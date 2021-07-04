@@ -71,8 +71,6 @@ CREATE TABLE `user` (
                         `seller` tinyint NOT NULL,
                         `role_type_id` int NOT NULL,
                         `salt` varchar(20) NOT NULL,
-                        `check_key` varchar(200),
-                        `expire_date` datetime,
                         PRIMARY KEY (`user_id`),
                         KEY `role_type_id` (`role_type_id`),
                         FOREIGN KEY (`role_type_id`) REFERENCES `role_type` (`role_type_id`)
