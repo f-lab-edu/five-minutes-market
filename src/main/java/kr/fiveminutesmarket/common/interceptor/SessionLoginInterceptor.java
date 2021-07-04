@@ -1,6 +1,7 @@
-package kr.fiveminutesmarket.user.interceptor;
+package kr.fiveminutesmarket.common.interceptor;
 
 import kr.fiveminutesmarket.common.annotation.Auth;
+import kr.fiveminutesmarket.common.dto.UserSessionDto;
 import kr.fiveminutesmarket.common.exception.AuthenticationException;
 import org.springframework.web.method.HandlerMethod;
 import org.springframework.web.servlet.HandlerInterceptor;
@@ -24,7 +25,7 @@ public class SessionLoginInterceptor implements HandlerInterceptor {
             return true;
         }
 
-        if (request.getSession().getAttribute("email") == null) {
+        if (request.getSession().getAttribute("user") == null) {
             throw new AuthenticationException("로그인이 필요합니다.");
         }
 
@@ -36,8 +37,10 @@ public class SessionLoginInterceptor implements HandlerInterceptor {
     }
 
     private void isSeller(HttpServletRequest request) {
-        if (request.getSession().getAttribute("seller") == null ||
-                request.getSession().getAttribute("seller").equals(false)) {
+        UserSessionDto userSession = (UserSessionDto)request.getSession().getAttribute("user");
+
+        if (request.getSession().getAttribute("user") == null ||
+                !userSession.getSeller()) {
             throw new AuthenticationException("판매자 권한이 필요합니다.");
         }
     }
