@@ -1,6 +1,7 @@
 package kr.fiveminutesmarket.user.repository;
 
 import kr.fiveminutesmarket.user.domain.ResetPwKey;
+import kr.fiveminutesmarket.user.event.ResetKeyBox;
 import org.apache.ibatis.annotations.Param;
 
 public interface ResetPwKeyRepository {

@@ -1,4 +1,4 @@
-package kr.fiveminutesmarket.outbox.config;
+package kr.fiveminutesmarket.user.scheduler.config;
 
 import org.springframework.context.annotation.Configuration;
 import org.springframework.scheduling.annotation.EnableScheduling;

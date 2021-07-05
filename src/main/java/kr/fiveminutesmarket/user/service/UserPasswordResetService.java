@@ -1,10 +1,8 @@
 package kr.fiveminutesmarket.user.service;
 
-import kr.fiveminutesmarket.outbox.event.OutBoxEventBuilder;
 import kr.fiveminutesmarket.user.domain.ResetPwKey;
 import kr.fiveminutesmarket.user.event.ResetPwKeyCreated;
 import kr.fiveminutesmarket.user.repository.ResetPwKeyRepository;
-import kr.fiveminutesmarket.user.repository.UserRepository;
 import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -19,20 +17,17 @@ public class UserPasswordResetService {
 
     private final ApplicationEventPublisher eventPublisher;
 
-    private final OutBoxEventBuilder<ResetPwKeyCreated> eventBuilder;
-
     public UserPasswordResetService(ResetPwKeyRepository resetKeyRepository,
-                                    ApplicationEventPublisher eventPublisher,
-                                    OutBoxEventBuilder<ResetPwKeyCreated> eventBuilder) {
+                                    ApplicationEventPublisher eventPublisher) {
         this.resetKeyRepository = resetKeyRepository;
         this.eventPublisher = eventPublisher;
-        this.eventBuilder = eventBuilder;
     }
 
     /**
      * 비밀번호 초기화 키 생성 후 DB UPDATE
+     *
      * @param userEmail 비밀번호 초기화 대상 사용자 이메일
-     * @param userName
+     * @param userName 비밀번호 초기화 대상 사용자 이름
      */
     @Transactional
     public void saveResetKey(String userEmail, String userName) {
@@ -43,14 +38,12 @@ public class UserPasswordResetService {
         resetKeyRepository.insertResetPwKey(resetPwKey);
 
         eventPublisher.publishEvent(
-                eventBuilder.createOutBoxEvent(
-                        new ResetPwKeyCreated(
-                                resetPwKey.getResetPwKeyId(),
-                                resetPwKey.getResetKey(),
-                                resetPwKey.getExpireDate(),
-                                resetPwKey.getEmail(),
-                                userName)
-                )
+                new ResetPwKeyCreated(
+                        resetPwKey.getResetKey(),
+                        resetPwKey.getExpireDate(),
+                        resetPwKey.getEmail(),
+                        userName,
+                        LocalDateTime.now())
         );
     }
 

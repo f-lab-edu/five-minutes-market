@@ -2,13 +2,10 @@ package kr.fiveminutesmarket.user.event;
 
 import java.time.LocalDateTime;
 
-public class ResetPwKeyCreated {
-
-    private Long resetPwKeyId;
+public class ResetKeyBox {
+    private Long resetKeyBoxId;
 
     private String resetKey;
-
-    private LocalDateTime expireDate;
 
     private String email;
 
@@ -16,27 +13,22 @@ public class ResetPwKeyCreated {
 
     private LocalDateTime occurredOn;
 
-    public ResetPwKeyCreated() {
+    public ResetKeyBox() {
     }
 
-    public ResetPwKeyCreated(String resetKey, LocalDateTime expireDate, String email, String userName, LocalDateTime occurredOn) {
+    public ResetKeyBox(String resetKey, String email, String userName, LocalDateTime occurredOn) {
         this.resetKey = resetKey;
-        this.expireDate = expireDate;
         this.email = email;
         this.userName = userName;
         this.occurredOn = occurredOn;
     }
 
-    public Long getResetPwKeyId() {
-        return resetPwKeyId;
+    public Long getResetKeyBoxId() {
+        return resetKeyBoxId;
     }
 
     public String getResetKey() {
         return resetKey;
-    }
-
-    public LocalDateTime getExpireDate() {
-        return expireDate;
     }
 
     public String getEmail() {

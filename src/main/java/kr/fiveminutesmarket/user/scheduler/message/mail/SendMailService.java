@@ -1,6 +1,5 @@
-package kr.fiveminutesmarket.outbox.message.mail;
+package kr.fiveminutesmarket.user.scheduler.message.mail;
 
-import kr.fiveminutesmarket.outbox.dto.ContentDto;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.stereotype.Service;
