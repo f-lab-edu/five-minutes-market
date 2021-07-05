@@ -11,9 +11,15 @@ services:
       - fiveminutesmarket.env
     depends_on:
       - db
+      - redis
   db:
     image: mysql:5.7.34
     ports:
       - "3306:3306"
     env_file:
       - mysql.env
+  redis:
+    image: redis:latest
+    command: redis-server --port 6379
+    ports:
+      - 6379:6379
