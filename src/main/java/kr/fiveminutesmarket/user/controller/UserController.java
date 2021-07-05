@@ -1,6 +1,8 @@
 package kr.fiveminutesmarket.user.controller;
 
 import kr.fiveminutesmarket.common.dto.ResponseDto;
+import kr.fiveminutesmarket.common.dto.UserSessionDto;
+import kr.fiveminutesmarket.user.domain.User;
 import kr.fiveminutesmarket.user.dto.dispatch.mail.UserEmailRequestDto;
 import kr.fiveminutesmarket.user.dto.dispatch.mail.UserInfoDto;
 import kr.fiveminutesmarket.user.dto.request.SignInRequestDto;
@@ -51,7 +53,13 @@ public class UserController {
     @PostMapping("/signIn")
     @ResponseStatus(HttpStatus.OK)
     public ResponseDto<?> signIn(@Valid @RequestBody SignInRequestDto resource, HttpSession session) {
-        userService.signIn(resource, session);
+        User user = userService.signIn(resource, session);
+
+        UserSessionDto userSession
+                = new UserSessionDto(user.getEmail(), user.getSeller(), user.getRoleType());
+
+        session.setAttribute("user", userSession);
+
         return new ResponseDto<>(0);
     }
 
