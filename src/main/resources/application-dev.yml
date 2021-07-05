@@ -1,3 +1,6 @@
 spring:
   datasource:
     driver-class-name: net.sf.log4jdbc.sql.jdbcapi.DriverSpy
+  flyway:
+    baseline-on-migrate: true
+    baseline-version: 0
