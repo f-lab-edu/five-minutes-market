@@ -39,8 +39,7 @@ public class MessageRelayService {
      *  - 메일 발송: 발송완료되면 완료된 ResetKeyBox 리스트에 추가
      *  - ResetKeyBox 삭제: 완료된 ResetKeyBox 리스트를 기준으로 ResetKeyBox 테이블 내 데이터 삭제
      */
-    @Transactional
-    @Scheduled(cron = "0 */5 * * * *")
+    @Scheduled(cron = "*/10 * * * * *")
     public void schedulingResetPasswordMail() {
         List<ResetKeyBox> resetKeyBoxList = resetKeyBoxRepository.findAll();
         if (!resetKeyBoxList.isEmpty()) {
