@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="kr.fiveminutesmarket.user.repository.ResetKeyBoxRepository">
+    <insert id="insertResetKeyBox" parameterType="map" useGeneratedKeys="true" keyProperty="resetKeyBoxId">
+        INSERT INTO reset_key_box(reset_key, email, user_name, occurred_on)
+        VALUES (#{resetKeyBox.resetKey}, #{resetKeyBox.email}, #{resetKeyBox.userName}, #{resetKeyBox.occurredOn})
+    </insert>
+
+    <select id="findAll" resultType="kr.fiveminutesmarket.user.event.ResetKeyBox">
+        SELECT
+               reset_key_box_id,
+               reset_key,
+               email,
+               user_name,
+               occurred_on
+        FROM reset_key_box
+        ORDER BY reset_key_box_id
+    </select>
+
+    <delete id="deleteAllByResetKeyBoxId">
+        DELETE FROM reset_key_box
+        WHERE reset_key_box_id IN
+        <foreach collection="list" item="item" open="(" close=")" separator=",">
+            #{item}
+        </foreach>
+    </delete>
+</mapper>

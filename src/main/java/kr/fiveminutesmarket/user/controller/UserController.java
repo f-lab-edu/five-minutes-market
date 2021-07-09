@@ -3,15 +3,15 @@ package kr.fiveminutesmarket.user.controller;
 import kr.fiveminutesmarket.common.dto.ResponseDto;
 import kr.fiveminutesmarket.common.dto.UserSessionDto;
 import kr.fiveminutesmarket.user.domain.User;
-import kr.fiveminutesmarket.user.dto.dispatch.ContentDto;
 import kr.fiveminutesmarket.user.dto.dispatch.mail.UserEmailRequestDto;
 import kr.fiveminutesmarket.user.dto.dispatch.mail.UserInfoDto;
 import kr.fiveminutesmarket.user.dto.request.SignInRequestDto;
 import kr.fiveminutesmarket.user.dto.request.UserPasswordRequestDto;
 import kr.fiveminutesmarket.user.dto.request.UserRegistrationRequestDto;
 import kr.fiveminutesmarket.user.dto.response.UserResponseDto;
-import kr.fiveminutesmarket.user.service.*;
-import org.springframework.beans.factory.annotation.Qualifier;
+import kr.fiveminutesmarket.user.service.AuthService;
+import kr.fiveminutesmarket.user.service.UserPasswordResetService;
+import kr.fiveminutesmarket.user.service.UserService;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
@@ -27,23 +27,15 @@ public class UserController {
 
     private final UserService userService;
 
-    private final SendMailService sendMailService;
-
     private final AuthService authService;
-
-    private final ContentService mailContentService;
 
     private final UserPasswordResetService userPasswordResetService;
 
     public UserController(UserService userService,
-                          SendMailService sendMailService,
                           AuthService authService,
-                          @Qualifier("mailContentService") ContentService mailContentService,
                           UserPasswordResetService userPasswordResetService) {
         this.userService = userService;
-        this.sendMailService = sendMailService;
         this.authService = authService;
-        this.mailContentService = mailContentService;
         this.userPasswordResetService = userPasswordResetService;
     }
 
@@ -85,11 +77,7 @@ public class UserController {
     public ResponseDto<String> findPassword(@Valid @RequestBody UserEmailRequestDto resource) {
         // 해당 이메일이 존재하는지 여부 검토
         UserInfoDto userInfoDto = authService.findByEmail(resource.getEmail());
-        userPasswordResetService.saveResetKey(userInfoDto.getUserEmail());
-
-        // TODO: saveResetKey 안에서 Outbox 패턴을 이용한 메일 발송 eventual consistency 구현하기
-        // ContentDto mailContentDto = mailContentService.createContent(userInfoDto.getUserEmail(), userInfoDto.getUserName());
-        //sendMailService.sendMail(mailContentDto);
+        userPasswordResetService.saveResetKey(userInfoDto.getUserEmail(), userInfoDto.getUserName());
 
         return new ResponseDto<>(0, "비밀번호 초기화를 위한 이메일을 발송하였습니다.", resource.getEmail());
     }

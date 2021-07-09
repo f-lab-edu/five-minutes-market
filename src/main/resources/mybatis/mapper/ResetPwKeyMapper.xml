@@ -3,9 +3,9 @@
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="kr.fiveminutesmarket.user.repository.ResetPwKeyRepository">
-    <insert id="insertResetPwKey">
+    <insert id="insertResetPwKey" parameterType="map" useGeneratedKeys="true" keyProperty="resetPwKeyId">
         INSERT INTO reset_pw_key(reset_key, expire_date, email)
-        VALUES (#{key}, #{expiredDate}, #{email})
+        VALUES (#{resetPwKey.resetKey}, #{resetPwKey.expireDate}, #{resetPwKey.email})
     </insert>
 
     <select id="findByResetKey" resultType="kr.fiveminutesmarket.user.domain.ResetPwKey">

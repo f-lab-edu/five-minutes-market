@@ -1,11 +1,11 @@
 package kr.fiveminutesmarket.user.repository;
 
 import kr.fiveminutesmarket.user.domain.ResetPwKey;
-
-import java.time.LocalDateTime;
+import kr.fiveminutesmarket.user.event.ResetKeyBox;
+import org.apache.ibatis.annotations.Param;
 
 public interface ResetPwKeyRepository {
-    void insertResetPwKey(String key, LocalDateTime expiredDate, String email);
+    void insertResetPwKey(@Param("resetPwKey") ResetPwKey resetPwKey);
 
     ResetPwKey findByResetKey(String key);
 }
