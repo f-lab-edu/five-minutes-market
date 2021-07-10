@@ -1,4 +1,4 @@
-package kr.fiveminutesmarket.user.scheduler.message.mail;
+package kr.fiveminutesmarket.user.scheduler.mail;
 
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;

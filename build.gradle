@@ -1,6 +1,7 @@
 buildscript {
     ext {
         flywayVersion = '7.10.0'
+        shedlockVersion = '4.24.0'
     }
 }
 
@@ -47,6 +48,10 @@ dependencies {
 
     // main sender
     implementation 'org.springframework.boot:spring-boot-starter-mail'
+
+    // shedlock
+    implementation "net.javacrumbs.shedlock:shedlock-spring:${shedlockVersion}"
+    implementation "net.javacrumbs.shedlock:shedlock-provider-jdbc-template:${shedlockVersion}"
 
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
 }

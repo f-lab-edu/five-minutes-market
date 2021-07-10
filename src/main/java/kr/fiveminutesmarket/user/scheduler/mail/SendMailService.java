@@ -1,4 +1,4 @@
-package kr.fiveminutesmarket.user.scheduler.message.mail;
+package kr.fiveminutesmarket.user.scheduler.mail;
 
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
