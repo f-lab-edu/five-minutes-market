@@ -3,10 +3,6 @@ package kr.fiveminutesmarket.user.scheduler;
 import kr.fiveminutesmarket.user.event.ResetKeyBox;
 import kr.fiveminutesmarket.user.repository.ResetKeyBoxRepository;
 import net.javacrumbs.shedlock.spring.annotation.SchedulerLock;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.core.env.Environment;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 
@@ -14,20 +10,15 @@ import java.util.List;
 
 @Component
 public class MessageRelayScheduler {
-    private static final Logger logger = LoggerFactory.getLogger(MessageRelayScheduler.class);
 
     private final ResetKeyBoxRepository resetKeyBoxRepository;
 
     private final ResetKeyBoxProcessor resetKeyBoxProcessor;
 
-    private final Environment env;
-
     public MessageRelayScheduler(ResetKeyBoxRepository resetKeyBoxRepository,
-                                 ResetKeyBoxProcessor resetKeyBoxProcessor,
-                                 Environment env) {
+                                 ResetKeyBoxProcessor resetKeyBoxProcessor) {
         this.resetKeyBoxRepository = resetKeyBoxRepository;
         this.resetKeyBoxProcessor = resetKeyBoxProcessor;
-        this.env = env;
     }
 
     /**
@@ -39,10 +30,8 @@ public class MessageRelayScheduler {
     @Scheduled(cron = "*/10 * * * * *")
     @SchedulerLock(name = "scheduledSendingEmailTask", lockAtLeastFor = "9s", lockAtMostFor = "9s")
     public void schedulingResetPasswordMail() {
-        logger.info("##################### Server port : " + env.getProperty("local.server.port") + " Scheduling Start");
         List<ResetKeyBox> resetKeyBoxList = resetKeyBoxRepository.findAll();
         // 리스트 결과값 기준으로 not empty
         resetKeyBoxProcessor.processEachBoxesAndSendMail(resetKeyBoxList);
-        logger.info("##################### Server port : " + env.getProperty("local.server.port") + " Scheduling End");
     }
 }
