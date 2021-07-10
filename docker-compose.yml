@@ -1,12 +1,29 @@
 # docker-compose.yml
 version: "3.8"
 services:
-  app-server:
+  nginx:
+    image: nginx
+    container_name: nginx
+    ports:
+      - "80:80"
+    volumes:
+      - ./nginx/:/etc/nginx/conf.d/
+    depends_on:
+      - appserver1
+      - appserver2
+  appserver1:
     build:
       context: .
       dockerfile: Dockerfile
-    ports:
-      - "8080:8080"
+    env_file:
+      - fiveminutesmarket.env
+    depends_on:
+      - db
+      - redis
+  appserver2:
+    build:
+      context: .
+      dockerfile: Dockerfile
     env_file:
       - fiveminutesmarket.env
     depends_on:
@@ -22,4 +39,4 @@ services:
     image: redis:latest
     command: redis-server --port 6379
     ports:
-      - 6379:6379
+      - "6379:6379"
