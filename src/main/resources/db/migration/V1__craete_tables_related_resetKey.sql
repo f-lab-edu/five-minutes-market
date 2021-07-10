@@ -1,3 +1,4 @@
+DROP TABLE IF EXISTS `reset_pw_key`;
 DROP TABLE IF EXISTS `reset_key_box`;
 DROP TABLE IF EXISTS `shedlock`;
 
