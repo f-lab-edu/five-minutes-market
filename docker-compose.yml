@@ -1,0 +1,25 @@
+# docker-compose.yml
+version: "3.8"
+services:
+  app-server:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "8080:8080"
+    env_file:
+      - fiveminutesmarket.env
+    depends_on:
+      - db
+      - redis
+  db:
+    image: mysql:5.7.34
+    ports:
+      - "3306:3306"
+    env_file:
+      - mysql.env
+  redis:
+    image: redis:latest
+    command: redis-server --port 6379
+    ports:
+      - 6379:6379
