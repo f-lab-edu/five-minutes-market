@@ -11,4 +11,5 @@ ENTRYPOINT ["java", \
 "-Dspring.datasource.url=${SPRING_DATASOURCE_URL}", \
 "-Dmail.username=${MAIL_USERNAME}", \
 "-Dmail.password=${MAIL_PASSWORD}", \
+"-Dredis.host=${REDIS_HOST}", \
 "/app.jar"]

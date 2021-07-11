@@ -5,5 +5,5 @@ spring:
     baseline-on-migrate: true
     baseline-version: 0
   redis:
-    host: ${REDIS_HOST}
+    host: ${redis.host}
     port: 6379

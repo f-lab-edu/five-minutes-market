@@ -27,6 +27,8 @@ public class RedisConfig {
         redisTemplate.setHashKeySerializer(new StringRedisSerializer());
         redisTemplate.setHashValueSerializer(new StringRedisSerializer());
 
+        redisTemplate.setConnectionFactory(redisConnectionFactory);
+
         return redisTemplate;
     }
 
