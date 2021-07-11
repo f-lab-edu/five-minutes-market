@@ -1,5 +1,7 @@
 package kr.fiveminutesmarket.user.controller;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import kr.fiveminutesmarket.common.dto.ResponseDto;
 import kr.fiveminutesmarket.common.dto.UserSessionDto;
 import kr.fiveminutesmarket.user.domain.User;
@@ -12,6 +14,7 @@ import kr.fiveminutesmarket.user.dto.response.UserResponseDto;
 import kr.fiveminutesmarket.user.service.AuthService;
 import kr.fiveminutesmarket.user.service.UserPasswordResetService;
 import kr.fiveminutesmarket.user.service.UserService;
+import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
@@ -19,6 +22,7 @@ import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Map;
 
 
 @RestController
@@ -31,12 +35,20 @@ public class UserController {
 
     private final UserPasswordResetService userPasswordResetService;
 
+    private final RedisTemplate<String, Object> restTemplate;
+
+    private final ObjectMapper objectMapper;
+
     public UserController(UserService userService,
                           AuthService authService,
-                          UserPasswordResetService userPasswordResetService) {
+                          UserPasswordResetService userPasswordResetService,
+                          RedisTemplate<String, Object> restTemplate,
+                          ObjectMapper objectMapper) {
         this.userService = userService;
         this.authService = authService;
         this.userPasswordResetService = userPasswordResetService;
+        this.restTemplate = restTemplate;
+        this.objectMapper = objectMapper;
     }
 
     // 회원가입
@@ -58,6 +70,12 @@ public class UserController {
         UserSessionDto userSession
                 = new UserSessionDto(user.getEmail(), user.getSeller(), user.getRoleType());
 
+        try {
+            String json = objectMapper.writeValueAsString(objectMapper.convertValue(userSession, Map.class));
+            restTemplate.opsForHash().put("session", user.getEmail(), json);
+        } catch (JsonProcessingException e) {
+            e.printStackTrace();
+        }
         session.setAttribute("user", userSession);
 
         return new ResponseDto<>(0);
