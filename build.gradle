@@ -48,6 +48,9 @@ dependencies {
     // main sender
     implementation 'org.springframework.boot:spring-boot-starter-mail'
 
+    // AOP
+    implementation 'org.springframework.boot:spring-boot-starter-aop'
+
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
 }
 
