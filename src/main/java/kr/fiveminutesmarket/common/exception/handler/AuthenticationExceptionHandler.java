@@ -4,11 +4,11 @@ import kr.fiveminutesmarket.common.dto.ResponseDto;
 import kr.fiveminutesmarket.common.exception.errors.AuthenticationException;
 import kr.fiveminutesmarket.common.exception.errors.TokenNotExistedException;
 import org.springframework.http.HttpStatus;
-import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseStatus;
+import org.springframework.web.bind.annotation.RestControllerAdvice;
 
-@ControllerAdvice
+@RestControllerAdvice
 public class AuthenticationExceptionHandler {
 
     @ExceptionHandler(AuthenticationException.class)
