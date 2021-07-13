@@ -1,4 +1,4 @@
-package kr.fiveminutesmarket.common.exception;
+package kr.fiveminutesmarket.common.exception.errors;
 
 public class AuthenticationException extends RuntimeException {
 

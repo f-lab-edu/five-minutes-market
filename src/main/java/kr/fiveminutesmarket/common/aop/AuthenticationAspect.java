@@ -2,22 +2,29 @@ package kr.fiveminutesmarket.common.aop;
 
 import kr.fiveminutesmarket.common.annotation.Authentication;
 import kr.fiveminutesmarket.common.dto.UserSessionDto;
-import kr.fiveminutesmarket.common.exception.AuthenticationException;
+import kr.fiveminutesmarket.common.exception.errors.AuthenticationException;
+import kr.fiveminutesmarket.common.exception.errors.TokenNotExistedException;
+import kr.fiveminutesmarket.common.utils.RedisAuthUtils;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.reflect.MethodSignature;
-import org.springframework.core.annotation.Order;
 import org.springframework.stereotype.Component;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
 
-import javax.servlet.http.HttpSession;
 import java.lang.reflect.Method;
+import java.util.Optional;
 
 @Aspect
 @Component
 public class AuthenticationAspect {
+
+    private final RedisAuthUtils redisAuthUtils;
+
+    public AuthenticationAspect(RedisAuthUtils redisAuthUtils) {
+        this.redisAuthUtils = redisAuthUtils;
+    }
 
     @Around("@annotation(kr.fiveminutesmarket.common.annotation.Authentication)")
     public Object authenticationCheck(ProceedingJoinPoint joinPoint) throws Throwable {
@@ -25,8 +32,14 @@ public class AuthenticationAspect {
         Method method = signature.getMethod();
         Authentication auth = method.getAnnotation(Authentication.class);
 
-        HttpSession session = ((ServletRequestAttributes)(RequestContextHolder.currentRequestAttributes())).getRequest().getSession();
-        UserSessionDto userSession = (UserSessionDto)session.getAttribute("user");
+        Optional<String> bearerValue = Optional.ofNullable(
+                ((ServletRequestAttributes) (RequestContextHolder.currentRequestAttributes())).getRequest().getHeader("Authorization"));
+
+        if (bearerValue.isEmpty()) {
+            throw new TokenNotExistedException();
+        }
+
+        UserSessionDto userSession = redisAuthUtils.getSession(bearerValue.get());
 
         if (userSession == null) {
             throw new AuthenticationException("로그인이 필요합니다.");
