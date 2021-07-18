@@ -1,4 +1,4 @@
-package kr.fiveminutesmarket.errors;
+package kr.fiveminutesmarket.common.exception.handler;
 
 import kr.fiveminutesmarket.common.dto.ResponseDto;
 import org.springframework.http.HttpStatus;
