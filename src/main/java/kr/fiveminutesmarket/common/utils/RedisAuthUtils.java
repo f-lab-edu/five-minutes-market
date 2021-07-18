@@ -26,15 +26,14 @@ public class RedisAuthUtils {
         this.mapper = mapper;
     }
 
-    public UserSessionDto getSession(String bearerValue) {
-
-        String authKey = extractAuthKey(bearerValue);
+    public UserSessionDto getSession(String authKey) {
         String jsonResult = (String) redisTemplate.opsForValue().get(authKey);
 
         if (jsonResult != null) {
             try {
                 return mapper.readValue(jsonResult, UserSessionDto.class);
             } catch (JsonProcessingException e) {
+                redisTemplate.delete(authKey);
                 throw new JsonDeserializeFailedException();
             }
         }
@@ -56,17 +55,12 @@ public class RedisAuthUtils {
         return authKey;
     }
 
-    public void renewSessionExpire(UserSessionDto sessionDto, String bearerValue) {
-        String authKey = extractAuthKey(bearerValue);
+    public void renewSessionExpire(UserSessionDto sessionDto, String authKey) {
 
         if(sessionDto != null) {
             logger.info("Before 만료시간 연장: " + redisTemplate.getExpire(authKey, TimeUnit.SECONDS));
             redisTemplate.expire(authKey, 1800, TimeUnit.SECONDS);
             logger.info("After 만료시간 연장: " + redisTemplate.getExpire(authKey, TimeUnit.SECONDS));
         }
-    }
-
-    private String extractAuthKey(String key) {
-        return key.substring(7);
     }
 }

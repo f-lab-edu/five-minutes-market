@@ -19,7 +19,6 @@ import java.util.Optional;
 @Aspect
 @Component
 public class AuthenticationAspect {
-
     private final RedisAuthUtils redisAuthUtils;
 
     public AuthenticationAspect(RedisAuthUtils redisAuthUtils) {
@@ -32,14 +31,14 @@ public class AuthenticationAspect {
         Method method = signature.getMethod();
         Authentication auth = method.getAnnotation(Authentication.class);
 
-        Optional<String> bearerValue = Optional.ofNullable(
-                ((ServletRequestAttributes) (RequestContextHolder.currentRequestAttributes())).getRequest().getHeader("Authorization"));
+        String bearerValue =
+                ((ServletRequestAttributes) (RequestContextHolder.currentRequestAttributes())).getRequest().getHeader("Authorization");
 
-        if (bearerValue.isEmpty()) {
+        if (bearerValue == null) {
             throw new TokenNotExistedException();
         }
 
-        UserSessionDto userSession = redisAuthUtils.getSession(bearerValue.get());
+        UserSessionDto userSession = redisAuthUtils.getSession(bearerValue.substring(7));
 
         if (userSession == null) {
             throw new AuthenticationException("로그인이 필요합니다.");

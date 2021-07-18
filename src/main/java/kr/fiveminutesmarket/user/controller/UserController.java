@@ -68,7 +68,6 @@ public class UserController {
 
         String authKey = redisUtils.setSession(userSession);
 
-        response.setHeader("Authorization", "Bearer " + authKey);
         return new ResponseDto<>(0, "로그인에 성공하였습니다.", new TokenDto(authKey));
     }
 

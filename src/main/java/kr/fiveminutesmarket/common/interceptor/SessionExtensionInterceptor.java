@@ -24,7 +24,7 @@ public class SessionExtensionInterceptor implements HandlerInterceptor {
 
         // bearerValue 존재하지 않을 때 세션 연장 로직 패스
         bearerValue.ifPresent(bearer -> {
-            UserSessionDto sessionDto = redisUtils.getSession(bearer);
+            UserSessionDto sessionDto = redisUtils.getSession(bearer.substring(7));
             // 세션 만료시간 갱신
             redisUtils.renewSessionExpire(sessionDto, bearer);
         });
