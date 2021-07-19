@@ -10,6 +10,9 @@ public class UserSessionDto {
 
     private RoleType role;
 
+    public UserSessionDto() {
+    }
+
     public UserSessionDto(String email, Boolean seller, RoleType role) {
         this.email = email;
         this.seller = seller;
@@ -27,4 +30,5 @@ public class UserSessionDto {
     public RoleType getRole() {
         return role;
     }
+
 }
