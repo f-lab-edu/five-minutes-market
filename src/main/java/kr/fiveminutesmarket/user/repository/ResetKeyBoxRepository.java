@@ -12,5 +12,5 @@ public interface ResetKeyBoxRepository {
 
     List<ResetKeyBox> findAll();
 
-    void deleteByBoxId(Long resetKeyBoxId);
+    void deleteBoxesWithIds(List<Long> completedBoxesArray);
 }

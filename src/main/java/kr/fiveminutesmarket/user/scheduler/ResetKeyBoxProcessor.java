@@ -23,7 +23,9 @@ public class ResetKeyBoxProcessor {
 
     private final MailContentService mailContentService;
 
-    public ResetKeyBoxProcessor(ResetKeyBoxRepository resetKeyBoxRepository, SendMailService sendMailService, MailContentService mailContentService) {
+    public ResetKeyBoxProcessor(ResetKeyBoxRepository resetKeyBoxRepository,
+                                SendMailService sendMailService,
+                                MailContentService mailContentService) {
         this.resetKeyBoxRepository = resetKeyBoxRepository;
         this.sendMailService = sendMailService;
         this.mailContentService = mailContentService;
@@ -31,8 +33,10 @@ public class ResetKeyBoxProcessor {
 
     public void processEachBoxesAndSendMail(List<ResetKeyBox> resetKeyBoxList) {
         if (!resetKeyBoxList.isEmpty()) {
-            List<Long> resetKeyBoxCompletedList = new LinkedList<>();
-            resetKeyBoxList.forEach(resetKeyBox -> {
+            int totalSize = resetKeyBoxList.size();
+            int numberOfCompleted = 0;
+            List<Long> completedBoxesList = new LinkedList<>();
+            for (ResetKeyBox resetKeyBox : resetKeyBoxList) {
                 ContentDto mailContent = mailContentService.createContent(
                         resetKeyBox.getResetKey(),
                         resetKeyBox.getEmail(),
@@ -42,14 +46,23 @@ public class ResetKeyBoxProcessor {
                 try {
                     // 발송완료시 ResetKeyBox 단위별로 mail 전송 및 table delete 처리
                     sendMailService.sendMail(mailContent);
-                    resetKeyBoxRepository.deleteByBoxId(resetKeyBox.getResetKeyBoxId());
                     logger.info("#" + resetKeyBox.getResetKeyBoxId() + " ResetKeyBox에 대한 메일 발송 완료하였습니다.");
+
+                    completedBoxesList.add(resetKeyBox.getResetKeyBoxId());
+                    numberOfCompleted++;
+
+                    if (numberOfCompleted == 10 || numberOfCompleted == totalSize) {
+                        resetKeyBoxRepository.deleteBoxesWithIds(completedBoxesList);
+                        completedBoxesList.clear();
+                        totalSize -= numberOfCompleted;
+                        numberOfCompleted = 0;
+                    }
                 } catch (MailException e) {
                     logger.error("MailSender process 과정에서 문제가 발생하였습니다. Box Id: " + resetKeyBox.getResetKeyBoxId());
                 } catch (RuntimeException e) {
                     logger.error("#" + resetKeyBox.getResetKeyBoxId() + " ResetKeyBox 처리하는 과정에서 예기치 않은 에러가 발생하였습니다.");
                 }
-            });
+            }
         }
     }
 }
