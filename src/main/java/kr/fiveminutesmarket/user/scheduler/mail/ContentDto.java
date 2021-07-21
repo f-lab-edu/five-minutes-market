@@ -1,4 +1,4 @@
-package kr.fiveminutesmarket.user.scheduler.message.mail;
+package kr.fiveminutesmarket.user.scheduler.mail;
 
 public class ContentDto {
     private String to;

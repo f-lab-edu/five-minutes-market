@@ -17,9 +17,10 @@
                occurred_on
         FROM reset_key_box
         ORDER BY reset_key_box_id
+        LIMIT 0, 30;
     </select>
 
-    <delete id="deleteAllByResetKeyBoxId">
+    <delete id="deleteBoxesWithIds">
         DELETE FROM reset_key_box
         WHERE reset_key_box_id IN
         <foreach collection="list" item="item" open="(" close=")" separator=",">
