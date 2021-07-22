@@ -12,10 +12,10 @@ import java.util.Optional;
 @Component
 public class SessionExtensionInterceptor implements HandlerInterceptor {
 
-    private final RedisAuthUtils redisUtils;
+    private final RedisAuthUtils redisAuthUtils;
 
-    public SessionExtensionInterceptor(RedisAuthUtils redisUtils) {
-        this.redisUtils = redisUtils;
+    public SessionExtensionInterceptor(RedisAuthUtils redisAuthUtils) {
+        this.redisAuthUtils = redisAuthUtils;
     }
 
     @Override
@@ -24,9 +24,9 @@ public class SessionExtensionInterceptor implements HandlerInterceptor {
 
         // bearerValue 존재하지 않을 때 세션 연장 로직 패스
         bearerValue.ifPresent(bearer -> {
-            UserSessionDto sessionDto = redisUtils.getSession(bearer.substring(7));
+            UserSessionDto sessionDto = redisAuthUtils.getSession(bearer.substring(7));
             // 세션 만료시간 갱신
-            redisUtils.renewSessionExpire(sessionDto, bearer);
+            redisAuthUtils.renewSessionExpire(sessionDto, bearer.substring(7));
         });
 
         return true;

@@ -1,10 +1,10 @@
-package kr.fiveminutesmarket.user.security;
+package kr.fiveminutesmarket.common.security;
 
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.util.Random;
 
-public class SHA256PasswordEncoder implements JavaPasswordEncoder {
+public class SHA256PasswordEncoder implements JavaPasswordEncoder{
 
     @Override
     public String encode(String source, String salt) {

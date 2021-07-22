@@ -1,5 +1,6 @@
 package kr.fiveminutesmarket.user.controller;
 
+import kr.fiveminutesmarket.common.annotation.AuthUser;
 import kr.fiveminutesmarket.common.annotation.Authentication;
 import kr.fiveminutesmarket.common.dto.ResponseDto;
 import kr.fiveminutesmarket.common.dto.UserSessionDto;
@@ -72,11 +73,13 @@ public class UserController {
     }
 
     // 비밀번호 변경
-    @PutMapping("/password")
-    public ResponseDto<?> changePassword(@RequestBody UserPasswordRequestDto resource) {
-         userService.updatePassword(resource.getEmail(), resource.getPassword());
+    @PatchMapping("/password")
+    @Authentication
+    public ResponseDto<?> changePassword(@RequestBody UserPasswordRequestDto resource,
+                                         @AuthUser UserSessionDto userSessionDto) {
+        userService.updatePassword(userSessionDto.getEmail(), resource.getPassword());
 
-         return new ResponseDto<>(0, "성공적으로 비밀번호를 변경하였습니다.");
+        return new ResponseDto<>(0, "성공적으로 비밀번호를 변경하였습니다.");
     }
 
     // 비밀번호 찾기
