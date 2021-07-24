@@ -1,9 +1,10 @@
 package kr.fiveminutesmarket.common.security;
 
-import kr.fiveminutesmarket.common.annotation.AuthUser;
+import kr.fiveminutesmarket.common.annotation.LoginUser;
+import kr.fiveminutesmarket.common.dto.UserSessionDto;
+import kr.fiveminutesmarket.common.exception.errors.AuthenticationException;
+import kr.fiveminutesmarket.common.exception.errors.TokenNotExistedException;
 import kr.fiveminutesmarket.common.utils.RedisAuthUtils;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.core.MethodParameter;
 import org.springframework.web.bind.support.WebDataBinderFactory;
 import org.springframework.web.context.request.NativeWebRequest;
@@ -11,8 +12,6 @@ import org.springframework.web.method.support.HandlerMethodArgumentResolver;
 import org.springframework.web.method.support.ModelAndViewContainer;
 
 public class SecurityUserResolver implements HandlerMethodArgumentResolver {
-    private static final Logger logger = LoggerFactory.getLogger(SecurityUserResolver.class);
-
     private final RedisAuthUtils redisAuthUtils;
 
     public SecurityUserResolver(RedisAuthUtils redisAuthUtils) {
@@ -21,7 +20,7 @@ public class SecurityUserResolver implements HandlerMethodArgumentResolver {
 
     @Override
     public boolean supportsParameter(MethodParameter methodParameter) {
-        return methodParameter.hasParameterAnnotation(AuthUser.class);
+        return methodParameter.hasParameterAnnotation(LoginUser.class);
     }
 
     @Override
@@ -32,12 +31,16 @@ public class SecurityUserResolver implements HandlerMethodArgumentResolver {
 
         String bearerValue = webRequest.getHeader("Authorization");
 
-        logger.info("########## Authentication Parameter Object Injection ##########");
-
-        if (bearerValue != null) {
-            return redisAuthUtils.getSession(bearerValue.substring(7));
+        if (bearerValue == null) {
+            throw new TokenNotExistedException();
         }
 
-        return null;
+        UserSessionDto sessionDto = redisAuthUtils.getSession(bearerValue.substring(7));
+
+        if(sessionDto == null) {
+            throw new AuthenticationException("로그인이 필요합니다.");
+        }
+
+        return sessionDto;
     }
 }
