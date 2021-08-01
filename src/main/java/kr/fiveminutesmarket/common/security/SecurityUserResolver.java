@@ -1,6 +1,7 @@
 package kr.fiveminutesmarket.common.security;
 
 import kr.fiveminutesmarket.common.annotation.LoginUser;
+import kr.fiveminutesmarket.common.exception.errors.AuthenticationException;
 import org.springframework.core.MethodParameter;
 import org.springframework.web.bind.support.WebDataBinderFactory;
 import org.springframework.web.context.request.NativeWebRequest;
@@ -8,6 +9,7 @@ import org.springframework.web.method.support.HandlerMethodArgumentResolver;
 import org.springframework.web.method.support.ModelAndViewContainer;
 
 import javax.servlet.http.HttpServletRequest;
+import java.util.Optional;
 
 public class SecurityUserResolver implements HandlerMethodArgumentResolver {
 
@@ -25,6 +27,7 @@ public class SecurityUserResolver implements HandlerMethodArgumentResolver {
 
         HttpServletRequest request = (HttpServletRequest) webRequest.getNativeRequest();
 
-        return request.getAttribute("authSession");
+        return Optional.ofNullable(request.getAttribute("authSession"))
+                .orElseThrow(() -> new AuthenticationException("로그인이 필요합니다."));
     }
 }
