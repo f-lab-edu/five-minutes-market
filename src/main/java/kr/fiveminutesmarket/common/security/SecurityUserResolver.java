@@ -25,6 +25,6 @@ public class SecurityUserResolver implements HandlerMethodArgumentResolver {
 
         HttpServletRequest request = (HttpServletRequest) webRequest.getNativeRequest();
 
-        return request.getAttribute("auth");
+        return request.getAttribute("authSession");
     }
 }
