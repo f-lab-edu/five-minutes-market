@@ -16,27 +16,33 @@ public class AuthenticationInterceptor implements HandlerInterceptor {
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
 
         // 모든 handler가 method 타입이 아닐수도 있다.
-        if(!(handler instanceof HandlerMethod)){
+        if (!(handler instanceof HandlerMethod)) {
             return true;
         }
 
-        Authentication authAnnotation = ((HandlerMethod)handler).getMethodAnnotation(Authentication.class);
-
-        Optional<UserSessionDto> userSession
-                = Optional.ofNullable((UserSessionDto) request.getAttribute("authSession"));
+        Authentication authAnnotation = ((HandlerMethod) handler).getMethodAnnotation(Authentication.class);
 
         if (authAnnotation != null) {
-            userSession.orElseThrow(() -> new AuthenticationException("로그인이 필요합니다."));
+            UserSessionDto userSession = authenticateUser(request);
 
-            isSeller(userSession.get());
+            authorizeSeller(authAnnotation, userSession);
         }
 
         return true;
     }
 
-    private void isSeller(UserSessionDto userSession) {
-        if (userSession.getSeller() == null ||
-                !userSession.getSeller()) {
+    private UserSessionDto authenticateUser(HttpServletRequest request) {
+        UserSessionDto userSession
+                = (UserSessionDto) request.getAttribute("authSession");
+
+        if (userSession == null) throw new AuthenticationException("로그인이 필요합니다.");
+
+        return userSession;
+    }
+
+    private void authorizeSeller(Authentication authAnnotation, UserSessionDto userSession) {
+        if (authAnnotation.seller() &&
+                (userSession.getSeller() == null || !userSession.getSeller())) {
             throw new AuthenticationException("판매자 권한이 필요합니다.");
         }
     }

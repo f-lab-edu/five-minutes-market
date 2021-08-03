@@ -103,7 +103,7 @@ public class UserController {
 
     @GetMapping
     @ResponseStatus(HttpStatus.OK)
-    @Authentication(seller = true)
+    @Authentication
     public ResponseDto<List<UserResponseDto>> findAll() {
         return new ResponseDto<>(0, null, userService.findAll());
     }
