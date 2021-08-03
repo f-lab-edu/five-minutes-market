@@ -25,6 +25,7 @@ import org.springframework.test.web.servlet.ResultActions;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.*;
@@ -152,11 +153,11 @@ class UserControllerTest {
 
         doThrow(new ExpiredPasswordResetKeyException()).when(authService).isValidResetKey(any(), any());
 
-        final ResultActions resultActions = mockMvc.perform(
-                MockMvcRequestBuilders.get("/user/reset-password/testkey")
-        );
-
-        resultActions.andExpect(status().isInternalServerError());
+        assertThatThrownBy(() -> {
+            mockMvc.perform(
+                    MockMvcRequestBuilders.get("/user/reset-password/testkey")
+            );
+        }).hasCause(new ExpiredPasswordResetKeyException());
     }
 
     @Test
