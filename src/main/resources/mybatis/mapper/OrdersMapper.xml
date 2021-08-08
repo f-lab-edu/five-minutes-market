@@ -2,8 +2,8 @@
 <!DOCTYPE mapper
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="kr.fiveminutesmarket.order.repository.OrderRepository">
-    <resultMap id="orderResultMap" type="kr.fiveminutesmarket.order.domain.Order">
+<mapper namespace="kr.fiveminutesmarket.order.repository.OrdersRepository">
+    <resultMap id="ordersResultMap" type="kr.fiveminutesmarket.order.domain.Orders">
         <id property="orderId" column="order_id"  />
         <result property="totalPrice" column="total_price" />
         <result property="address" column="address" />
@@ -22,7 +22,7 @@
     </resultMap>
 
     <!--  사용자 관점에서의 주문 리스트 조회  -->
-    <select id="findAllByUserIdOrderByCreatedDate" resultMap="orderResultMap">
+    <select id="findAllByUserIdOrderByCreatedDate" resultMap="ordersResultMap">
         SELECT
             o.order_id AS order_id,
             o.total_price AS total_price,
@@ -37,7 +37,7 @@
             op.product_name AS product_name,
             op.amount AS amount,
             op.price AS price
-        FROM `order` o
+        FROM `orders` o
             INNER JOIN order_product op
                 ON o.order_id = op.order_id
         WHERE o.user_id = #{userId}

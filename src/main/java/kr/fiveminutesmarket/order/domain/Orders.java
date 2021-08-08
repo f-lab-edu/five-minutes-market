@@ -1,12 +1,9 @@
-package kr.fiveminutesmarket.order.dto;
-
-import kr.fiveminutesmarket.order.domain.OrderStatus;
-import kr.fiveminutesmarket.order.domain.Payment;
+package kr.fiveminutesmarket.order.domain;
 
 import java.time.LocalDateTime;
 import java.util.List;
 
-public class OrderByUserResponseDto {
+public class Orders {
 
     private Long orderId;
 
@@ -26,21 +23,21 @@ public class OrderByUserResponseDto {
 
     private Long userId;
 
-    private List<OrderProductResponseDto> orderProducts;
+    private List<OrderProduct> orderProducts;
 
-    public OrderByUserResponseDto() {
+    public Orders() {
     }
 
-    public OrderByUserResponseDto(Long orderId,
-                                  Integer totalPrice,
-                                  String address,
-                                  Payment payment,
-                                  OrderStatus orderStatus,
-                                  String message,
-                                  LocalDateTime createdDate,
-                                  LocalDateTime updatedDate,
-                                  Long userId,
-                                  List<OrderProductResponseDto> orderProducts) {
+    public Orders(Long orderId,
+                  Integer totalPrice,
+                  String address,
+                  Payment payment,
+                  OrderStatus orderStatus,
+                  String message,
+                  LocalDateTime createdDate,
+                  LocalDateTime updatedDate,
+                  Long userId,
+                  List<OrderProduct> orderProducts) {
         this.orderId = orderId;
         this.totalPrice = totalPrice;
         this.address = address;
@@ -89,7 +86,7 @@ public class OrderByUserResponseDto {
         return userId;
     }
 
-    public List<OrderProductResponseDto> getOrderProducts() {
+    public List<OrderProduct> getOrderProducts() {
         return orderProducts;
     }
 }
