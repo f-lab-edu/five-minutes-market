@@ -8,7 +8,7 @@ public class OrderProduct {
 
     private Integer amount;
 
-    private Integer price;
+    private Price price;
 
     private Long orderId;
 
@@ -19,7 +19,7 @@ public class OrderProduct {
         this.orderProductId = orderProductId;
         this.productName = productName;
         this.amount = amount;
-        this.price = price;
+        this.price = new Price(price);
         this.orderId = orderId;
     }
 
@@ -36,7 +36,7 @@ public class OrderProduct {
     }
 
     public Integer getPrice() {
-        return price;
+        return price.getPrice();
     }
 
     public Long getOrderId() {

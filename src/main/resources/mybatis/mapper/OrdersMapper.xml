@@ -17,7 +17,9 @@
             <id property="orderProductId" column="order_product_id" />
             <result property="productName" column="product_name" />
             <result property="amount" column="amount" />
-            <result property="price" column="price" />
+            <association property="price"  javaType="kr.fiveminutesmarket.order.domain.Price" >
+                <result property="price"  column="price" />
+            </association>
         </collection>
     </resultMap>
 
