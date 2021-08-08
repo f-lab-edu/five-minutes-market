@@ -1,12 +1,12 @@
 package kr.fiveminutesmarket.order.service;
 
-import kr.fiveminutesmarket.order.domain.Order;
+import kr.fiveminutesmarket.order.domain.Orders;
 import kr.fiveminutesmarket.order.domain.OrderProduct;
 import kr.fiveminutesmarket.order.domain.OrderStatus;
 import kr.fiveminutesmarket.order.domain.Payment;
-import kr.fiveminutesmarket.order.dto.OrderByUserResponseDto;
+import kr.fiveminutesmarket.order.dto.OrdersByUserResponseDto;
 import kr.fiveminutesmarket.order.dto.OrderProductResponseDto;
-import kr.fiveminutesmarket.order.repository.OrderRepository;
+import kr.fiveminutesmarket.order.repository.OrdersRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -24,12 +24,12 @@ import static org.mockito.BDDMockito.given;
 class OrderServiceTest {
 
     @InjectMocks
-    private OrderService orderService;
+    private OrdersService orderService;
 
     @Mock
-    private OrderRepository orderRepository;
+    private OrdersRepository orderRepository;
 
-    private List<Order> orders;
+    private List<Orders> orders;
 
     @BeforeEach
     public void setUp() {
@@ -54,7 +54,7 @@ class OrderServiceTest {
         orderProducts2.add(orderProduct3);
         orderProducts2.add(orderProduct4);
 
-        Order order1 = new Order(
+        Orders order1 = new Orders(
                 1L,
                 13_000,
                 "test address 1",
@@ -66,7 +66,7 @@ class OrderServiceTest {
                 1000L,
                 orderProducts1);
 
-        Order order2 = new Order(
+        Orders order2 = new Orders(
                 2L,
                 92_300,
                 "test address 2",
@@ -87,12 +87,12 @@ class OrderServiceTest {
     @Test
     @DisplayName("구매자 ID 기준 주문리스트 조회 테스트")
     public void getOrderListWithUserId() {
-        List<OrderByUserResponseDto> dtoList = orderService.getOrderListWithUserId(1000L, 0, 2);
+        List<OrdersByUserResponseDto> dtoList = orderService.getOrderListWithUserId(1000L, 0, 2);
 
         compareOrderDtoListWithGivenOrder(dtoList);
     }
 
-    private void compareOrderDtoListWithGivenOrder(List<OrderByUserResponseDto> dtoList) {
+    private void compareOrderDtoListWithGivenOrder(List<OrdersByUserResponseDto> dtoList) {
         for (int i = 0; i < dtoList.size(); i++) {
             assertThat(dtoList.get(i).getOrderId()).isEqualTo(orders.get(i).getOrderId());
             assertThat(dtoList.get(i).getTotalPrice()).isEqualTo(orders.get(i).getTotalPrice());
