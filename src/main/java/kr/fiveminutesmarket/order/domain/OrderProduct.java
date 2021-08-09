@@ -6,7 +6,7 @@ public class OrderProduct {
 
     private String productName;
 
-    private Integer amount;
+    private Amount amount;
 
     private Price price;
 
@@ -18,7 +18,7 @@ public class OrderProduct {
     public OrderProduct(Long orderProductId, String productName, Integer amount, Integer price, Long orderId) {
         this.orderProductId = orderProductId;
         this.productName = productName;
-        this.amount = amount;
+        this.amount = new Amount(amount);
         this.price = new Price(price);
         this.orderId = orderId;
     }
@@ -32,7 +32,7 @@ public class OrderProduct {
     }
 
     public Integer getAmount() {
-        return amount;
+        return amount.getAmount();
     }
 
     public Integer getPrice() {
