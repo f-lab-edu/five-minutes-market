@@ -11,7 +11,7 @@ class AmountTest {
 
     @ParameterizedTest
     @ValueSource(ints = {-1, -2, -3})
-    @DisplayName("")
+    @DisplayName("수량이 0 보다 적을 시 예외 발생")
     void amountInitializationThrowsExceptionTest(int value) {
         assertThatExceptionOfType(IllegalArgumentException.class)
                 .isThrownBy(() -> {

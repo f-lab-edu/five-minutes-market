@@ -13,7 +13,7 @@ class PriceTest {
 
     @ParameterizedTest
     @ValueSource(ints = {-1, -2, -3})
-    @DisplayName("")
+    @DisplayName("가격이 0보다 작을시 예외 발생")
     void priceInitializationThrowsExceptionTest(int value) {
         assertThatExceptionOfType(IllegalArgumentException.class)
                 .isThrownBy(() -> {
