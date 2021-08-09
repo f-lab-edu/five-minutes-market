@@ -2,7 +2,7 @@ package kr.fiveminutesmarket.order.domain;
 
 public class Price {
 
-    private Integer price;
+    private final Integer price;
 
     public Price(Integer price) {
         if (price < 0) {
@@ -14,9 +14,5 @@ public class Price {
 
     public int getPrice() {
         return price;
-    }
-
-    public void setPrice(Integer price) {
-        this.price = price;
     }
 }
