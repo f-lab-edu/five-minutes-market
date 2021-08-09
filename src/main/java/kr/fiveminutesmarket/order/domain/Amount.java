@@ -2,6 +2,9 @@ package kr.fiveminutesmarket.order.domain;
 
 public class Amount {
 
+    private static final int MINIMUM_AMOUNT = 0;
+    private static final String AMOUNT_VALID_EXCEPTION_MESSAGE = "수량은 " + MINIMUM_AMOUNT + "보다 작을수 없습니다.";
+
     private final Integer amount;
 
     public Amount(Integer amount) {
@@ -11,8 +14,8 @@ public class Amount {
     }
 
     private void validate(Integer amount) {
-        if (amount < 0) {
-            throw new IllegalArgumentException("수량은 0보다 작을수 없습니다.");
+        if (amount < MINIMUM_AMOUNT) {
+            throw new IllegalArgumentException(AMOUNT_VALID_EXCEPTION_MESSAGE);
         }
     }
 
