@@ -13,7 +13,7 @@ public class Orders {
 
     private Payment payment;
 
-    private OrderStatus orderStatus;
+    private OrderStatusUnit orderStatusUnit;
 
     private String message;
 
@@ -32,7 +32,7 @@ public class Orders {
                   Integer totalPrice,
                   String address,
                   Payment payment,
-                  OrderStatus orderStatus,
+                  OrderStatusUnit orderStatusUnit,
                   String message,
                   LocalDateTime createdDate,
                   LocalDateTime updatedDate,
@@ -42,7 +42,7 @@ public class Orders {
         this.totalPrice = totalPrice;
         this.address = address;
         this.payment = payment;
-        this.orderStatus = orderStatus;
+        this.orderStatusUnit = orderStatusUnit;
         this.message = message;
         this.createdDate = createdDate;
         this.updatedDate = updatedDate;
@@ -66,8 +66,8 @@ public class Orders {
         return payment;
     }
 
-    public OrderStatus getOrderStatus() {
-        return orderStatus;
+    public OrderStatusUnit getOrderStatusUnit() {
+        return orderStatusUnit;
     }
 
     public String getMessage() {
