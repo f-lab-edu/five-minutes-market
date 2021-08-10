@@ -74,6 +74,7 @@ public class UserController {
 
     // 비밀번호 변경
     @PatchMapping("/password")
+    @ResponseStatus(HttpStatus.OK)
     public ResponseDto<?> changePassword(@RequestBody UserPasswordRequestDto resource,
                                          @LoginUser UserSessionDto userSessionDto) {
         userService.updatePassword(userSessionDto.getEmail(), resource.getPassword());

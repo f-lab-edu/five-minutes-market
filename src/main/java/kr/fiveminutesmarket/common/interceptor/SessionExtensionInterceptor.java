@@ -2,13 +2,16 @@ package kr.fiveminutesmarket.common.interceptor;
 
 import kr.fiveminutesmarket.common.dto.UserSessionDto;
 import kr.fiveminutesmarket.common.utils.RedisAuthUtils;
+import org.springframework.util.StringUtils;
 import org.springframework.web.servlet.HandlerInterceptor;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.util.Optional;
 
 public class SessionExtensionInterceptor implements HandlerInterceptor {
+    private static final String AUTHORIZATION_HEADER = "Authorization";
+
+    private static final int BEARER_PREFIX_COUNT = 7;
 
     private final RedisAuthUtils redisAuthUtils;
 
@@ -18,19 +21,26 @@ public class SessionExtensionInterceptor implements HandlerInterceptor {
 
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
-        Optional<String> bearerValue = Optional.ofNullable(request.getHeader("Authorization"));
+        String token = extractToken(request);
 
-        bearerValue.ifPresent(bearer -> {
-            String bearerToken = bearer.substring(7);
-            UserSessionDto userSession = redisAuthUtils.getSession(bearerToken);
+        if (token != null) {
+            UserSessionDto userSession = redisAuthUtils.getSession(token);
             // 세션 만료시간 갱신
-            redisAuthUtils.renewSessionExpire(userSession, bearerToken);
+            redisAuthUtils.renewSessionExpire(userSession, token);
             // interceptor 전달을 위한 처리
             request.setAttribute("authSession", userSession);
-        });
+        }
 
         return true;
     }
 
+    // Bearer Prefix를 가진 토큰 추출
+    private String extractToken(HttpServletRequest request) {
+        String bearerToken = request.getHeader(AUTHORIZATION_HEADER);
+        if (StringUtils.hasText(bearerToken) && bearerToken.startsWith("Bearer ")) {
+            return bearerToken.substring(BEARER_PREFIX_COUNT);
+        }
 
+        return null;
+    }
 }
