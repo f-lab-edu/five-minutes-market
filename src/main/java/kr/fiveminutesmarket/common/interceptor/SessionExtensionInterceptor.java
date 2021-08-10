@@ -23,7 +23,7 @@ public class SessionExtensionInterceptor implements HandlerInterceptor {
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
         String token = extractToken(request);
 
-        if (token != null) {
+        if (StringUtils.hasText(token)) {
             UserSessionDto userSession = redisAuthUtils.getSession(token);
             // 세션 만료시간 갱신
             redisAuthUtils.renewSessionExpire(userSession, token);
