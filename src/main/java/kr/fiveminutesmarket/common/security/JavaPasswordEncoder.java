@@ -1,4 +1,4 @@
-package kr.fiveminutesmarket.user.security;
+package kr.fiveminutesmarket.common.security;
 
 public interface JavaPasswordEncoder {
     String encode(String password, String salt);

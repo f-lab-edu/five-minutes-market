@@ -1,5 +1,6 @@
 package kr.fiveminutesmarket.user.service;
 
+import kr.fiveminutesmarket.common.security.JavaPasswordEncoder;
 import kr.fiveminutesmarket.user.domain.RoleType;
 import kr.fiveminutesmarket.user.domain.User;
 import kr.fiveminutesmarket.user.dto.request.SignInRequestDto;
@@ -11,7 +12,6 @@ import kr.fiveminutesmarket.user.error.exception.UserEmailExistedException;
 import kr.fiveminutesmarket.user.error.exception.UserNotFoundException;
 import kr.fiveminutesmarket.user.repository.RoleTypeRepository;
 import kr.fiveminutesmarket.user.repository.UserRepository;
-import kr.fiveminutesmarket.user.security.JavaPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
