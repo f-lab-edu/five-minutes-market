@@ -3,7 +3,7 @@ package kr.fiveminutesmarket.order.service;
 import kr.fiveminutesmarket.order.domain.Orders;
 import kr.fiveminutesmarket.order.domain.OrderProduct;
 import kr.fiveminutesmarket.order.domain.OrderStatus;
-import kr.fiveminutesmarket.order.domain.Payment;
+import kr.fiveminutesmarket.order.domain.PaymentMethod;
 import kr.fiveminutesmarket.order.dto.OrdersByUserResponseDto;
 import kr.fiveminutesmarket.order.dto.OrderProductResponseDto;
 import kr.fiveminutesmarket.order.repository.OrdersRepository;
@@ -58,7 +58,7 @@ class OrderServiceTest {
                 1L,
                 13_000,
                 "test address 1",
-                Payment.CREDIT,
+                PaymentMethod.CREDIT,
                 OrderStatus.COMPLETED,
                 "test message 1",
                 LocalDateTime.of(2021, 8, 1, 11, 10),
@@ -70,7 +70,7 @@ class OrderServiceTest {
                 2L,
                 92_300,
                 "test address 2",
-                Payment.CHECK,
+                PaymentMethod.KAKAOPAY,
                 OrderStatus.DELIVERY,
                 "test message 2",
                 LocalDateTime.of(2021, 7, 29, 14, 20),

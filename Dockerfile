@@ -9,6 +9,7 @@ ENTRYPOINT ["java", \
 "-jar", \
 "-Dspring.profiles.active=${PROFILE_OPTION}", \
 "-Dspring.datasource.url=${SPRING_DATASOURCE_URL}", \
+"-Dkakao.admin.token=${KAKAO_ADMIN_TOKEN}", \
 "-Dmail.username=${MAIL_USERNAME}", \
 "-Dmail.password=${MAIL_PASSWORD}", \
 "-Dredis.host=${REDIS_HOST}", \

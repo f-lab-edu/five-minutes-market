@@ -11,7 +11,7 @@ public class Orders {
 
     private String address;
 
-    private Payment payment;
+    private PaymentMethod payment;
 
     private OrderStatus orderStatus;
 
@@ -31,7 +31,7 @@ public class Orders {
     public Orders(Long orderId,
                   Integer totalPrice,
                   String address,
-                  Payment payment,
+                  PaymentMethod payment,
                   OrderStatus orderStatus,
                   String message,
                   LocalDateTime createdDate,
@@ -62,7 +62,7 @@ public class Orders {
         return address;
     }
 
-    public Payment getPayment() {
+    public PaymentMethod getPayment() {
         return payment;
     }
 
