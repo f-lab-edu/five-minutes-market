@@ -11,3 +11,4 @@ spring:
 kakao:
   admin:
     token: ${kakao.admin.token}
+  redirect_domain: http://localhost

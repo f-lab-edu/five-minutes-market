@@ -27,6 +27,9 @@ public class KakaopayPayment implements Payment{
     @Value("${kakao.admin.token}")
     private String token;
 
+    @Value("kakao.redirect_domain")
+    private String domain;
+
     public String payment(Orders orders) {
         RestTemplate restTemplate = new RestTemplate();
 
@@ -44,9 +47,9 @@ public class KakaopayPayment implements Payment{
         params.add("quantity", "1");
         params.add("total_amount", "5000");
         params.add("tax_free_amount", "500");
-        params.add("approval_url", "http://localhost/orders/payments/kakaopay/success");
-        params.add("cancel_url", "http://localhost/orders/payments/kakaopay/cancel");
-        params.add("fail_url", "http://localhost/orders/payments/kakaopay/fail");
+        params.add("approval_url", domain + "/orders/payments/kakaopay/success");
+        params.add("cancel_url", domain + "/orders/payments/kakaopay/cancel");
+        params.add("fail_url", domain + "/orders/payments/kakaopay/fail");
 
 
         HttpEntity<MultiValueMap<String, String>> body = new HttpEntity<MultiValueMap<String, String>>(params, headers);
