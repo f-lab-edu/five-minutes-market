@@ -23,11 +23,12 @@ class OrderStatusTest {
         OrderStatus targetStatus = OrderStatus.PAYMENT_WAITING;
         OrderStatus currentStatus = OrderStatus.ARRIVAL;
 
-        Throwable thrown = catchThrowable(() -> {
-            currentStatus.validate(targetStatus.getStatus());
-        });
+        Throwable thrown = catchThrowable(() ->
+                currentStatus.validate(targetStatus.getStatus())
+        );
 
-        assertThat(thrown).isInstanceOf(RuntimeException.class)
+        assertThat(thrown)
+                .isInstanceOf(OrderStatus.OrderStatusNotPossibleConvertException.class)
                 .hasMessageContaining("\"" +
                         currentStatus.getStatus() +
                         "\" 상태에서 \"" +

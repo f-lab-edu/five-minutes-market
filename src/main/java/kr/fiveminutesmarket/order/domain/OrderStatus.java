@@ -38,7 +38,7 @@ public enum OrderStatus {
             throw new OrderStatusNotPossibleConvertException(status, convertedTo);
     }
 
-    private static class OrderStatusNotPossibleConvertException extends RuntimeException {
+    public static class OrderStatusNotPossibleConvertException extends RuntimeException {
         OrderStatusNotPossibleConvertException(String fromStatus, String toStatus) {
             super("\"" + fromStatus + "\" 상태에서 \"" + toStatus + "\" 상태로 전환하는 것은 불가능합니다.");
         }
