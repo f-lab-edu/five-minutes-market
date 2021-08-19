@@ -12,9 +12,7 @@
         <result property="createdDate" column="created_date" />
         <result property="updatedDate" column="updated_date" />
         <result property="userId" column="user_id" />
-        <association property="orderStatusUnit" javaType="kr.fiveminutesmarket.order.domain.OrderStatusUnit">
-            <result property="orderStatus" column="order_status"/>
-        </association>
+        <result property="orderStatus" column="order_status" />
         <collection property="orderProducts" ofType="kr.fiveminutesmarket.order.domain.OrderProduct">
             <id property="orderProductId" column="order_product_id" />
             <result property="productName" column="product_name" />

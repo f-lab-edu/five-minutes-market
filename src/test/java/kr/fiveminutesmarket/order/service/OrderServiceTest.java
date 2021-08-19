@@ -51,18 +51,11 @@ class OrderServiceTest {
         orderProducts2.add(orderProduct3);
         orderProducts2.add(orderProduct4);
 
-        OrderStatusUnit orderStatus1 = OrderStatusUnit.initialize();    // COMPLETED
-        orderStatus1.nextStep();                                        // WAITING
-        OrderStatusUnit orderStatus2 = OrderStatusUnit.initialize();
-        orderStatus2.nextStep();
-        orderStatus2.nextStep();
-
         Orders order1 = new Orders(
                 1L,
                 13_000,
                 "test address 1",
                 Payment.CREDIT,
-                orderStatus1,
                 "test message 1",
                 LocalDateTime.of(2021, 8, 1, 11, 10),
                 LocalDateTime.of(2021, 8, 1, 15, 20),
@@ -74,7 +67,6 @@ class OrderServiceTest {
                 92_300,
                 "test address 2",
                 Payment.CHECK,
-                orderStatus2,
                 "test message 2",
                 LocalDateTime.of(2021, 7, 29, 14, 20),
                 LocalDateTime.of(2021, 7, 31, 17, 50),
@@ -100,7 +92,7 @@ class OrderServiceTest {
             assertThat(dtoList.get(i).getOrderId()).isEqualTo(orders.get(i).getOrderId());
             assertThat(dtoList.get(i).getTotalPrice()).isEqualTo(orders.get(i).getTotalPrice());
             assertThat(dtoList.get(i).getPayment()).isEqualTo(orders.get(i).getPayment());
-            assertThat(dtoList.get(i).getOrderStatus()).isEqualTo(orders.get(i).getOrderStatusUnit().getStatus());
+            assertThat(dtoList.get(i).getOrderStatus()).isEqualTo(orders.get(i).getOrderStatus());
             assertThat(dtoList.get(i).getUserId()).isEqualTo(orders.get(i).getUserId());
 
             compareOrderProductDtoListListWithGivenOrderProduct(

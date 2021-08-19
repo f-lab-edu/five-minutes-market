@@ -33,7 +33,7 @@ public class OrdersService {
                 orders.getTotalPrice(),
                 orders.getAddress(),
                 orders.getPayment(),
-                orders.getOrderStatusUnit(),
+                orders.getOrderStatus(),
                 orders.getMessage(),
                 orders.getCreatedDate(),
                 orders.getUpdatedDate(),

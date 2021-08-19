@@ -13,7 +13,7 @@ public class Orders {
 
     private Payment payment;
 
-    private OrderStatusUnit orderStatusUnit;
+    private OrderStatus orderStatus;
 
     private String message;
 
@@ -32,7 +32,6 @@ public class Orders {
                   Integer totalPrice,
                   String address,
                   Payment payment,
-                  OrderStatusUnit orderStatusUnit,
                   String message,
                   LocalDateTime createdDate,
                   LocalDateTime updatedDate,
@@ -42,7 +41,7 @@ public class Orders {
         this.totalPrice = totalPrice;
         this.address = address;
         this.payment = payment;
-        this.orderStatusUnit = orderStatusUnit;
+        this.orderStatus = OrderStatus.COMPLETED;
         this.message = message;
         this.createdDate = createdDate;
         this.updatedDate = updatedDate;
@@ -66,8 +65,8 @@ public class Orders {
         return payment;
     }
 
-    public OrderStatusUnit getOrderStatusUnit() {
-        return orderStatusUnit;
+    public OrderStatus getOrderStatus() {
+        return orderStatus;
     }
 
     public String getMessage() {
@@ -88,5 +87,19 @@ public class Orders {
 
     public List<OrderProduct> getOrderProducts() {
         return orderProducts;
+    }
+
+    public void updateOrderStatus(OrderStatus changeToStatus) {
+        validate(orderStatus, changeToStatus);
+        orderStatus = changeToStatus;
+    }
+
+    /**
+     * 현재 주문상태에서 갱신하고자하는 주문상태로 전환 가능한지 타당성 여부 검토
+     * @param from 현재 주문상태
+     * @param to 갱신하고자 하는 주문상태
+     */
+    private void validate(OrderStatus from, OrderStatus to) {
+        from.validate(to.getStatus());
     }
 }
