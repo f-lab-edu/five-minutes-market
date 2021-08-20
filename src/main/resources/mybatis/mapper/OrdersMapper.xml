@@ -22,19 +22,12 @@
                 <arg column="order_id" javaType="Long"/>
             </constructor>
             <id property="orderProductId" column="order_product_id" />
-            <association property="productInfo"  javaType="kr.fiveminutesmarket.order.domain.ProductInfo" >
-                <constructor>
-                    <arg column="product_name" javaType="String"/>
-                    <arg column="product_amount" javaType="Integer"/>
-                    <arg column="product_price" javaType="Integer"/>
-                </constructor>
-                <result property="productName" column="product_name" />
-                <association property="amount"  javaType="kr.fiveminutesmarket.order.domain.Amount" >
-                    <result property="amount"  column="product_amount" />
-                </association>
-                <association property="price"  javaType="kr.fiveminutesmarket.order.domain.Price" >
-                    <result property="price"  column="product_price" />
-                </association>
+            <result property="productName" column="product_name" />
+            <association property="amount"  javaType="kr.fiveminutesmarket.order.domain.Amount" >
+                <result property="amount"  column="product_amount" />
+            </association>
+            <association property="price"  javaType="kr.fiveminutesmarket.order.domain.Price" >
+                <result property="price"  column="product_price" />
             </association>
         </collection>
     </resultMap>
