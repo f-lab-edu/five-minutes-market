@@ -7,7 +7,6 @@
         <id property="orderId" column="order_id"  />
         <result property="totalPrice" column="total_price" />
         <result property="address" column="address" />
-        <result property="payment" column="payment" />
         <result property="message" column="message" />
         <result property="createdDate" column="created_date" />
         <result property="updatedDate" column="updated_date" />
@@ -27,7 +26,6 @@
             o.order_id AS order_id,
             o.total_price AS total_price,
             o.address AS address,
-            o.payment AS payment,
             o.order_status AS order_status,
             o.message AS message,
             o.created_date AS created_date,

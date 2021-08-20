@@ -14,8 +14,6 @@ public class OrdersByUserResponseDto {
 
     private String address;
 
-    private Payment payment;
-
     private OrderStatus orderStatus;
 
     private String message;
@@ -34,7 +32,6 @@ public class OrdersByUserResponseDto {
     public OrdersByUserResponseDto(Long orderId,
                                    Integer totalPrice,
                                    String address,
-                                   Payment payment,
                                    OrderStatus orderStatus,
                                    String message,
                                    LocalDateTime createdDate,
@@ -44,7 +41,6 @@ public class OrdersByUserResponseDto {
         this.orderId = orderId;
         this.totalPrice = totalPrice;
         this.address = address;
-        this.payment = payment;
         this.orderStatus = orderStatus;
         this.message = message;
         this.createdDate = createdDate;
@@ -63,10 +59,6 @@ public class OrdersByUserResponseDto {
 
     public String getAddress() {
         return address;
-    }
-
-    public Payment getPayment() {
-        return payment;
     }
 
     public OrderStatus getOrderStatus() {

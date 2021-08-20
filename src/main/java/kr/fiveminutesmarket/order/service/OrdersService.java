@@ -32,7 +32,6 @@ public class OrdersService {
                 orders.getOrderId(),
                 orders.getTotalPrice(),
                 orders.getAddress(),
-                orders.getPayment(),
                 orders.getOrderStatus(),
                 orders.getMessage(),
                 orders.getCreatedDate(),

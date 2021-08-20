@@ -33,9 +33,8 @@ public enum OrderStatus {
         return status;
     }
 
-    public void validate(String convertedTo) {
-        if(!covertToList.contains(convertedTo))
-            throw new OrderStatusNotPossibleConvertException(status, convertedTo);
+    public Set<String> getCovertToList() {
+        return covertToList;
     }
 
     public static class OrderStatusNotPossibleConvertException extends RuntimeException {
