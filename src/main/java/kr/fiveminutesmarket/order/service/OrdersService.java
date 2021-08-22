@@ -1,9 +1,9 @@
 package kr.fiveminutesmarket.order.service;
 
-import kr.fiveminutesmarket.order.domain.Orders;
 import kr.fiveminutesmarket.order.domain.OrderProduct;
-import kr.fiveminutesmarket.order.dto.OrdersByUserResponseDto;
+import kr.fiveminutesmarket.order.domain.Orders;
 import kr.fiveminutesmarket.order.dto.OrderProductResponseDto;
+import kr.fiveminutesmarket.order.dto.OrdersByUserResponseDto;
 import kr.fiveminutesmarket.order.repository.OrdersRepository;
 import org.springframework.stereotype.Service;
 
@@ -32,7 +32,6 @@ public class OrdersService {
                 orders.getOrderId(),
                 orders.getTotalPrice(),
                 orders.getAddress(),
-                orders.getPayment(),
                 orders.getOrderStatus(),
                 orders.getMessage(),
                 orders.getCreatedDate(),

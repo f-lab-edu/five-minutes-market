@@ -2,6 +2,7 @@ package kr.fiveminutesmarket.order.domain;
 
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Set;
 
 public class Orders {
 
@@ -10,8 +11,6 @@ public class Orders {
     private Integer totalPrice;
 
     private String address;
-
-    private PaymentMethod payment;
 
     private OrderStatus orderStatus;
 
@@ -31,7 +30,6 @@ public class Orders {
     public Orders(Long orderId,
                   Integer totalPrice,
                   String address,
-                  PaymentMethod payment,
                   OrderStatus orderStatus,
                   String message,
                   LocalDateTime createdDate,
@@ -41,8 +39,7 @@ public class Orders {
         this.orderId = orderId;
         this.totalPrice = totalPrice;
         this.address = address;
-        this.payment = payment;
-        this.orderStatus = orderStatus;
+        this.orderStatus = OrderStatus.PAYMENT_WAITING;
         this.message = message;
         this.createdDate = createdDate;
         this.updatedDate = updatedDate;
@@ -60,10 +57,6 @@ public class Orders {
 
     public String getAddress() {
         return address;
-    }
-
-    public PaymentMethod getPayment() {
-        return payment;
     }
 
     public OrderStatus getOrderStatus() {
@@ -88,5 +81,61 @@ public class Orders {
 
     public List<OrderProduct> getOrderProducts() {
         return orderProducts;
+    }
+
+    public void canceled() {
+        OrderStatus canceledStatus = OrderStatus.CANCELED;
+
+        validateConverting(orderStatus, canceledStatus);
+        orderStatus = canceledStatus;
+    }
+
+    public void arrivalDelivery() {
+        OrderStatus arrivalStatus = OrderStatus.ARRIVAL;
+
+        validateConverting(orderStatus, arrivalStatus);
+        orderStatus = arrivalStatus;
+    }
+
+    public void onDelivery() {
+        OrderStatus onDeliveryStatus = OrderStatus.DELIVERY;
+
+        validateConverting(orderStatus, onDeliveryStatus);
+        orderStatus = onDeliveryStatus;
+    }
+
+    public void productArranged() {
+        OrderStatus arrangedStatus = OrderStatus.ARRANGED;
+
+        validateConverting(orderStatus, arrangedStatus);
+        orderStatus = arrangedStatus;
+    }
+
+    public void paymentCompleted() {
+        OrderStatus paymentCompletedStatus = OrderStatus.PAYMENT_COMPLETED;
+
+        validateConverting(orderStatus, paymentCompletedStatus);
+        orderStatus = paymentCompletedStatus;
+    }
+
+    public void paymentWaiting() {
+        OrderStatus paymentWaiting = OrderStatus.PAYMENT_WAITING;
+
+        validateConverting(orderStatus, paymentWaiting);
+        orderStatus = paymentWaiting;
+    }
+
+    /**
+     * 현재 주문상태에서 갱신하고자하는 주문상태로 전환 가능한지 타당성 여부 검토
+     * @param from 현재 주문상태
+     * @param to 갱신하고자 하는 주문상태
+     */
+    private void validateConverting(OrderStatus from, OrderStatus to) {
+        Set<String> convertToList = from.getCovertToList();
+        String convertingTargetStatus = to.getStatus();
+
+        if (!convertToList.contains(convertingTargetStatus)) {
+            throw new OrderStatus.OrderStatusNotPossibleConvertException(from.getStatus(), to.getStatus());
+        }
     }
 }

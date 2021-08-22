@@ -1,7 +1,6 @@
 package kr.fiveminutesmarket.order.dto;
 
 import kr.fiveminutesmarket.order.domain.OrderStatus;
-import kr.fiveminutesmarket.order.domain.PaymentMethod;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -13,8 +12,6 @@ public class OrdersByUserResponseDto {
     private Integer totalPrice;
 
     private String address;
-
-    private PaymentMethod payment;
 
     private OrderStatus orderStatus;
 
@@ -34,7 +31,6 @@ public class OrdersByUserResponseDto {
     public OrdersByUserResponseDto(Long orderId,
                                    Integer totalPrice,
                                    String address,
-                                   PaymentMethod payment,
                                    OrderStatus orderStatus,
                                    String message,
                                    LocalDateTime createdDate,
@@ -44,7 +40,6 @@ public class OrdersByUserResponseDto {
         this.orderId = orderId;
         this.totalPrice = totalPrice;
         this.address = address;
-        this.payment = payment;
         this.orderStatus = orderStatus;
         this.message = message;
         this.createdDate = createdDate;
@@ -63,10 +58,6 @@ public class OrdersByUserResponseDto {
 
     public String getAddress() {
         return address;
-    }
-
-    public PaymentMethod getPayment() {
-        return payment;
     }
 
     public OrderStatus getOrderStatus() {
