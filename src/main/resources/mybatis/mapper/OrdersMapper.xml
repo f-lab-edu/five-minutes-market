@@ -14,10 +14,21 @@
         <result property="updatedDate" column="updated_date" />
         <result property="userId" column="user_id" />
         <collection property="orderProducts" ofType="kr.fiveminutesmarket.order.domain.OrderProduct">
+            <constructor>
+                <idArg column="order_product_id" javaType="Long"/>
+                <arg column="product_name" javaType="String"/>
+                <arg column="product_amount" javaType="Integer"/>
+                <arg column="product_price" javaType="Integer"/>
+                <arg column="order_id" javaType="Long"/>
+            </constructor>
             <id property="orderProductId" column="order_product_id" />
             <result property="productName" column="product_name" />
-            <result property="amount" column="amount" />
-            <result property="price" column="price" />
+            <association property="amount"  javaType="kr.fiveminutesmarket.order.domain.Amount" >
+                <result property="amount"  column="product_amount" />
+            </association>
+            <association property="price"  javaType="kr.fiveminutesmarket.order.domain.Price" >
+                <result property="price"  column="product_price" />
+            </association>
         </collection>
     </resultMap>
 
@@ -35,8 +46,8 @@
             o.user_id AS user_id,
             op.order_product_id AS order_product_id,
             op.product_name AS product_name,
-            op.amount AS amount,
-            op.price AS price
+            op.amount AS product_amount,
+            op.price AS product_price
         FROM `orders` o
             INNER JOIN order_product op
                 ON o.order_id = op.order_id
