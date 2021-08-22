@@ -27,7 +27,7 @@ public class KakaopayPayment implements Payment{
     @Value("${kakao.admin.token}")
     private String token;
 
-    @Value("kakao.redirect_domain")
+    @Value("${kakao.redirect_domain}")
     private String domain;
 
     public String payment(Orders orders) {
@@ -41,12 +41,12 @@ public class KakaopayPayment implements Payment{
         MultiValueMap<String, String> params = new LinkedMultiValueMap<>();
 
         params.add("cid", "TC0ONETIME");
-        params.add("partner_order_id", orders.getOrderId().toString());
-        params.add("partner_user_id", orders.getUserId().toString());
+        params.add("partner_order_id", String.valueOf(orders.getOrderId()));
+        params.add("partner_user_id", String.valueOf(orders.getUserId()));
         params.add("item_name", orders.getOrderProducts().get(0).getProductName());
-        params.add("quantity", "1");
-        params.add("total_amount", "5000");
-        params.add("tax_free_amount", "500");
+        params.add("quantity", String.valueOf(orders.getOrderProducts().get(0).getAmount()));
+        params.add("total_amount", String.valueOf(orders.getTotalPrice()));
+        params.add("tax_free_amount", String.valueOf(orders.getTotalPrice() / 10));
         params.add("approval_url", domain + "/orders/payments/kakaopay/success");
         params.add("cancel_url", domain + "/orders/payments/kakaopay/cancel");
         params.add("fail_url", domain + "/orders/payments/kakaopay/fail");

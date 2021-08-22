@@ -1,5 +1,6 @@
 package kr.fiveminutesmarket.order.domain;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import kr.fiveminutesmarket.common.exception.errors.JsonSerializeFailedException;
@@ -12,12 +13,24 @@ import java.util.concurrent.TimeUnit;
 public class KakaoPayReady {
 
     private String tid;
-    private String next_redirect_app_url;
-    private String next_redirect_mobile_url;
-    private String next_redirect_pc_url;
-    private String android_app_scheme;
-    private String ios_app_scheme;
-    private String created_at;
+
+    @JsonProperty("next_redirect_app_url")
+    private String nextRedirectAppUrl;
+
+    @JsonProperty("next_redirect_mobile_url")
+    private String nextRedirectMobileUrl;
+
+    @JsonProperty("next_redirect_pc_url")
+    private String nextRedirectPcUrl;
+
+    @JsonProperty("android_app_scheme")
+    private String androidAppScheme;
+
+    @JsonProperty("ios_app_scheme")
+    private String iosAppScheme;
+
+    @JsonProperty("created_at")
+    private String createdAt;
 
     public KakaoPayReady() {
     }
@@ -26,58 +39,29 @@ public class KakaoPayReady {
         return tid;
     }
 
-    public void setTid(String tid) {
-        this.tid = tid;
+    public String getNextRedirectAppUrl() {
+        return nextRedirectAppUrl;
     }
 
-    public String getNext_redirect_app_url() {
-        return next_redirect_app_url;
+    public String getNextRedirectMobileUrl() {
+        return nextRedirectMobileUrl;
     }
 
-    public void setNext_redirect_app_url(String next_redirect_app_url) {
-        this.next_redirect_app_url = next_redirect_app_url;
+    public String getNextRedirectPcUrl() {
+        return nextRedirectPcUrl;
     }
 
-    public String getNext_redirect_mobile_url() {
-        return next_redirect_mobile_url;
+    public String getAndroidAppScheme() {
+        return androidAppScheme;
     }
 
-    public void setNext_redirect_mobile_url(String next_redirect_mobile_url) {
-        this.next_redirect_mobile_url = next_redirect_mobile_url;
+    public String getIosAppScheme() {
+        return iosAppScheme;
     }
 
-    public String getNext_redirect_pc_url() {
-        return next_redirect_pc_url;
+    public String getCreatedAt() {
+        return createdAt;
     }
-
-    public void setNext_redirect_pc_url(String next_redirect_pc_url) {
-        this.next_redirect_pc_url = next_redirect_pc_url;
-    }
-
-    public String getAndroid_app_scheme() {
-        return android_app_scheme;
-    }
-
-    public void setAndroid_app_scheme(String android_app_scheme) {
-        this.android_app_scheme = android_app_scheme;
-    }
-
-    public String getIos_app_scheme() {
-        return ios_app_scheme;
-    }
-
-    public void setIos_app_scheme(String ios_app_scheme) {
-        this.ios_app_scheme = ios_app_scheme;
-    }
-
-    public String getCreated_at() {
-        return created_at;
-    }
-
-    public void setCreated_at(String created_at) {
-        this.created_at = created_at;
-    }
-
 
     public static KakaoPayReady of(String json) {
         ObjectMapper mapper = new ObjectMapper();

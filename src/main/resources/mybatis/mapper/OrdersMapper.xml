@@ -68,8 +68,8 @@
             o.user_id AS user_id,
             op.order_product_id AS order_product_id,
             op.product_name AS product_name,
-            op.amount AS amount,
-            op.price AS price
+            op.amount AS product_amount,
+            op.price AS product_price
         FROM `orders` o
                  INNER JOIN (
                      SELECT *
