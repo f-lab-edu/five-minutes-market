@@ -1,7 +1,6 @@
 package kr.fiveminutesmarket.order.dto;
 
 import kr.fiveminutesmarket.order.domain.OrderStatus;
-import kr.fiveminutesmarket.order.domain.Payment;
 
 import java.time.LocalDateTime;
 import java.util.List;

@@ -16,9 +16,6 @@ public enum OrderStatus {
             OrderStatus.CANCELED.status),
     PAYMENT_WAITING("결제대기",
             OrderStatus.PAYMENT_COMPLETED.status,
-            OrderStatus.CANCELED.status),
-    COMPLETED("주문완료",
-            OrderStatus.PAYMENT_WAITING.status,
             OrderStatus.CANCELED.status);
 
     private final String status;

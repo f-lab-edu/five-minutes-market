@@ -38,7 +38,7 @@ public class Orders {
         this.orderId = orderId;
         this.totalPrice = totalPrice;
         this.address = address;
-        this.orderStatus = OrderStatus.COMPLETED;
+        this.orderStatus = OrderStatus.PAYMENT_WAITING;
         this.message = message;
         this.createdDate = createdDate;
         this.updatedDate = updatedDate;
