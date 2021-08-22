@@ -105,8 +105,7 @@ class UserControllerTest {
     }
 
     private UserPasswordRequestDto userPasswordRequestDto() {
-        return new UserPasswordRequestDto("hkx2r0i@gmail.com",
-                "xptmxm@nae");
+        return new UserPasswordRequestDto("hkx2r0i@gmail.com");
     }
 
     @Test

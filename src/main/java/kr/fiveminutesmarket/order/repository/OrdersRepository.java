@@ -8,4 +8,6 @@ import java.util.List;
 @Mapper
 public interface OrdersRepository {
     List<Orders> findAllByUserIdOrderByCreatedDate(Long userId, int startIndex, int itemCount);
+
+    Orders findByOrderId(Long orderId);
 }

@@ -30,6 +30,7 @@ public class Orders {
     public Orders(Long orderId,
                   Integer totalPrice,
                   String address,
+                  OrderStatus orderStatus,
                   String message,
                   LocalDateTime createdDate,
                   LocalDateTime updatedDate,

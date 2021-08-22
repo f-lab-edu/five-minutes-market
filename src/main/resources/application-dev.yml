@@ -7,3 +7,8 @@ spring:
   redis:
     host: ${redis.host}
     port: 6379
+
+kakao:
+  admin:
+    token: ${kakao.admin.token}
+  redirect_domain: http://localhost

@@ -1,5 +1,7 @@
 package kr.fiveminutesmarket.order.domain;
 
+import kr.fiveminutesmarket.order.exception.errors.AmountValidException;
+
 public class Amount {
 
     private static final int MINIMUM_AMOUNT = 0;
@@ -15,7 +17,7 @@ public class Amount {
 
     private void validate(Integer amount) {
         if (amount < MINIMUM_AMOUNT) {
-            throw new IllegalArgumentException(AMOUNT_VALID_EXCEPTION_MESSAGE);
+            throw new AmountValidException(AMOUNT_VALID_EXCEPTION_MESSAGE);
         }
     }
 

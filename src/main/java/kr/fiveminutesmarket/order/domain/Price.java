@@ -1,5 +1,7 @@
 package kr.fiveminutesmarket.order.domain;
 
+import kr.fiveminutesmarket.order.exception.errors.PriceValidException;
+
 public class Price {
 
     private static final int MINIMUM_PRICE = 0;
@@ -15,7 +17,7 @@ public class Price {
 
     private void validate(Integer price) {
         if (price < MINIMUM_PRICE) {
-            throw new IllegalArgumentException(PRICE_VALID_EXCEPTION_MESSAGE);
+            throw new PriceValidException(PRICE_VALID_EXCEPTION_MESSAGE);
         }
     }
 
