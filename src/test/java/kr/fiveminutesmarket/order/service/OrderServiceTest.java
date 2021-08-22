@@ -55,8 +55,6 @@ class OrderServiceTest {
                 1L,
                 13_000,
                 "test address 1",
-                Payment.CREDIT,
-                OrderStatus.COMPLETED,
                 "test message 1",
                 LocalDateTime.of(2021, 8, 1, 11, 10),
                 LocalDateTime.of(2021, 8, 1, 15, 20),
@@ -67,8 +65,6 @@ class OrderServiceTest {
                 2L,
                 92_300,
                 "test address 2",
-                Payment.CHECK,
-                OrderStatus.DELIVERY,
                 "test message 2",
                 LocalDateTime.of(2021, 7, 29, 14, 20),
                 LocalDateTime.of(2021, 7, 31, 17, 50),
@@ -93,7 +89,6 @@ class OrderServiceTest {
         for (int i = 0; i < dtoList.size(); i++) {
             assertThat(dtoList.get(i).getOrderId()).isEqualTo(orders.get(i).getOrderId());
             assertThat(dtoList.get(i).getTotalPrice()).isEqualTo(orders.get(i).getTotalPrice());
-            assertThat(dtoList.get(i).getPayment()).isEqualTo(orders.get(i).getPayment());
             assertThat(dtoList.get(i).getOrderStatus()).isEqualTo(orders.get(i).getOrderStatus());
             assertThat(dtoList.get(i).getUserId()).isEqualTo(orders.get(i).getUserId());
 
