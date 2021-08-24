@@ -4,5 +4,7 @@ import kr.fiveminutesmarket.order.domain.Orders;
 
 public interface Payment {
 
-    String payment(Orders orderProduct);
+    String payment(Orders orders);
+
+    String approve(Orders orders, String token);
 }
