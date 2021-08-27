@@ -1,5 +1,6 @@
 package kr.fiveminutesmarket.order.service;
 
+import kr.fiveminutesmarket.common.utils.RedisUtils;
 import kr.fiveminutesmarket.order.domain.Orders;
 import kr.fiveminutesmarket.order.domain.PaymentHistory;
 import kr.fiveminutesmarket.order.domain.PaymentMethod;
@@ -8,8 +9,6 @@ import kr.fiveminutesmarket.order.payment.KakaopayPayment;
 import kr.fiveminutesmarket.order.payment.Payment;
 import kr.fiveminutesmarket.order.repository.OrdersRepository;
 import kr.fiveminutesmarket.order.repository.PaymentHistoryRepository;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Service;
 
@@ -50,9 +49,11 @@ public class PaymentService {
 
         Orders orders = ordersRepository.findByOrderId(orderId);
 
-        Long ordersId = orders.getOrderId();
-        String tid = (String) redisTemplate.opsForValue().get(KakaopayPayment.PLATFORM + ":" + ordersId);
         String paymentApprovedLog = payment.approve(orders, pgToken);
+
+        Long ordersId = orders.getOrderId();
+        String redisKey = RedisUtils.createKeyWithPrefix(KakaopayPayment.PLATFORM, String.valueOf(orderId));
+        String tid = (String) redisTemplate.opsForValue().get(redisKey);
 
         // 결제 history 생성
         PaymentHistory paymentHistory = toPaymentHistoryEntity(tid, ordersId, true, paymentApprovedLog);

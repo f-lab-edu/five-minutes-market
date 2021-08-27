@@ -3,6 +3,7 @@ package kr.fiveminutesmarket.order.payment;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import kr.fiveminutesmarket.common.exception.errors.JsonSerializeFailedException;
+import kr.fiveminutesmarket.common.utils.RedisUtils;
 import kr.fiveminutesmarket.order.domain.KakaoPayApproved;
 import kr.fiveminutesmarket.order.domain.KakaoPayReady;
 import kr.fiveminutesmarket.order.domain.Orders;
@@ -42,7 +43,7 @@ public class KakaopayPayment implements Payment {
     // 카카오페이 결제 준비
     @Override
     public String payment(Orders orders) {
-        HttpHeaders headers = makeHeaders();
+        HttpHeaders headers = makeCommonHeaders();
         MultiValueMap<String, String> params = new LinkedMultiValueMap<>();
 
         // redirect url: [domain]/orders/{orderId}/payments/kakaopay/...
@@ -76,7 +77,7 @@ public class KakaopayPayment implements Payment {
         KakaoPayReady kakaoPayReady = restTemplate.postForObject(uri, body, KakaoPayReady.class);
 
         if (kakaoPayReady != null) {
-            String redisKey = PLATFORM + ":" + orders.getOrderId();
+            String redisKey = RedisUtils.createKeyWithPrefix(PLATFORM, String.valueOf(orders.getOrderId()));
             redisTemplate.opsForValue().set(redisKey, kakaoPayReady.getTid());
             redisTemplate.expire(redisKey, 900, TimeUnit.SECONDS);  // 15분 만료시간
         }
@@ -87,10 +88,10 @@ public class KakaopayPayment implements Payment {
     // 카카오페이 결제 승인
     @Override
     public String approve(Orders orders, String token) {
-        HttpHeaders headers = makeHeaders();
+        HttpHeaders headers = makeCommonHeaders();
         MultiValueMap<String, String> params = new LinkedMultiValueMap<>();
 
-        String redisKey = PLATFORM + ":" + orders.getOrderId();
+        String redisKey = RedisUtils.createKeyWithPrefix(PLATFORM, String.valueOf(orders.getOrderId()));
         String tid = (String) redisTemplate.opsForValue().get(redisKey);
 
         params.add("cid", CID);
@@ -115,7 +116,7 @@ public class KakaopayPayment implements Payment {
     }
 
     // 공통 Header 구성
-    private HttpHeaders makeHeaders() {
+    private HttpHeaders makeCommonHeaders() {
         HttpHeaders headers = new HttpHeaders();
         headers.add("Authorization", "KakaoAK " + token);
         headers.add("Accept", MediaType.APPLICATION_JSON_VALUE);
