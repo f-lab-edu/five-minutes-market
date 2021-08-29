@@ -1,10 +1,14 @@
 package kr.fiveminutesmarket.order.payment;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import kr.fiveminutesmarket.common.exception.errors.JsonSerializeFailedException;
+import kr.fiveminutesmarket.common.utils.RedisUtils;
+import kr.fiveminutesmarket.order.domain.KakaoPayApproved;
 import kr.fiveminutesmarket.order.domain.KakaoPayReady;
 import kr.fiveminutesmarket.order.domain.Orders;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
@@ -12,17 +16,17 @@ import org.springframework.stereotype.Component;
 import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
 import org.springframework.web.client.RestTemplate;
+import org.springframework.web.util.UriComponentsBuilder;
 
 import java.net.URI;
-import java.net.URISyntaxException;
+import java.util.concurrent.TimeUnit;
 
 @Component
-public class KakaopayPayment implements Payment{
+public class KakaopayPayment implements Payment {
 
-    private static final Logger logger = LoggerFactory.getLogger(KakaopayPayment.class);
     private static final String HOST = "https://kapi.kakao.com";
-
-    private KakaoPayReady kakaoPayReady;
+    private static final String CID = "TC0ONETIME";
+    public static final String PLATFORM = "kakaopay";
 
     @Value("${kakao.admin.token}")
     private String token;
@@ -30,36 +34,107 @@ public class KakaopayPayment implements Payment{
     @Value("${kakao.redirect_domain}")
     private String domain;
 
+    private final RedisTemplate<String, Object> redisTemplate;
+
+    public KakaopayPayment(RedisTemplate<String, Object> redisTemplate) {
+        this.redisTemplate = redisTemplate;
+    }
+
+    // 카카오페이 결제 준비
+    @Override
     public String payment(Orders orders) {
-        RestTemplate restTemplate = new RestTemplate();
-
-        HttpHeaders headers = new HttpHeaders();
-        headers.add("Authorization", "KakaoAK " + token);
-        headers.add("Accept", MediaType.APPLICATION_JSON_VALUE);
-        headers.add("Content-Type", MediaType.APPLICATION_FORM_URLENCODED_VALUE + ";charset=UTF-8");
-
+        HttpHeaders headers = makeCommonHeaders();
         MultiValueMap<String, String> params = new LinkedMultiValueMap<>();
 
-        params.add("cid", "TC0ONETIME");
+        // redirect url: [domain]/orders/{orderId}/payments/kakaopay/...
+        String redirectUrl = domain
+                + "/orders/"
+                + orders.getOrderId()
+                + "/payments/"
+                + PLATFORM;
+
+        params.add("cid", CID);
         params.add("partner_order_id", String.valueOf(orders.getOrderId()));
         params.add("partner_user_id", String.valueOf(orders.getUserId()));
         params.add("item_name", orders.getOrderProducts().get(0).getProductName());
         params.add("quantity", String.valueOf(orders.getOrderProducts().get(0).getAmount()));
         params.add("total_amount", String.valueOf(orders.getTotalPrice()));
         params.add("tax_free_amount", String.valueOf(orders.getTotalPrice() / 10));
-        params.add("approval_url", domain + "/orders/payments/kakaopay/success");
-        params.add("cancel_url", domain + "/orders/payments/kakaopay/cancel");
-        params.add("fail_url", domain + "/orders/payments/kakaopay/fail");
+        params.add("approval_url", redirectUrl + "/success");
+        params.add("cancel_url", redirectUrl + "/cancel");
+        params.add("fail_url", redirectUrl + "/fail");
 
+        HttpEntity<MultiValueMap<String, String>> body = new HttpEntity<>(params, headers);
 
-        HttpEntity<MultiValueMap<String, String>> body = new HttpEntity<MultiValueMap<String, String>>(params, headers);
+        URI uri = UriComponentsBuilder
+                .fromUriString(HOST)
+                .path("/v1/payment/ready")
+                .encode()
+                .build()
+                .toUri();
 
-        try {
-            kakaoPayReady = restTemplate.postForObject(new URI(HOST + "/v1/payment/ready"), body, KakaoPayReady.class);
-        } catch (URISyntaxException e) {
-            logger.error(e.getMessage());
+        RestTemplate restTemplate = new RestTemplate();
+        KakaoPayReady kakaoPayReady = restTemplate.postForObject(uri, body, KakaoPayReady.class);
+
+        if (kakaoPayReady != null) {
+            String redisKey = RedisUtils.createKeyWithPrefix(PLATFORM, String.valueOf(orders.getOrderId()));
+            redisTemplate.opsForValue().set(redisKey, kakaoPayReady.getTid());
+            redisTemplate.expire(redisKey, 900, TimeUnit.SECONDS);  // 15분 만료시간
         }
 
-        return KakaoPayReady.toJson(kakaoPayReady);
+        return toJson(kakaoPayReady);
+    }
+
+    // 카카오페이 결제 승인
+    @Override
+    public String approve(Orders orders, String token) {
+        HttpHeaders headers = makeCommonHeaders();
+        MultiValueMap<String, String> params = new LinkedMultiValueMap<>();
+
+        String redisKey = RedisUtils.createKeyWithPrefix(PLATFORM, String.valueOf(orders.getOrderId()));
+        String tid = (String) redisTemplate.opsForValue().get(redisKey);
+
+        params.add("cid", CID);
+        params.add("tid", tid);
+        params.add("partner_order_id", String.valueOf(orders.getOrderId()));
+        params.add("partner_user_id", String.valueOf(orders.getUserId()));
+        params.add("pg_token", token);
+
+        HttpEntity<MultiValueMap<String, String>> body = new HttpEntity<>(params, headers);
+
+        URI uri = UriComponentsBuilder
+                .fromUriString(HOST)
+                .path("/v1/payment/approve")
+                .encode()
+                .build()
+                .toUri();
+
+        RestTemplate restTemplate = new RestTemplate();
+        KakaoPayApproved kakaoPayApproved = restTemplate.postForObject(uri, body, KakaoPayApproved.class);
+
+        return toJson(kakaoPayApproved);
+    }
+
+    // 공통 Header 구성
+    private HttpHeaders makeCommonHeaders() {
+        HttpHeaders headers = new HttpHeaders();
+        headers.add("Authorization", "KakaoAK " + token);
+        headers.add("Accept", MediaType.APPLICATION_JSON_VALUE);
+        headers.add("Content-Type", MediaType.APPLICATION_FORM_URLENCODED_VALUE + ";charset=UTF-8");
+
+        return headers;
+    }
+
+    private String toJson(Object kakaoPayResponse) {
+        ObjectMapper mapper = new ObjectMapper();
+
+        String json = "";
+        try {
+            json = mapper.writeValueAsString(mapper.convertValue(kakaoPayResponse, kakaoPayResponse.getClass()));
+        } catch (JsonProcessingException e) {
+            throw new JsonSerializeFailedException();
+        }
+
+        return json;
     }
 }

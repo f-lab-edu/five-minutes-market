@@ -1,14 +1,6 @@
 package kr.fiveminutesmarket.order.domain;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import kr.fiveminutesmarket.common.exception.errors.JsonSerializeFailedException;
-
-import java.time.LocalDateTime;
-import java.util.Map;
-import java.util.UUID;
-import java.util.concurrent.TimeUnit;
 
 public class KakaoPayReady {
 
@@ -61,32 +53,5 @@ public class KakaoPayReady {
 
     public String getCreatedAt() {
         return createdAt;
-    }
-
-    public static KakaoPayReady of(String json) {
-        ObjectMapper mapper = new ObjectMapper();
-
-        if (json == null || !"".equals(json)) {
-            try {
-                return mapper.readValue(json, KakaoPayReady.class);
-            } catch (JsonProcessingException e) {
-                e.printStackTrace();
-            }
-        }
-
-        return null;
-    }
-
-    public static String toJson(KakaoPayReady userSession) {
-        ObjectMapper mapper = new ObjectMapper();
-
-        String json = "";
-        try {
-            json = mapper.writeValueAsString(mapper.convertValue(userSession, KakaoPayReady.class));
-        } catch (JsonProcessingException e) {
-            throw new JsonSerializeFailedException();
-        }
-
-        return json;
     }
 }

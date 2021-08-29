@@ -1,22 +1,19 @@
 package kr.fiveminutesmarket.order.controller;
 
 import kr.fiveminutesmarket.common.dto.ResponseDto;
-import kr.fiveminutesmarket.order.domain.KakaoPayReady;
 import kr.fiveminutesmarket.order.dto.OrdersByUserResponseDto;
-import kr.fiveminutesmarket.order.payment.KakaopayPayment;
 import kr.fiveminutesmarket.order.service.OrdersService;
 import kr.fiveminutesmarket.order.service.PaymentService;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
 
-import java.net.URISyntaxException;
 import java.util.List;
 
 @RestController
 public class OrdersController {
 
-    private static final Logger logger = LoggerFactory.getLogger(KakaopayPayment.class);
     private final OrdersService ordersService;
     private final PaymentService paymentService;
 
@@ -36,10 +33,18 @@ public class OrdersController {
         return new ResponseDto<>(0, null, ordersByUserResponseDtoList);
     }
 
-    @GetMapping("/orders/{orderId}/{paymentMethod}")
-    public ResponseDto<?> paymentOrder(@PathVariable("orderId") Long orderId,
-                                                   @PathVariable("paymentMethod") String paymentMethod) {
+    @GetMapping("/orders/{orderId}/payments/{paymentMethod}/success")
+    public ResponseDto<String> approvePayment(@PathVariable("orderId") Long orderId,
+                                              @PathVariable("paymentMethod") String paymentMethod,
+                                              @RequestParam("pg_token") String pgToken) {
 
-        return new ResponseDto<>(0, "", paymentService.payment(orderId, paymentMethod));
+        return new ResponseDto<>(0, "결제승인완료", paymentService.approvePayment(orderId, pgToken, paymentMethod));
+    }
+
+    @GetMapping("/orders/{orderId}/{paymentMethod}")
+    public ResponseDto<String> paymentOrder(@PathVariable("orderId") Long orderId,
+                                            @PathVariable("paymentMethod") String paymentMethod) {
+
+        return new ResponseDto<>(0, "결제대기", paymentService.readyPayment(orderId, paymentMethod));
     }
 }

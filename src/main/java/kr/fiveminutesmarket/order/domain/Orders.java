@@ -138,4 +138,18 @@ public class Orders {
             throw new OrderStatus.OrderStatusNotPossibleConvertException(from.getStatus(), to.getStatus());
         }
     }
+
+    @Override
+    public String toString() {
+        return "Orders{" +
+                "orderId=" + orderId +
+                ", totalPrice=" + totalPrice +
+                ", address='" + address + '\'' +
+                ", orderStatus=" + orderStatus +
+                ", message='" + message + '\'' +
+                ", createdDate=" + createdDate +
+                ", updatedDate=" + updatedDate +
+                ", userId=" + userId +
+                '}';
+    }
 }
