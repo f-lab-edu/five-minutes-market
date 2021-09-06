@@ -21,7 +21,7 @@ public class Amount {
         }
     }
 
-    public int getAmount() {
+    public Integer getAmount() {
         return amount;
     }
 }

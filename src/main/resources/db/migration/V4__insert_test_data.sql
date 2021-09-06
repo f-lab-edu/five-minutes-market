@@ -7,14 +7,14 @@ INSERT INTO `user` (user_id, user_name, email, password, address, phone_number, 
 VALUES (2, 'test seller1', 'seller2@test.com', '67c017fe365dda6ede64c51fed9b18386d4578d378a33ee891685ded7210004e', 'test address2', '01033337777', 1, 2, '48157d186d5d30db');
 
 -- order data
-INSERT INTO `order` (order_id, total_price, address, payment, order_status, message, created_date, updated_date, user_id)
-VALUES (1, 38000, 'test address1', 'CREDIT', 'COMPLETED', '배송 잘부탁드리겠습니다!', NOW(), NOW(), 1);
-INSERT INTO `order` (order_id, total_price, address, payment, order_status, message, created_date, updated_date, user_id)
-VALUES (2, 27000, 'test address1', 'CHECK', 'DELIVERY', '배송 잘부탁드리겠습니다!', NOW(), NOW(), 1);
-INSERT INTO `order` (order_id, total_price, address, payment, order_status, message, created_date, updated_date, user_id)
-VALUES (3, 40000, 'test address2', 'CREDIT', 'CANCELED', 'test message delivery', NOW(), NOW(), 2);
-INSERT INTO `order` (order_id, total_price, address, payment, order_status, message, created_date, updated_date, user_id)
-VALUES (4, 90000, 'test address2', 'CREDIT', 'COMPLETED', 'test message', NOW(), NOW(), 2);
+INSERT INTO `order` (order_id, total_price, address, order_status, message, created_date, updated_date, user_id)
+VALUES (1, 10000000, 'test address1', 'PAYMENT_WAITING', '배송 잘부탁드리겠습니다!', NOW(), NOW(), 1);
+INSERT INTO `order` (order_id, total_price, address, order_status, message, created_date, updated_date, user_id)
+VALUES (2, 27000, 'test address1', 'DELIVERY', '배송 잘부탁드리겠습니다!', NOW(), NOW(), 1);
+INSERT INTO `order` (order_id, total_price, address, order_status, message, created_date, updated_date, user_id)
+VALUES (3, 40000, 'test address2', 'CANCELED', 'test message delivery', NOW(), NOW(), 2);
+INSERT INTO `order` (order_id, total_price, address, order_status, message, created_date, updated_date, user_id)
+VALUES (4, 90000, 'test address2', 'PAYMENT_WAITING', 'test message', NOW(), NOW(), 2);
 
 -- order_product
 INSERT INTO `order_product` (product_name, amount, price, order_id)

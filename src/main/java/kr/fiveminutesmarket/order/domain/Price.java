@@ -21,7 +21,7 @@ public class Price {
         }
     }
 
-    public int getPrice() {
+    public Integer getPrice() {
         return price;
     }
 }

@@ -4,9 +4,10 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import kr.fiveminutesmarket.common.exception.errors.JsonSerializeFailedException;
 import kr.fiveminutesmarket.common.utils.RedisUtils;
-import kr.fiveminutesmarket.order.domain.KakaoPayApproved;
-import kr.fiveminutesmarket.order.domain.KakaoPayReady;
 import kr.fiveminutesmarket.order.domain.Orders;
+import kr.fiveminutesmarket.order.domain.pay.KakaoPayApproved;
+import kr.fiveminutesmarket.order.domain.pay.KakaoPayFailed;
+import kr.fiveminutesmarket.order.domain.pay.KakaoPayReady;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.http.HttpEntity;
@@ -23,7 +24,6 @@ import java.util.concurrent.TimeUnit;
 
 @Component
 public class KakaopayPayment implements Payment {
-
     private static final String HOST = "https://kapi.kakao.com";
     private static final String CID = "TC0ONETIME";
     public static final String PLATFORM = "kakaopay";
@@ -79,7 +79,7 @@ public class KakaopayPayment implements Payment {
         if (kakaoPayReady != null) {
             String redisKey = RedisUtils.createKeyWithPrefix(PLATFORM, String.valueOf(orders.getOrderId()));
             redisTemplate.opsForValue().set(redisKey, kakaoPayReady.getTid());
-            redisTemplate.expire(redisKey, 900, TimeUnit.SECONDS);  // 15분 만료시간
+            redisTemplate.expire(redisKey, 1800, TimeUnit.SECONDS);  // 30분 만료시간
         }
 
         return toJson(kakaoPayReady);
@@ -113,6 +113,25 @@ public class KakaopayPayment implements Payment {
         KakaoPayApproved kakaoPayApproved = restTemplate.postForObject(uri, body, KakaoPayApproved.class);
 
         return toJson(kakaoPayApproved);
+    }
+
+    @Override
+    public String fail(Orders orders) {
+        String redisKey = RedisUtils.createKeyWithPrefix(PLATFORM, String.valueOf(orders.getOrderId()));
+        String tid = (String) redisTemplate.opsForValue().get(redisKey);
+
+        KakaoPayFailed kakaoPayFailed = new KakaoPayFailed(
+                tid,
+                orders.getOrderId(),
+                orders.getUserId(),
+                orders.getTotalPrice());
+
+        return toJson(kakaoPayFailed);
+    }
+
+    @Override
+    public String cancel(Orders orders) {
+        return "";
     }
 
     // 공통 Header 구성

@@ -1,8 +1,12 @@
-package kr.fiveminutesmarket.order.domain;
+package kr.fiveminutesmarket.order.domain.pay;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import com.fasterxml.jackson.datatype.jsr310.deser.LocalDateTimeDeserializer;
+import com.fasterxml.jackson.datatype.jsr310.ser.LocalDateTimeSerializer;
 
-import java.util.Date;
+import java.time.LocalDateTime;
 
 public class KakaoPayApproved {
 
@@ -36,11 +40,15 @@ public class KakaoPayApproved {
 
     // 결제 준비 요청 시각
     @JsonProperty("created_at")
-    private Date createdAt;
+    @JsonDeserialize(using = LocalDateTimeDeserializer.class)
+    @JsonSerialize(using = LocalDateTimeSerializer.class)
+    private LocalDateTime createdAt;
 
     // 결제 승인 시각
     @JsonProperty("approved_at")
-    private Date approvedAt;
+    @JsonDeserialize(using = LocalDateTimeDeserializer.class)
+    @JsonSerialize(using = LocalDateTimeSerializer.class)
+    private LocalDateTime approvedAt;
 
     private static class PayedAmount {
         @JsonProperty("total")

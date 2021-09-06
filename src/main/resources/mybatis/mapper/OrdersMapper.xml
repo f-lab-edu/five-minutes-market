@@ -3,6 +3,11 @@
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="kr.fiveminutesmarket.order.repository.OrdersRepository">
+    <insert id="insert" parameterType="map" useGeneratedKeys="true" keyProperty="orderId">
+        INSERT INTO orders(total_price, address, order_status, message, created_date, updated_date, user_id)
+        VALUES(#{orders.totalPrice}, #{orders.address}, #{orders.orderStatus}, #{orders.message}, #{orders.createdDate}, #{orders.updatedDate}, #{orders.userId})
+    </insert>
+
     <resultMap id="ordersResultMap" type="kr.fiveminutesmarket.order.domain.Orders">
         <id property="orderId" column="order_id"  />
         <result property="totalPrice" column="total_price" />
