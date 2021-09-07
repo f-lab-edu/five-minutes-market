@@ -88,6 +88,7 @@ public class PaymentService {
         return paymentApprovedLog;
     }
 
+    @Transactional
     public String failPayment(Long orderId, String paymentMethod) {
         Payment payment = selectProperPayment(paymentMethod);
 
@@ -104,13 +105,6 @@ public class PaymentService {
         paymentHistoryRepository.insertPaymentHistory(paymentHistory);
 
         return paymentFailedLog;
-    }
-
-    public String cancelPayment(Long orderId, String paymentMethod) {
-        Payment payment = selectProperPayment(paymentMethod);
-
-        Orders orders = ordersRepository.findByOrderId(orderId);
-        return null;
     }
 
     private Payment selectProperPayment(String paymentMethod) {

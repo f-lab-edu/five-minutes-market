@@ -47,7 +47,6 @@ public class OrdersController {
     public ResponseDto<String> failedPayment(@PathVariable("orderId") Long orderId,
                                              @PathVariable("paymentMethod") String paymentMethod) {
 
-        logger.info("################## payment failed #####################");
         return new ResponseDto<>(0, "결제실패", paymentService.failPayment(orderId, paymentMethod));
     }
 
