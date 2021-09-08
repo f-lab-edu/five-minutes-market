@@ -1,22 +1,28 @@
 package kr.fiveminutesmarket.category.domain;
 
-import kr.fiveminutesmarket.category.dto.request.SubCategoryRequest;
-import kr.fiveminutesmarket.category.dto.response.SubCategoryResponse;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
+import javax.persistence.*;
+
+@Entity
 public class SubCategory {
-
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long subCategoryId;
 
     private String subCategoryName;
 
-    private Long mainCategoryId;
+    @ManyToOne
+    @JoinColumn(name = "main_category_id")
+    @JsonIgnore
+    private MainCategory mainCategory;
 
     public SubCategory() {
     }
 
-    public SubCategory(String subCategoryName, Long mainCategoryId) {
+    public SubCategory(String subCategoryName, MainCategory mainCategory) {
         this.subCategoryName = subCategoryName;
-        this.mainCategoryId = mainCategoryId;
+        this.mainCategory = mainCategory;
     }
 
     public Long getSubCategoryId() {
@@ -27,21 +33,12 @@ public class SubCategory {
         return subCategoryName;
     }
 
-    public Long getMainCategoryId() {
-        return mainCategoryId;
+    public MainCategory getMainCategory() {
+        return mainCategory;
     }
 
-    public SubCategoryResponse toResponse() {
-        SubCategoryResponse response = new SubCategoryResponse();
-        response.setSubCategoryId(subCategoryId);
-        response.setSubCategoryName(subCategoryName);
-        response.setMainCategoryId(mainCategoryId);
-
-        return response;
-    }
-
-    public void updateInfo(SubCategoryRequest resource) {
-        this.subCategoryName = resource.getSubCategoryName();
-        this.mainCategoryId = resource.getMainCategoryId();
+    public void updateInfo(String subCategoryName, MainCategory mainCategory) {
+        this.subCategoryName = subCategoryName;
+        this.mainCategory = mainCategory;
     }
 }

@@ -1,6 +1,5 @@
 package kr.fiveminutesmarket.category.dto.request;
 
-import kr.fiveminutesmarket.category.domain.MainCategory;
 import org.hibernate.validator.constraints.Length;
 
 import javax.validation.constraints.NotBlank;
@@ -22,10 +21,6 @@ public class MainCategoryRequest {
 
     public String getMainCategoryName() {
         return mainCategoryName;
-    }
-
-    public MainCategory toEntity() {
-        return new MainCategory(mainCategoryName);
     }
 
 }

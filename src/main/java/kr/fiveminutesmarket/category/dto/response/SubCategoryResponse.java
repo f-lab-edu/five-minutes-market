@@ -6,30 +6,20 @@ public class SubCategoryResponse {
 
     private String subCategoryName;
 
-    private Long mainCategoryId;
+    public SubCategoryResponse() {
+    }
+
+    public SubCategoryResponse(Long subCategoryId, String subCategoryName) {
+        this.subCategoryId = subCategoryId;
+        this.subCategoryName = subCategoryName;
+    }
 
     public Long getSubCategoryId() {
         return subCategoryId;
     }
 
-    public void setSubCategoryId(Long subCategoryId) {
-        this.subCategoryId = subCategoryId;
-    }
-
     public String getSubCategoryName() {
         return subCategoryName;
-    }
-
-    public void setSubCategoryName(String subCategoryName) {
-        this.subCategoryName = subCategoryName;
-    }
-
-    public Long getMainCategoryId() {
-        return mainCategoryId;
-    }
-
-    public void setMainCategoryId(Long mainCategoryId) {
-        this.mainCategoryId = mainCategoryId;
     }
 
 }

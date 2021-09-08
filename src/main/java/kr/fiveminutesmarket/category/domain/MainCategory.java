@@ -1,13 +1,20 @@
 package kr.fiveminutesmarket.category.domain;
 
 import kr.fiveminutesmarket.category.dto.request.MainCategoryRequest;
-import kr.fiveminutesmarket.category.dto.response.MainCategoryResponse;
 
+import javax.persistence.*;
+import java.util.List;
+
+@Entity
 public class MainCategory {
-
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long mainCategoryId;
 
     private String mainCategoryName;
+
+    @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.REMOVE ,mappedBy = "mainCategory")
+    private List<SubCategory> subCategoryList;
 
     public MainCategory() {
     }
@@ -24,15 +31,12 @@ public class MainCategory {
         return mainCategoryName;
     }
 
+    public List<SubCategory> getSubCategoryList() {
+        return subCategoryList;
+    }
+
     public void updateInfo(MainCategoryRequest resource) {
         this.mainCategoryName = resource.getMainCategoryName();
     }
 
-    public MainCategoryResponse toResponse() {
-        MainCategoryResponse response = new MainCategoryResponse();
-        response.setMainCategoryId(mainCategoryId);
-        response.setMainCategoryName(mainCategoryName);
-
-        return response;
-    }
 }
