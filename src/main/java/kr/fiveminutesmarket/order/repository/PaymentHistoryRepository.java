@@ -7,4 +7,6 @@ import org.apache.ibatis.annotations.Param;
 @Mapper
 public interface PaymentHistoryRepository {
     void insertPaymentHistory(@Param("paymentHistory") PaymentHistory paymentHistory);
+
+    PaymentHistory findByOrdersId(Long ordersId);
 }

@@ -15,6 +15,13 @@ public class OrderProduct {
     public OrderProduct() {
     }
 
+    public OrderProduct(String productName, Integer amount, Integer price, Long orderId) {
+        this.productName = productName;
+        this.amount = new Amount(amount);
+        this.price = new Price(price);
+        this.orderId = orderId;
+    }
+
     public OrderProduct(Long orderProductId, String productName, Integer amount, Integer price, Long orderId) {
         this.orderProductId = orderProductId;
         this.productName = productName;
@@ -31,11 +38,11 @@ public class OrderProduct {
         return productName;
     }
 
-    public int getAmount() {
+    public Integer getAmount() {
         return amount.getAmount();
     }
 
-    public int getPrice() {
+    public Integer getPrice() {
         return price.getPrice();
     }
 

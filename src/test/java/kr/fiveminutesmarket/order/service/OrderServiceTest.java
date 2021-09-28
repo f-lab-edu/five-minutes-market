@@ -41,10 +41,10 @@ class OrderServiceTest {
         List<OrderProduct> orderProducts1 = new ArrayList<>();
         List<OrderProduct> orderProducts2 = new ArrayList<>();
 
-        OrderProduct orderProduct1 = new OrderProduct(20L, "상추", 10, 3_000, 1L);
-        OrderProduct orderProduct2 = new OrderProduct(21L, "가지", 15, 2_500, 1L);
-        OrderProduct orderProduct3 = new OrderProduct(22L, "수박", 2, 10_000, 2L);
-        OrderProduct orderProduct4 = new OrderProduct(23L, "참외", 10, 5_000, 2L);
+        OrderProduct orderProduct1 = new OrderProduct("상추", 10, 3_000, 1L);
+        OrderProduct orderProduct2 = new OrderProduct("가지", 15, 2_500, 1L);
+        OrderProduct orderProduct3 = new OrderProduct("수박", 2, 10_000, 2L);
+        OrderProduct orderProduct4 = new OrderProduct("참외", 10, 5_000, 2L);
 
         orderProducts1.add(orderProduct1);
         orderProducts1.add(orderProduct2);
@@ -52,10 +52,8 @@ class OrderServiceTest {
         orderProducts2.add(orderProduct4);
 
         Orders order1 = new Orders(
-                1L,
                 13_000,
                 "test address 1",
-                OrderStatus.ARRANGED,
                 "test message 1",
                 LocalDateTime.of(2021, 8, 1, 11, 10),
                 LocalDateTime.of(2021, 8, 1, 15, 20),
@@ -63,10 +61,8 @@ class OrderServiceTest {
                 orderProducts1);
 
         Orders order2 = new Orders(
-                2L,
                 92_300,
                 "test address 2",
-                OrderStatus.DELIVERY,
                 "test message 2",
                 LocalDateTime.of(2021, 7, 29, 14, 20),
                 LocalDateTime.of(2021, 7, 31, 17, 50),

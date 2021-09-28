@@ -1,4 +1,4 @@
-package kr.fiveminutesmarket.order.domain;
+package kr.fiveminutesmarket.order.domain.pay;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 

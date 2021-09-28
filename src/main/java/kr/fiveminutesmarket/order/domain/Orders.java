@@ -27,16 +27,26 @@ public class Orders {
     public Orders() {
     }
 
-    public Orders(Long orderId,
-                  Integer totalPrice,
+    public Orders(Integer totalPrice,
                   String address,
-                  OrderStatus orderStatus,
+                  String message,
+                  LocalDateTime createdDate,
+                  Long userId) {
+        this.totalPrice = totalPrice;
+        this.address = address;
+        this.orderStatus = OrderStatus.PAYMENT_WAITING;
+        this.message = message;
+        this.createdDate = createdDate;
+        this.userId = userId;
+    }
+
+    public Orders(Integer totalPrice,
+                  String address,
                   String message,
                   LocalDateTime createdDate,
                   LocalDateTime updatedDate,
                   Long userId,
                   List<OrderProduct> orderProducts) {
-        this.orderId = orderId;
         this.totalPrice = totalPrice;
         this.address = address;
         this.orderStatus = OrderStatus.PAYMENT_WAITING;
@@ -81,6 +91,10 @@ public class Orders {
 
     public List<OrderProduct> getOrderProducts() {
         return orderProducts;
+    }
+
+    public void setOrderProducts(List<OrderProduct> orderProducts) {
+        this.orderProducts = orderProducts;
     }
 
     public void canceled() {

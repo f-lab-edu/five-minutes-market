@@ -11,4 +11,11 @@
                #{paymentHistory.paymentLog}
                )
     </insert>
+
+    <select id="findByOrdersId" resultType="kr.fiveminutesmarket.order.domain.PaymentHistory">
+        SELECT
+               *
+        FROM payment_history
+        WHERE orders_id = #{ordersId}
+    </select>
 </mapper>

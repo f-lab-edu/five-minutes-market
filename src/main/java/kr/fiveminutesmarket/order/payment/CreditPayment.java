@@ -15,4 +15,14 @@ public class CreditPayment implements Payment{
     public String approve(Orders orders, String token) {
         return "결제 승인 완료!";
     }
+
+    @Override
+    public String fail(Orders orders) {
+        return "결제 실패!";
+    }
+
+    @Override
+    public String cancel(Orders orders) {
+        return "결제 취소!";
+    }
 }
