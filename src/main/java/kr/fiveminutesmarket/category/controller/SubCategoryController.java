@@ -8,7 +8,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
-import java.util.List;
 
 @RestController
 @RequestMapping("/subCategory")
@@ -18,22 +17,6 @@ public class SubCategoryController {
 
     public SubCategoryController(SubCategoryService subCategoryService) {
         this.subCategoryService = subCategoryService;
-    }
-
-    @GetMapping
-    @ResponseStatus(HttpStatus.OK)
-    public ResponseDto<List<SubCategoryResponse>> getAll() {
-        List<SubCategoryResponse> subCategoryList = subCategoryService.findAll();
-
-        return new ResponseDto<>(0,null, subCategoryList);
-    }
-
-    @GetMapping("/{id}")
-    @ResponseStatus(HttpStatus.OK)
-    public ResponseDto<SubCategoryResponse> findById(@PathVariable("id") Long id) {
-        SubCategoryResponse subCategory = subCategoryService.findById(id);
-
-        return new ResponseDto<>(0,null, subCategory);
     }
 
     @PostMapping
@@ -47,10 +30,10 @@ public class SubCategoryController {
     @PutMapping("/{id}")
     @ResponseStatus(HttpStatus.OK)
     public ResponseDto<?> update(@PathVariable("id") Long id,
-                @Valid @RequestBody SubCategoryRequest resource) {
+                                 @Valid @RequestBody SubCategoryRequest resource) {
         subCategoryService.update(id, resource);
 
-        return new ResponseDto<>(0);
+        return new ResponseDto<>(0, "수정 완료하였습니다.");
     }
 
     @DeleteMapping("/{id}")

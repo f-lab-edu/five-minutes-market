@@ -4,6 +4,7 @@ import kr.fiveminutesmarket.category.domain.MainCategory;
 import kr.fiveminutesmarket.category.domain.SubCategory;
 import kr.fiveminutesmarket.category.dto.request.SubCategoryRequest;
 import kr.fiveminutesmarket.category.dto.response.SubCategoryResponse;
+import kr.fiveminutesmarket.category.error.exception.MainCategoryNotFoundException;
 import kr.fiveminutesmarket.category.error.exception.ParentCategoryNotExistedException;
 import kr.fiveminutesmarket.category.error.exception.SubCategoryNameDuplicatedException;
 import kr.fiveminutesmarket.category.error.exception.SubCategoryNotFoundException;
@@ -11,9 +12,6 @@ import kr.fiveminutesmarket.category.repository.MainCategoryRepository;
 import kr.fiveminutesmarket.category.repository.SubCategoryRepository;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-
-import java.util.List;
-import java.util.stream.Collectors;
 
 @Service
 @Transactional
@@ -28,50 +26,44 @@ public class SubCategoryService {
         this.mainCategoryRepository = mainCategoryRepository;
     }
 
-    public List<SubCategoryResponse> findAll() {
-
-        List<SubCategory> subCategoryList = subCategoryRepository.findAll();
-
-        return subCategoryList.stream()
-                .map(SubCategory::toResponse)
-                .collect(Collectors.toList());
-    }
-
-    public SubCategoryResponse findById(Long id) {
-        SubCategory subCategory = subCategoryRepository.findById(id);
-
-        if(subCategory == null)
-            throw new SubCategoryNotFoundException(id);
-
-        return subCategory.toResponse();
-    }
-
     public SubCategoryResponse add(SubCategoryRequest resource) {
-        int count = subCategoryRepository.countByName(resource.getSubCategoryName());
+        long count = subCategoryRepository.countBySubCategoryName(resource.getSubCategoryName());
 
         if(count != 0 )
             throw new SubCategoryNameDuplicatedException(resource.getSubCategoryName());
 
-        MainCategory mainCategory = mainCategoryRepository.findById(resource.getMainCategoryId());
+        MainCategory mainCategory = mainCategoryRepository.findById(resource.getMainCategoryId())
+                .orElseThrow(() -> new ParentCategoryNotExistedException(resource.getMainCategoryId()));
 
-        if(mainCategory == null)
-            throw new ParentCategoryNotExistedException(resource.getMainCategoryId());
+        SubCategory subCategory = toEntity(resource, mainCategory);
 
-        SubCategory subCategory = resource.toEntity();
-        subCategoryRepository.insert(subCategory);
+        SubCategory saved = subCategoryRepository.save(subCategory);
 
-        return subCategory.toResponse();
+        return toResponse(saved);
     }
 
-    public int update(Long id, SubCategoryRequest resource) {
+    public void update(Long id, SubCategoryRequest resource) {
 
-        SubCategory subCategory = subCategoryRepository.findById(id);
-        subCategory.updateInfo(resource);
+        SubCategory subCategory = subCategoryRepository.findById(id)
+                .orElseThrow(() -> new SubCategoryNotFoundException(id));
 
-        return subCategoryRepository.updateSubCategory(id, subCategory);
+        MainCategory mainCategory = mainCategoryRepository.findById(resource.getMainCategoryId())
+                .orElseThrow(() -> new MainCategoryNotFoundException(resource.getMainCategoryId()));
+
+        subCategory.updateInfo(resource.getSubCategoryName(), mainCategory);
     }
 
     public void deleteById(Long id) {
         subCategoryRepository.deleteById(id);
+    }
+
+    private SubCategory toEntity(SubCategoryRequest resource, MainCategory mainCategory) {
+        return new SubCategory(resource.getSubCategoryName(), mainCategory);
+    }
+
+    public static SubCategoryResponse toResponse(SubCategory entity) {
+        return new SubCategoryResponse(
+                entity.getSubCategoryId(),
+                entity.getSubCategoryName());
     }
 }
